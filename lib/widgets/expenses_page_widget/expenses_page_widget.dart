@@ -11,16 +11,16 @@ class ExpensesPageWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 13),
       child: Column(
         children: [
-          const SizedBox(height: 50),
-          const Center(
-            child: Text(
-              'Расходы',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 30,
-              ),
-            ),
-          ),
+          const SizedBox(height: 20),
+          // const Center(
+          //   child: Text(
+          //     'Расходы',
+          //     style: TextStyle(
+          //       fontWeight: FontWeight.w700,
+          //       fontSize: 30,
+          //     ),
+          //   ),
+          // ),
           const SizedBox(height: 20),
           const SizedBox(
             height: 200,
@@ -41,20 +41,9 @@ class ExpensesPageWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            children: const [
-              Text(
-                'Расходы',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
           const SizedBox(height: 20),
           SizedBox(
-            height: 372,
+            height: 376,
             child: ListView.separated(
               itemCount: 20,
               itemBuilder: (BuildContext context, int index) {

@@ -7,11 +7,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        disabledColor: const Color.fromARGB(255, 232, 232, 232),
+    return DefaultTabController(
+      length: 2,
+      child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: const Color.fromARGB(255, 93, 176, 117),
+          disabledColor: const Color.fromARGB(255, 232, 232, 232),
+        ),
+        home: const MainPage(),
       ),
-      home: const MainPage(),
     );
   }
 }
