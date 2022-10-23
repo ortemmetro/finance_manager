@@ -12,16 +12,6 @@ class ExpensesPageWidget extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          // const Center(
-          //   child: Text(
-          //     'Расходы',
-          //     style: TextStyle(
-          //       fontWeight: FontWeight.w700,
-          //       fontSize: 30,
-          //     ),
-          //   ),
-          // ),
-          const SizedBox(height: 20),
           const SizedBox(
             height: 200,
             width: 200,
@@ -42,8 +32,7 @@ class ExpensesPageWidget extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           const SizedBox(height: 20),
-          SizedBox(
-            height: 376,
+          Expanded(
             child: ListView.separated(
               itemCount: 20,
               itemBuilder: (BuildContext context, int index) {

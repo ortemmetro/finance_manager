@@ -32,8 +32,7 @@ class IncomePageWidget extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           const SizedBox(height: 20),
-          SizedBox(
-            height: 372,
+          Expanded(
             child: ListView.separated(
               itemCount: 20,
               itemBuilder: (BuildContext context, int index) {
