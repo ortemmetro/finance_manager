@@ -3,6 +3,18 @@ import 'package:flutter/material.dart';
 
 import '../expenses_page_widget/expenses_page_widget.dart';
 
+class DrawerIconTextFunction {
+  final Icon icon;
+  final String text;
+  final Function onTap;
+
+  DrawerIconTextFunction({
+    required this.icon,
+    required this.text,
+    required this.onTap,
+  });
+}
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -20,11 +32,34 @@ class _MainPageState extends State<MainPage> {
     ],
   );
 
+  final drawerTileList = <DrawerIconTextFunction>[
+    DrawerIconTextFunction(
+        icon: const Icon(Icons.home), text: 'Главная', onTap: () {}),
+    DrawerIconTextFunction(
+        icon: const Icon(Icons.attach_money), text: 'Счета', onTap: () {}),
+    DrawerIconTextFunction(
+        icon: const Icon(Icons.auto_graph_outlined),
+        text: 'Графики',
+        onTap: () {}),
+    DrawerIconTextFunction(
+        icon: const Icon(Icons.category), text: 'Категории', onTap: () {}),
+    DrawerIconTextFunction(
+        icon: const Icon(Icons.money), text: 'Валюта', onTap: () {}),
+    DrawerIconTextFunction(
+        icon: const Icon(Icons.settings), text: 'Настройки', onTap: () {}),
+    DrawerIconTextFunction(
+        icon: const Icon(Icons.share),
+        text: 'Поделиться с друзьями',
+        onTap: () {}),
+    DrawerIconTextFunction(
+        icon: const Icon(Icons.star), text: 'Оценить приложение', onTap: () {}),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBarWidget(tab: tab),
-      drawer: const _DrawerWidget(),
+      drawer: _DrawerWidget(itemList: drawerTileList),
       body: const TabBarView(
         children: [
           ExpensesPageWidget(),
@@ -36,8 +71,10 @@ class _MainPageState extends State<MainPage> {
 }
 
 class _DrawerWidget extends StatelessWidget {
+  final List<DrawerIconTextFunction> itemList;
   const _DrawerWidget({
     Key? key,
+    required this.itemList,
   }) : super(key: key);
 
   @override
@@ -51,11 +88,11 @@ class _DrawerWidget extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(top: 10),
-              itemCount: 10,
+              itemCount: itemList.length,
               itemBuilder: (context, index) {
-                return const ListTile(
-                  leading: Icon(Icons.computer),
-                  title: Text('Hello'),
+                return ListTile(
+                  leading: itemList[index].icon,
+                  title: Text(itemList[index].text),
                 );
               },
             ),

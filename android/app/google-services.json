@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "568187925020",
+    "project_id": "finance-manager-205a2",
+    "storage_bucket": "finance-manager-205a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568187925020:android:16489a09088810d5a765d9",
+        "android_client_info": {
+          "package_name": "com.example.finance_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568187925020-u9kn0kvdj1q3nq6ltj700qq4svfarftv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTeWp5lPBeOpgP-yOSg98znCgb0jvc7_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568187925020-u9kn0kvdj1q3nq6ltj700qq4svfarftv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
