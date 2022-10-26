@@ -1,3 +1,4 @@
+import 'package:finance_manager/widgets/add_widget/add_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../main_page/main_page.dart';
@@ -13,8 +14,15 @@ class App extends StatelessWidget {
         theme: ThemeData(
           primaryColor: const Color.fromARGB(255, 93, 176, 117),
           disabledColor: const Color.fromARGB(255, 232, 232, 232),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color.fromARGB(255, 93, 176, 117),
+          ),
         ),
-        home: const MainPage(),
+        routes: {
+          'main_page': (context) => const MainPage(),
+          'main_page/add': (context) => const AddWidget(),
+        },
+        initialRoute: 'main_page',
       ),
     );
   }

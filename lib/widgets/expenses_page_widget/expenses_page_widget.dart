@@ -41,7 +41,8 @@ class ExpensesPageWidget extends StatelessWidget {
                   bottom: 0,
                   right: 0,
                   child: RawMaterialButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('main_page/add'),
                     fillColor: Color.fromARGB(255, 93, 176, 117),
                     shape: CircleBorder(),
                     padding: EdgeInsets.all(12.0),
