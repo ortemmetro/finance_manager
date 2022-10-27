@@ -6,7 +6,7 @@ import '../expenses_page_widget/expenses_page_widget.dart';
 class DrawerIconTextFunction {
   final Icon icon;
   final String text;
-  final Function onTap;
+  final Function? onTap;
 
   DrawerIconTextFunction({
     required this.icon,
@@ -34,25 +34,46 @@ class _MainPageState extends State<MainPage> {
 
   final drawerTileList = <DrawerIconTextFunction>[
     DrawerIconTextFunction(
-        icon: const Icon(Icons.home), text: 'Главная', onTap: () {}),
+      icon: const Icon(Icons.home),
+      text: 'Главная',
+      onTap: null,
+    ),
     DrawerIconTextFunction(
-        icon: const Icon(Icons.attach_money), text: 'Счета', onTap: () {}),
+      icon: const Icon(Icons.attach_money),
+      text: 'Счета',
+      onTap: (BuildContext context) =>
+          Navigator.of(context).pushNamed('main_page/invoices'),
+    ),
     DrawerIconTextFunction(
-        icon: const Icon(Icons.auto_graph_outlined),
-        text: 'Графики',
-        onTap: () {}),
+      icon: const Icon(Icons.auto_graph_outlined),
+      text: 'Графики',
+      onTap: null,
+    ),
     DrawerIconTextFunction(
-        icon: const Icon(Icons.category), text: 'Категории', onTap: () {}),
+      icon: const Icon(Icons.category),
+      text: 'Категории',
+      onTap: null,
+    ),
     DrawerIconTextFunction(
-        icon: const Icon(Icons.money), text: 'Валюта', onTap: () {}),
+      icon: const Icon(Icons.money),
+      text: 'Валюта',
+      onTap: null,
+    ),
     DrawerIconTextFunction(
-        icon: const Icon(Icons.settings), text: 'Настройки', onTap: () {}),
+      icon: const Icon(Icons.settings),
+      text: 'Настройки',
+      onTap: null,
+    ),
     DrawerIconTextFunction(
-        icon: const Icon(Icons.share),
-        text: 'Поделиться с друзьями',
-        onTap: () {}),
+      icon: const Icon(Icons.share),
+      text: 'Поделиться с друзьями',
+      onTap: null,
+    ),
     DrawerIconTextFunction(
-        icon: const Icon(Icons.star), text: 'Оценить приложение', onTap: () {}),
+      icon: const Icon(Icons.star),
+      text: 'Оценить приложение',
+      onTap: null,
+    ),
   ];
 
   @override
@@ -90,6 +111,7 @@ class _DrawerWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10),
               itemCount: itemList.length,
               itemBuilder: (context, index) {
+                final function = itemList[index].onTap;
                 return ListTile(
                   leading: itemList[index].icon,
                   title: Text(itemList[index].text),

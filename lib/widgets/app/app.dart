@@ -1,4 +1,5 @@
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
+import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../main_page/main_page.dart';
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
         routes: {
           'main_page': (context) => const MainPage(),
           'main_page/add': (context) => const AddWidget(),
+          'main_page/invoices': (context) => const InvoicesWidget(),
         },
         initialRoute: 'main_page',
       ),
