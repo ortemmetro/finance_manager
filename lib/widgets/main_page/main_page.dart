@@ -36,7 +36,8 @@ class _MainPageState extends State<MainPage> {
     DrawerIconTextFunction(
       icon: const Icon(Icons.home),
       text: 'Главная',
-      onTap: null,
+      onTap: (BuildContext context) =>
+          Navigator.of(context).pushNamed('main_page'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.attach_money),
@@ -47,12 +48,14 @@ class _MainPageState extends State<MainPage> {
     DrawerIconTextFunction(
       icon: const Icon(Icons.auto_graph_outlined),
       text: 'Графики',
-      onTap: null,
+      onTap: (BuildContext context) =>
+          Navigator.of(context).pushNamed('main_page/charts'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.category),
       text: 'Категории',
-      onTap: null,
+      onTap: (BuildContext context) =>
+          Navigator.of(context).pushNamed('main_page/categories'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.money),
@@ -78,14 +81,17 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _AppBarWidget(tab: tab),
-      drawer: _DrawerWidget(itemList: drawerTileList),
-      body: const TabBarView(
-        children: [
-          ExpensesPageWidget(),
-          IncomePageWidget(),
-        ],
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: _AppBarWidget(tab: tab),
+        drawer: _DrawerWidget(itemList: drawerTileList),
+        body: const TabBarView(
+          children: [
+            ExpensesPageWidget(),
+            IncomePageWidget(),
+          ],
+        ),
       ),
     );
   }
@@ -115,6 +121,7 @@ class _DrawerWidget extends StatelessWidget {
                 return ListTile(
                   leading: itemList[index].icon,
                   title: Text(itemList[index].text),
+                  onTap: () => function!(context),
                 );
               },
             ),
