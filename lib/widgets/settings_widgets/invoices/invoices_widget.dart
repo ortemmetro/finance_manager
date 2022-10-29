@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../drawer_widget/drawer_widget.dart';
+
 class InvoicesWidget extends StatelessWidget {
   const InvoicesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),

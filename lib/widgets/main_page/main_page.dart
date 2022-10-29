@@ -1,19 +1,8 @@
 import 'package:finance_manager/widgets/income_page_widget/income_page_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../drawer_widget/drawer_widget.dart';
 import '../expenses_page_widget/expenses_page_widget.dart';
-
-class DrawerIconTextFunction {
-  final Icon icon;
-  final String text;
-  final Function? onTap;
-
-  DrawerIconTextFunction({
-    required this.icon,
-    required this.text,
-    required this.onTap,
-  });
-}
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -32,130 +21,18 @@ class _MainPageState extends State<MainPage> {
     ],
   );
 
-  final drawerTileList = <DrawerIconTextFunction>[
-    DrawerIconTextFunction(
-      icon: const Icon(Icons.home),
-      text: 'Главная',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page'),
-    ),
-    DrawerIconTextFunction(
-      icon: const Icon(Icons.attach_money),
-      text: 'Счета',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page/invoices'),
-    ),
-    DrawerIconTextFunction(
-      icon: const Icon(Icons.auto_graph_outlined),
-      text: 'Графики',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page/charts'),
-    ),
-    DrawerIconTextFunction(
-      icon: const Icon(Icons.category),
-      text: 'Категории',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page/categories'),
-    ),
-    DrawerIconTextFunction(
-      icon: const Icon(Icons.money),
-      text: 'Валюта',
-      onTap: null,
-    ),
-    DrawerIconTextFunction(
-      icon: const Icon(Icons.settings),
-      text: 'Настройки',
-      onTap: null,
-    ),
-    DrawerIconTextFunction(
-      icon: const Icon(Icons.share),
-      text: 'Поделиться с друзьями',
-      onTap: null,
-    ),
-    DrawerIconTextFunction(
-      icon: const Icon(Icons.star),
-      text: 'Оценить приложение',
-      onTap: null,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: _AppBarWidget(tab: tab),
-        drawer: _DrawerWidget(itemList: drawerTileList),
+        drawer: DrawerWidget(),
         body: const TabBarView(
           children: [
             ExpensesPageWidget(),
             IncomePageWidget(),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DrawerWidget extends StatelessWidget {
-  final List<DrawerIconTextFunction> itemList;
-  const _DrawerWidget({
-    Key? key,
-    required this.itemList,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: [
-          const SizedBox(height: 35),
-          const _UserTileWidget(),
-          const Divider(thickness: 2.0),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.only(top: 10),
-              itemCount: itemList.length,
-              itemBuilder: (context, index) {
-                final function = itemList[index].onTap;
-                return ListTile(
-                  leading: itemList[index].icon,
-                  title: Text(itemList[index].text),
-                  onTap: () => function!(context),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _UserTileWidget extends StatelessWidget {
-  const _UserTileWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const ListTile(
-      title: Text(
-        'Артём Руппель',
-        style: TextStyle(fontSize: 17),
-      ),
-      subtitle: Text(
-        'Остаток: \$999',
-        style: TextStyle(fontSize: 17),
-      ),
-      leading: CircleAvatar(
-        backgroundColor: Colors.black,
-        radius: 25,
-        child: CircleAvatar(
-          radius: 22.75,
-          backgroundImage: AssetImage(
-            'images/user_image.jpg',
-          ),
         ),
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../drawer_widget/drawer_widget.dart';
+
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget({super.key});
 
@@ -17,6 +19,7 @@ class CategoriesWidget extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        drawer: DrawerWidget(),
         appBar: AppBar(
           toolbarHeight: 70.0,
           title: const Text('Категории'),

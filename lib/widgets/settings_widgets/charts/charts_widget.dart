@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../drawer_widget/drawer_widget.dart';
+
 class ChartsWidget extends StatelessWidget {
   const ChartsWidget({super.key});
 
@@ -18,6 +20,7 @@ class ChartsWidget extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        drawer: DrawerWidget(),
         appBar: AppBar(
           title: Text('Графики'),
           centerTitle: true,
