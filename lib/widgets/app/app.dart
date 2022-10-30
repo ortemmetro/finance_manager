@@ -24,7 +24,7 @@ class App extends StatelessWidget {
       ),
       routes: {
         'main_page': (context) => const MainPage(),
-        'main_page/add': (context) => const AddWidget(),
+        'main_page/add': (context) => AddWidget(),
         'main_page/invoices': (context) => const InvoicesWidget(),
         'main_page/charts': (context) => const ChartsWidget(),
         'main_page/categories': (context) => const CategoriesWidget(),

@@ -1,7 +1,10 @@
+import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:flutter/material.dart';
 
 class AddWidget extends StatelessWidget {
-  const AddWidget({super.key});
+  AddWidget({super.key});
+  final priceController = TextEditingController();
+  final textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +18,12 @@ class AddWidget extends StatelessWidget {
               Center(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
+                  children: [
                     SizedBox(
                       height: 10,
                       width: 100,
                       child: TextField(
+                        controller: priceController,
                         decoration: InputDecoration(),
                       ),
                     ),
@@ -97,13 +101,23 @@ class AddWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 width: 367,
-                child: TextField(),
+                child: TextField(
+                  controller: textController,
+                ),
               ),
               const SizedBox(height: 50),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  AddWidgetModel().createExpense(
+                    comment: textController.text,
+                    category: 'Семья',
+                    price: double.parse(priceController.text),
+                    date: DateTime(2020, 10, 10),
+                  );
+                  Navigator.of(context).pop();
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                     Color.fromARGB(255, 93, 176, 117),
