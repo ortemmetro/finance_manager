@@ -24,10 +24,10 @@ class AddWidget extends StatelessWidget {
                       width: 100,
                       child: TextField(
                         controller: priceController,
-                        decoration: InputDecoration(),
+                        decoration: const InputDecoration(),
                       ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text('KZT'),
                   ],
                 ),
@@ -120,7 +120,7 @@ class AddWidget extends StatelessWidget {
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(255, 93, 176, 117),
+                    const Color.fromARGB(255, 93, 176, 117),
                   ),
                 ),
                 child: const Padding(

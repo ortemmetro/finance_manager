@@ -1,7 +1,9 @@
 import 'package:finance_manager/widgets/income_page_widget/income_page_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../drawer_widget/drawer_widget.dart';
+import '../expenses_page_widget/expenses_page_model.dart';
 import '../expenses_page_widget/expenses_page_widget.dart';
 
 class MainPage extends StatefulWidget {
@@ -28,9 +30,12 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         appBar: _AppBarWidget(tab: tab),
         drawer: DrawerWidget(),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            ExpensesPageWidget(),
+            ChangeNotifierProvider(
+              create: (context) => ExpensesPageModel(),
+              child: const ExpensesPageWidget(),
+            ),
             IncomePageWidget(),
           ],
         ),

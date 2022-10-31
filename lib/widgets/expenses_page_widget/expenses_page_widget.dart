@@ -1,5 +1,7 @@
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 
 import '../../entity/expense.dart';
 import '../radial_percent/radial_percent_widget.dart';
@@ -9,8 +11,9 @@ class ExpensesPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<ExpensesPageModel>(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 13),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -60,8 +63,8 @@ class ExpensesPageWidget extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Expanded(
-            child: StreamBuilder<List<Expense>>(
-              stream: ExpensesPageModel().readExpenses(),
+            child: FutureBuilder<List<Expense>>(
+              future: model.readExpenses().first,
               builder: (context, snapshot) {
                 final expenses = snapshot.data;
                 if (expenses != null) {
@@ -89,30 +92,62 @@ class _ExpensesListViewWidget extends StatelessWidget {
     return ListView.separated(
       itemCount: expenses.length,
       itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          dense: true,
-          leading: Container(
-            width: 19,
-            height: 19,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 93, 176, 117),
-              shape: BoxShape.circle,
-            ),
-          ),
-          title: Text(
-            expenses[index].category.toString(),
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-          ),
-          trailing: Text(expenses[index].price.toString()),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        );
+        return _ExpensesListTileWidget(expenses: expenses, index: index);
       },
       separatorBuilder: (BuildContext context, int index) {
         return const Divider(
           thickness: 1.5,
+          height: 1,
         );
       },
+    );
+  }
+}
+
+class _ExpensesListTileWidget extends StatelessWidget {
+  final List<Expense> expenses;
+  final int index;
+  const _ExpensesListTileWidget({
+    super.key,
+    required this.expenses,
+    required this.index,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<ExpensesPageModel>(context);
+    return Slidable(
+      groupTag: 0,
+      endActionPane: ActionPane(
+        extentRatio: 0.25,
+        motion: ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) => model.deleteExpense(expenses[index].id),
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Удалить',
+          ),
+        ],
+      ),
+      child: ListTile(
+        dense: false,
+        leading: Container(
+          width: 19,
+          height: 19,
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 93, 176, 117),
+            shape: BoxShape.circle,
+          ),
+        ),
+        title: Text(
+          expenses[index].category.toString(),
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+        ),
+        trailing: Text(expenses[index].price.toString()),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      ),
     );
   }
 }
