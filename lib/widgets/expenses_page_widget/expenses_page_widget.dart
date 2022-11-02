@@ -4,14 +4,27 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../../entity/expense.dart';
+import '../add_widget/add_widget_model.dart';
 import '../radial_percent/radial_percent_widget.dart';
 
-class ExpensesPageWidget extends StatelessWidget {
+class ExpensesPageWidget extends StatefulWidget {
   const ExpensesPageWidget({super.key});
 
   @override
+  State<ExpensesPageWidget> createState() => _ExpensesPageWidgetState();
+}
+
+class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+        Duration.zero, () => context.read<ExpensesPageModel>().setup());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final model = Provider.of<ExpensesPageModel>(context);
+    final model = context.watch<ExpensesPageModel>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
@@ -63,16 +76,17 @@ class ExpensesPageWidget extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Expanded(
-            child: FutureBuilder<List<Expense>>(
-              future: model.readExpenses().first,
-              builder: (context, snapshot) {
-                final expenses = snapshot.data;
-                if (expenses != null) {
-                  return _ExpensesListViewWidget(expenses: expenses);
-                }
-                return const SizedBox.shrink();
-              },
-            ),
+            child: _ExpensesListViewWidget(expenses: model.listOfExpenses),
+            //FutureBuilder<List<Expense>>(
+            //   future: model.readExpenses().first,
+            //   builder: (context, snapshot) {
+            //     final expenses = snapshot.data;
+            //     if (expenses != null) {
+            //       return _ExpensesListViewWidget(expenses: expenses);
+            //     }
+            //     return const SizedBox.shrink();
+            //   },
+            // ),
           ),
         ],
       ),
@@ -108,7 +122,6 @@ class _ExpensesListTileWidget extends StatelessWidget {
   final List<Expense> expenses;
   final int index;
   const _ExpensesListTileWidget({
-    super.key,
     required this.expenses,
     required this.index,
   });
@@ -120,7 +133,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
       groupTag: 0,
       endActionPane: ActionPane(
         extentRatio: 0.25,
-        motion: ScrollMotion(),
+        motion: const ScrollMotion(),
         children: [
           SlidableAction(
             onPressed: (context) => model.deleteExpense(expenses[index].id),

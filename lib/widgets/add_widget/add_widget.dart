@@ -1,5 +1,6 @@
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddWidget extends StatelessWidget {
   AddWidget({super.key});
@@ -8,6 +9,7 @@ class AddWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<AddWidgetModel>();
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -110,7 +112,7 @@ class AddWidget extends StatelessWidget {
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () {
-                  AddWidgetModel().createExpense(
+                  model.createExpense(
                     comment: textController.text,
                     category: 'Семья',
                     price: double.parse(priceController.text),

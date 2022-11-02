@@ -1,7 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/entity/expense.dart';
+import 'package:flutter/cupertino.dart';
 
-class AddWidgetModel {
+import '../expenses_page_widget/expenses_page_model.dart';
+
+class AddWidgetModel extends ChangeNotifier {
+  // final expenseModel;
+
+  // AddWidgetModel(this.expenseModel);
+
   Future createExpense({
     required String comment,
     required String category,
@@ -21,5 +28,7 @@ class AddWidgetModel {
     final json = expense.toJson();
 
     await docExpense.set(json);
+
+    // expenseModel.readExpenses();
   }
 }

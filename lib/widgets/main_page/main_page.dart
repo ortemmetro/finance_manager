@@ -2,6 +2,7 @@ import 'package:finance_manager/widgets/income_page_widget/income_page_widget.da
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../add_widget/add_widget_model.dart';
 import '../drawer_widget/drawer_widget.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 import '../expenses_page_widget/expenses_page_widget.dart';
@@ -30,15 +31,30 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         appBar: _AppBarWidget(tab: tab),
         drawer: DrawerWidget(),
-        body: TabBarView(
-          children: [
-            ChangeNotifierProvider(
-              create: (context) => ExpensesPageModel(),
-              child: const ExpensesPageWidget(),
-            ),
-            IncomePageWidget(),
+        body: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<ExpensesPageModel>(
+                create: (_) => ExpensesPageModel()),
+            ChangeNotifierProvider<AddWidgetModel>(
+                create: (_) => AddWidgetModel()),
           ],
+          child: const TabBarView(
+            children: [
+              ExpensesPageWidget(),
+              IncomePageWidget(),
+            ],
+          ),
         ),
+        //TabBarView(
+        //   children: [
+
+        //     ChangeNotifierProvider(
+        //       create: (context) => ExpensesPageModel(),
+        //       child: const ExpensesPageWidget(),
+        //     ),
+        //     IncomePageWidget(),
+        //   ],
+        // ),
       ),
     );
   }
