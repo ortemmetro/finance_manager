@@ -5,15 +5,16 @@ import 'package:flutter/cupertino.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidgetModel extends ChangeNotifier {
-  // final expenseModel;
+  final ExpensesPageModel expenseModel;
 
-  // AddWidgetModel(this.expenseModel);
+  AddWidgetModel(this.expenseModel);
 
-  Future createExpense({
+  void createExpense({
     required String comment,
     required String category,
     required DateTime date,
     required double price,
+    required BuildContext context,
   }) async {
     //Reference to document
     final docExpense = FirebaseFirestore.instance.collection('Expenses').doc();
@@ -27,8 +28,8 @@ class AddWidgetModel extends ChangeNotifier {
 
     final json = expense.toJson();
 
-    await docExpense.set(json);
-
-    // expenseModel.readExpenses();
+    docExpense.set(json);
+    await expenseModel.readExpenses();
+    Navigator.of(context).pop();
   }
 }

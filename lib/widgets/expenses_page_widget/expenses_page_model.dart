@@ -12,20 +12,16 @@ class ExpensesPageModel extends ChangeNotifier {
     await readExpenses();
   }
 
-  Future<List<Expense>> readExpenses() async {
+  Future<void> readExpenses() async {
     final listOfExpenses = await FirebaseFirestore.instance
         .collection('Expenses')
         .snapshots()
         .map((snapshot) =>
             snapshot.docs.map((doc) => Expense.fromJson(doc.data())).toList())
         .first;
-    if (_listOfExpenses == listOfExpenses) {
-      return listOfExpenses;
-    }
-
+    // if (_listOfExpenses == listOfExpenses) return;
     _listOfExpenses = listOfExpenses;
     notifyListeners();
-    return listOfExpenses;
   }
 
   void deleteExpense(String id) {

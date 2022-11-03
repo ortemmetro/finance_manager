@@ -2,10 +2,35 @@ import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../expenses_page_widget/expenses_page_model.dart';
+
 class AddWidget extends StatelessWidget {
   AddWidget({super.key});
   final priceController = TextEditingController();
   final textController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final expenseModel = context.read<ExpensesPageModel>();
+    return ChangeNotifierProvider(
+      create: (context) => AddWidgetModel(expenseModel),
+      child: _AddWidgetBody(
+        priceController: priceController,
+        textController: textController,
+      ),
+    );
+  }
+}
+
+class _AddWidgetBody extends StatelessWidget {
+  const _AddWidgetBody({
+    Key? key,
+    required this.priceController,
+    required this.textController,
+  }) : super(key: key);
+
+  final TextEditingController priceController;
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +142,8 @@ class AddWidget extends StatelessWidget {
                     category: 'Семья',
                     price: double.parse(priceController.text),
                     date: DateTime(2020, 10, 10),
+                    context: context,
                   );
-                  Navigator.of(context).pop();
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(

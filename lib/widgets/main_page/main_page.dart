@@ -15,6 +15,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final model = ExpensesPageModel();
   final tab = const TabBar(
     indicatorColor: Colors.transparent,
     unselectedLabelColor: Color.fromARGB(255, 232, 232, 232),
@@ -35,8 +36,6 @@ class _MainPageState extends State<MainPage> {
           providers: [
             ChangeNotifierProvider<ExpensesPageModel>(
                 create: (_) => ExpensesPageModel()),
-            ChangeNotifierProvider<AddWidgetModel>(
-                create: (_) => AddWidgetModel()),
           ],
           child: const TabBarView(
             children: [

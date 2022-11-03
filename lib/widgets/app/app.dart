@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/charts/charts_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget.dart';
@@ -16,27 +18,29 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: const Color.fromARGB(255, 93, 176, 117),
-        disabledColor: const Color.fromARGB(255, 232, 232, 232),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 93, 176, 117),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: const Color.fromARGB(255, 93, 176, 117),
+          disabledColor: const Color.fromARGB(255, 232, 232, 232),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color.fromARGB(255, 93, 176, 117),
+          ),
         ),
+        routes: {
+          'main_page': (context) => const MainPage(),
+          'main_page/add': (context) => AddWidget(),
+          'main_page/invoices': (context) => const InvoicesWidget(),
+          'main_page/charts': (context) => const ChartsWidget(),
+          'main_page/categories': (context) => const CategoriesWidget(),
+          'main_page/currency': (context) => const CurrencyWidget(),
+          'main_page/settings': (context) => const SettingsWidget(),
+        },
+        initialRoute: 'main_page',
       ),
-      routes: {
-        'main_page': (context) => const MainPage(),
-        'main_page/add': (context) => ChangeNotifierProvider<AddWidgetModel>(
-              create: (_) => AddWidgetModel(),
-              child: AddWidget(),
-            ),
-        'main_page/invoices': (context) => const InvoicesWidget(),
-        'main_page/charts': (context) => const ChartsWidget(),
-        'main_page/categories': (context) => const CategoriesWidget(),
-        'main_page/currency': (context) => const CurrencyWidget(),
-        'main_page/settings': (context) => const SettingsWidget(),
-      },
-      initialRoute: 'main_page',
     );
   }
 }

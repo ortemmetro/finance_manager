@@ -77,16 +77,6 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
           const SizedBox(height: 20),
           Expanded(
             child: _ExpensesListViewWidget(expenses: model.listOfExpenses),
-            //FutureBuilder<List<Expense>>(
-            //   future: model.readExpenses().first,
-            //   builder: (context, snapshot) {
-            //     final expenses = snapshot.data;
-            //     if (expenses != null) {
-            //       return _ExpensesListViewWidget(expenses: expenses);
-            //     }
-            //     return const SizedBox.shrink();
-            //   },
-            // ),
           ),
         ],
       ),
