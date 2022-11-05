@@ -9,7 +9,7 @@ class AddWidgetModel extends ChangeNotifier {
 
   AddWidgetModel(this.expenseModel);
 
-  void createExpense({
+  Future<void>? createExpense({
     required String comment,
     required String category,
     required DateTime date,
@@ -28,8 +28,10 @@ class AddWidgetModel extends ChangeNotifier {
 
     final json = expense.toJson();
 
-    docExpense.set(json);
-    await expenseModel.readExpenses();
+    await docExpense.set(json);
+    expenseModel.setup();
+
     Navigator.of(context).pop();
+    return;
   }
 }

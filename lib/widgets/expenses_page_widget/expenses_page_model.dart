@@ -4,23 +4,24 @@ import 'package:flutter/material.dart';
 import '../../entity/expense.dart';
 
 class ExpensesPageModel extends ChangeNotifier {
-  List<Expense> _listOfExpenses = [];
-
-  List<Expense> get listOfExpenses => _listOfExpenses;
+  List<Expense> listOfExpenses = [];
 
   void setup() async {
-    await readExpenses();
+    final list = await readExpenses();
+    setExpenses(list);
   }
 
-  Future<void> readExpenses() async {
-    final listOfExpenses = await FirebaseFirestore.instance
+  Future<List<Expense>> readExpenses() {
+    return FirebaseFirestore.instance
         .collection('Expenses')
         .snapshots()
         .map((snapshot) =>
             snapshot.docs.map((doc) => Expense.fromJson(doc.data())).toList())
         .first;
-    // if (_listOfExpenses == listOfExpenses) return;
-    _listOfExpenses = listOfExpenses;
+  }
+
+  void setExpenses(List<Expense> currentListOfExpenses) {
+    listOfExpenses = currentListOfExpenses;
     notifyListeners();
   }
 
@@ -29,7 +30,7 @@ class ExpensesPageModel extends ChangeNotifier {
         FirebaseFirestore.instance.collection('Expenses').doc(id);
 
     docExpense.delete();
-    readExpenses();
+    setup();
     notifyListeners();
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../../entity/expense.dart';
-import '../add_widget/add_widget_model.dart';
 import '../radial_percent/radial_percent_widget.dart';
 
 class ExpensesPageWidget extends StatefulWidget {

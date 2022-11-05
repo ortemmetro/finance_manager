@@ -4,9 +4,16 @@ import 'package:provider/provider.dart';
 
 import '../expenses_page_widget/expenses_page_model.dart';
 
-class AddWidget extends StatelessWidget {
+class AddWidget extends StatefulWidget {
   AddWidget({super.key});
+
+  @override
+  State<AddWidget> createState() => _AddWidgetState();
+}
+
+class _AddWidgetState extends State<AddWidget> {
   final priceController = TextEditingController();
+
   final textController = TextEditingController();
 
   @override
@@ -136,8 +143,8 @@ class _AddWidgetBody extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               ElevatedButton(
-                onPressed: () {
-                  model.createExpense(
+                onPressed: () async {
+                  await model.createExpense(
                     comment: textController.text,
                     category: 'Семья',
                     price: double.parse(priceController.text),
