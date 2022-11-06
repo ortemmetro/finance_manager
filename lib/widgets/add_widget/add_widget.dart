@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidget extends StatefulWidget {
-  AddWidget({super.key});
+  const AddWidget({super.key});
 
   @override
   State<AddWidget> createState() => _AddWidgetState();
@@ -42,6 +42,7 @@ class _AddWidgetBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<AddWidgetModel>();
+
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -78,9 +79,10 @@ class _AddWidgetBody extends StatelessWidget {
               SizedBox(
                 height: 125,
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: model.listOfCategories.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
+                    final icon = model.listOfCategories[index].icon;
                     return Column(
                       children: [
                         Padding(
@@ -92,17 +94,25 @@ class _AddWidgetBody extends StatelessWidget {
                               Container(
                                 margin: EdgeInsets.all(12.0),
                                 child: Container(
+                                  width: 65,
+                                  height: 65,
                                   decoration: BoxDecoration(
-                                    color: Colors.black,
+                                    color: Color(int.parse(model
+                                        .listOfCategories[index]
+                                        .color)), //Colors.black,
                                     shape: BoxShape.circle,
                                   ),
-                                  child: const SizedBox(width: 75, height: 75),
+                                  child: Icon(
+                                    model.iconsMap[
+                                        model.listOfCategories[index].icon],
+                                    size: 45,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const Text('Семья'),
+                        Text(model.listOfCategories[index].name),
                       ],
                     );
                   },
