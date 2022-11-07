@@ -42,7 +42,7 @@ class _AddWidgetBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<AddWidgetModel>();
-
+    DateTime? newDate;
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -50,23 +50,7 @@ class _AddWidgetBody extends StatelessWidget {
           Column(
             children: [
               const SizedBox(height: 45),
-              Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: 10,
-                      width: 100,
-                      child: TextField(
-                        controller: priceController,
-                        decoration: const InputDecoration(),
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text('KZT'),
-                  ],
-                ),
-              ),
+              _InputFieldWithCurrencyWidget(priceController: priceController),
               const SizedBox(height: 45),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -76,59 +60,12 @@ class _AddWidgetBody extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 125,
-                child: ListView.builder(
-                  itemCount: model.listOfCategories.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    final icon = model.listOfCategories[index].icon;
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.all(12.0),
-                                child: Container(
-                                  width: 65,
-                                  height: 65,
-                                  decoration: BoxDecoration(
-                                    color: Color(int.parse(model
-                                        .listOfCategories[index]
-                                        .color)), //Colors.black,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    model.iconsMap[
-                                        model.listOfCategories[index].icon],
-                                    size: 45,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(model.listOfCategories[index].name),
-                      ],
-                    );
-                  },
-                ),
-              ),
+              _CategoriesListWidget(model: model),
               const SizedBox(height: 45),
               ElevatedButton(
-                onPressed: () {},
-                //async {
-                //   DateTime? newDate = await showDatePicker(
-                //     context: context,
-                //     initialDate: DateTime(2022, 10, 27),
-                //     firstDate: DateTime(1900),
-                //     lastDate: DateTime(2023),
-                //   );
-                // },
+                onPressed: () async {
+                  newDate = await model.myShowDatePicker(newDate, context);
+                },
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
                     Color.fromARGB(255, 93, 176, 117),
@@ -137,20 +74,7 @@ class _AddWidgetBody extends StatelessWidget {
                 child: const Text('Выбрать дату'),
               ),
               const SizedBox(height: 50),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  children: const [
-                    Text('Комментарий'),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 367,
-                child: TextField(
-                  controller: textController,
-                ),
-              ),
+              _CommentFieldWidget(textController: textController),
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () async {
@@ -158,7 +82,7 @@ class _AddWidgetBody extends StatelessWidget {
                     comment: textController.text,
                     category: 'Семья',
                     price: double.parse(priceController.text),
-                    date: DateTime(2020, 10, 10),
+                    date: newDate ?? DateTime(0),
                     context: context,
                   );
                 },
@@ -179,6 +103,149 @@ class _AddWidgetBody extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _CategoriesListWidget extends StatelessWidget {
+  const _CategoriesListWidget({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+
+  final AddWidgetModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 125,
+      child: ListView.builder(
+        itemCount: model.listOfCategories.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _CategoryCircleIconWidget(model: model, index: index),
+                  ],
+                ),
+              ),
+              Text(model.listOfCategories[index].name),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _CategoryCircleIconWidget extends StatelessWidget {
+  const _CategoryCircleIconWidget({
+    Key? key,
+    required this.model,
+    required this.index,
+  }) : super(key: key);
+
+  final AddWidgetModel model;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    bool isCategoryTapped = false;
+    return GestureDetector(
+      onTap: () => isCategoryTapped = model.toogleCategory(isCategoryTapped),
+      child: isCategoryTapped == true
+          ? Container(
+              margin: const EdgeInsets.all(12.0),
+              child: Container(
+                width: 65,
+                height: 65,
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.done, size: 45),
+              ),
+            )
+          : Container(
+              margin: const EdgeInsets.all(12.0),
+              child: Container(
+                width: 65,
+                height: 65,
+                decoration: BoxDecoration(
+                  color: Color(int.parse(model.listOfCategories[index].color)),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  model.iconsMap[model.listOfCategories[index].icon],
+                  size: 45,
+                ),
+              ),
+            ),
+    );
+  }
+}
+
+class _InputFieldWithCurrencyWidget extends StatelessWidget {
+  const _InputFieldWithCurrencyWidget({
+    Key? key,
+    required this.priceController,
+  }) : super(key: key);
+
+  final TextEditingController priceController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 10,
+            width: 100,
+            child: TextField(
+              controller: priceController,
+              decoration: const InputDecoration(),
+            ),
+          ),
+          const SizedBox(width: 5),
+          const Text('KZT'),
+        ],
+      ),
+    );
+  }
+}
+
+class _CommentFieldWidget extends StatelessWidget {
+  final TextEditingController textController;
+  const _CommentFieldWidget({
+    required this.textController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Row(
+            children: const [
+              Text('Комментарий'),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 367,
+          child: TextField(
+            controller: textController,
+          ),
+        ),
+      ],
     );
   }
 }
