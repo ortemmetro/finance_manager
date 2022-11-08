@@ -156,22 +156,42 @@ class _CategoryCircleIconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isCategoryTapped = false;
+    var selectedIndex = model.selectedIndex;
     return GestureDetector(
-      onTap: () => isCategoryTapped = model.toogleCategory(isCategoryTapped),
-      child: isCategoryTapped == true
+      onTap: () => model.isSelectedIndex(index),
+      child: selectedIndex == index
           ? Container(
               margin: const EdgeInsets.all(12.0),
-              child: Container(
-                width: 65,
-                height: 65,
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                  shape: BoxShape.circle,
+              child: CircleAvatar(
+                radius: 32.5,
+                backgroundColor: Colors.black,
+                child: CircleAvatar(
+                  radius: 29,
+                  child: Container(
+                    width: 65,
+                    height: 65,
+                    decoration: BoxDecoration(
+                      color:
+                          Color(int.parse(model.listOfCategories[index].color)),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.done, size: 45),
+                  ),
                 ),
-                child: Icon(Icons.done, size: 45),
               ),
             )
+          // Container(
+          //     margin: const EdgeInsets.all(12.0),
+          //     child: Container(
+          //       width: 65,
+          //       height: 65,
+          //       decoration: BoxDecoration(
+          //         color: Color(int.parse(model.listOfCategories[index].color)),
+          //         shape: BoxShape.circle,
+          //       ),
+          //       child: const Icon(Icons.done, size: 45),
+          //     ),
+          //   )
           : Container(
               margin: const EdgeInsets.all(12.0),
               child: Container(

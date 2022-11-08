@@ -8,6 +8,7 @@ import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidgetModel extends ChangeNotifier {
   final ExpensesPageModel expenseModel;
+  var selectedIndex = -1;
 
   final listOfCategories = DefaultExpenseCategoriesData().listOfCategories;
   final iconsMap = DefaultExpenseCategoriesData().iconsMap;
@@ -40,9 +41,14 @@ class AddWidgetModel extends ChangeNotifier {
     return;
   }
 
-  bool toogleCategory(bool isCategoryTapped) {
-    isCategoryTapped = !isCategoryTapped;
-    return isCategoryTapped;
+  void isSelectedIndex(int index) {
+    if (selectedIndex == index) {
+      selectedIndex = -1;
+      notifyListeners();
+      return;
+    }
+    selectedIndex = index;
+    notifyListeners();
   }
 
   Future<DateTime?> myShowDatePicker(
