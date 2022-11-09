@@ -9,6 +9,7 @@ import '../expenses_page_widget/expenses_page_model.dart';
 class AddWidgetModel extends ChangeNotifier {
   final ExpensesPageModel expenseModel;
   var selectedIndex = -1;
+  String selectedCategoryName = "";
 
   final listOfCategories = DefaultExpenseCategoriesData().listOfCategories;
   final iconsMap = DefaultExpenseCategoriesData().iconsMap;

@@ -80,7 +80,7 @@ class _AddWidgetBody extends StatelessWidget {
                 onPressed: () async {
                   await model.createExpense(
                     comment: textController.text,
-                    category: 'Семья',
+                    category: model.selectedCategoryName,
                     price: double.parse(priceController.text),
                     date: newDate ?? DateTime(0),
                     context: context,
@@ -158,7 +158,10 @@ class _CategoryCircleIconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var selectedIndex = model.selectedIndex;
     return GestureDetector(
-      onTap: () => model.isSelectedIndex(index),
+      onTap: () {
+        model.isSelectedIndex(index);
+        model.selectedCategoryName = model.listOfCategories[index].name;
+      },
       child: selectedIndex == index
           ? Container(
               margin: const EdgeInsets.all(12.0),

@@ -60,9 +60,9 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
                   child: RawMaterialButton(
                     onPressed: () =>
                         Navigator.of(context).pushNamed('main_page/add'),
-                    fillColor: Color.fromARGB(255, 93, 176, 117),
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(12.0),
+                    fillColor: const Color.fromARGB(255, 93, 176, 117),
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(12.0),
                     child: const Icon(
                       Icons.add,
                       size: 25,
@@ -135,12 +135,17 @@ class _ExpensesListTileWidget extends StatelessWidget {
       ),
       child: ListTile(
         dense: false,
-        leading: Container(
-          width: 19,
-          height: 19,
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 93, 176, 117),
-            shape: BoxShape.circle,
+        minLeadingWidth: 25,
+        leading: SizedBox(
+          height: double.infinity,
+          child: Container(
+            width: 19,
+            height: 19,
+            decoration: BoxDecoration(
+              color: Color(int.parse(
+                  model.findCategory(expenses[index].category).color)),
+              shape: BoxShape.circle,
+            ),
           ),
         ),
         title: Text(
