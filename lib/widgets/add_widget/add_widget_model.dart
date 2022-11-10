@@ -3,7 +3,6 @@ import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/expense.dart';
 import 'package:flutter/material.dart';
 
-import '../../entity/category.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidgetModel extends ChangeNotifier {

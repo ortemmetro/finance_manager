@@ -7,11 +7,16 @@ import '../../entity/expense.dart';
 
 class ExpensesPageModel extends ChangeNotifier {
   List<Expense> listOfExpenses = [];
+  List<Color> listOfColors = [];
+
+  Map<String, double> dataMap = {};
 
   void setup() async {
     final list = await readExpenses();
-    setExpenses(list);
-    sortExpenses();
+    _setExpenses(list);
+    _setColors();
+    _setDataMap();
+    _sortExpenses();
   }
 
   Future<List<Expense>> readExpenses() {
@@ -23,16 +28,16 @@ class ExpensesPageModel extends ChangeNotifier {
         .first;
   }
 
-  void setExpenses(List<Expense> currentListOfExpenses) {
+  void _setExpenses(List<Expense> currentListOfExpenses) {
     listOfExpenses = currentListOfExpenses;
     notifyListeners();
   }
 
-  void deleteExpense(String id) {
+  void deleteExpense(String id) async {
     final docExpense =
         FirebaseFirestore.instance.collection('Expenses').doc(id);
 
-    docExpense.delete();
+    await docExpense.delete();
     setup();
     notifyListeners();
   }
@@ -45,7 +50,23 @@ class ExpensesPageModel extends ChangeNotifier {
     return category;
   }
 
-  void sortExpenses() {
+  void _sortExpenses() {
     listOfExpenses.sort((a, b) => a.price.compareTo(b.price) * -1);
+  }
+
+  void _setColors() {
+    if (listOfExpenses.isEmpty) return;
+    for (var i = 0; i < listOfExpenses.length; i++) {
+      listOfColors.add(
+          Color(int.parse(findCategory(listOfExpenses[i].category).color)));
+    }
+  }
+
+  void _setDataMap() {
+    final Map<String, double> mapOfExpenses = {};
+    for (var i = 0; i < listOfExpenses.length; i++) {
+      mapOfExpenses[listOfExpenses[i].category] = listOfExpenses[i].price;
+    }
+    dataMap.addAll(mapOfExpenses);
   }
 }
