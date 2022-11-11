@@ -35,38 +35,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
             child: Stack(
               children: [
                 Center(
-                  child: SizedBox(
-                    height: 200,
-                    width: 200,
-                    child: PieChart(
-                      dataMap: model.dataMap.isEmpty
-                          ? <String, double>{"yes": 20.0}
-                          : model.dataMap,
-                      chartType: ChartType.ring,
-                      colorList: model.listOfColors.isEmpty
-                          ? [Colors.grey]
-                          : model.listOfColors,
-                      ringStrokeWidth: 10.0,
-                      legendOptions: const LegendOptions(showLegends: false),
-                      chartValuesOptions:
-                          const ChartValuesOptions(showChartValues: false),
-                    ),
-
-                    // RadialPercentWidget(
-                    //   percent: 0.5,
-                    //   backgroundColor: Color.fromRGBO(255, 10, 23, 0.0),
-                    //   filledColor: Color.fromARGB(255, 37, 203, 103),
-                    //   unfilledColor: Color.fromARGB(255, 232, 232, 232),
-                    //   lineWidth: 5.5,
-                    //   child: Text(
-                    //     '100.01 ₸',
-                    //     style: TextStyle(
-                    //       fontSize: 20,
-                    //       color: Color.fromARGB(255, 93, 176, 117),
-                    //     ),
-                    //   ),
-                    // ),
-                  ),
+                  child: _PieChartWidget(model: model),
                 ),
                 Positioned(
                   bottom: 0,
@@ -92,6 +61,34 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
             child: _ExpensesListViewWidget(expenses: model.listOfExpenses),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _PieChartWidget extends StatelessWidget {
+  const _PieChartWidget({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+
+  final ExpensesPageModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      width: 200,
+      child: PieChart(
+        dataMap: model.dataMap.isEmpty
+            ? <String, double>{"yes": 20.0}
+            : model.dataMap,
+        chartType: ChartType.ring,
+        colorList:
+            model.listOfColors.isEmpty ? [Colors.grey] : model.listOfColors,
+        ringStrokeWidth: 12.5,
+        legendOptions: const LegendOptions(showLegends: false),
+        chartValuesOptions: const ChartValuesOptions(showChartValues: false),
       ),
     );
   }
@@ -139,7 +136,9 @@ class _ExpensesListTileWidget extends StatelessWidget {
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) => model.deleteExpense(expenses[index].id),
+            onPressed: (context) async {
+              await model.deleteExpense(expenses[index].id);
+            },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
             icon: Icons.delete,

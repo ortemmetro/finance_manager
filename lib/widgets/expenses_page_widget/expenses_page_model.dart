@@ -14,9 +14,10 @@ class ExpensesPageModel extends ChangeNotifier {
   void setup() async {
     final list = await readExpenses();
     _setExpenses(list);
-    _setColors();
-    _setDataMap();
     _sortExpenses();
+    _setDataMap();
+    _setColors();
+    notifyListeners();
   }
 
   Future<List<Expense>> readExpenses() {
@@ -33,13 +34,12 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteExpense(String id) async {
+  Future<void> deleteExpense(String id) async {
     final docExpense =
         FirebaseFirestore.instance.collection('Expenses').doc(id);
 
     await docExpense.delete();
     setup();
-    notifyListeners();
   }
 
   Category findCategory(String categoryName) {
@@ -52,21 +52,26 @@ class ExpensesPageModel extends ChangeNotifier {
 
   void _sortExpenses() {
     listOfExpenses.sort((a, b) => a.price.compareTo(b.price) * -1);
+    notifyListeners();
   }
 
   void _setColors() {
     if (listOfExpenses.isEmpty) return;
+    listOfColors.clear();
     for (var i = 0; i < listOfExpenses.length; i++) {
       listOfColors.add(
           Color(int.parse(findCategory(listOfExpenses[i].category).color)));
     }
+    notifyListeners();
   }
 
   void _setDataMap() {
     final Map<String, double> mapOfExpenses = {};
+    dataMap.clear();
     for (var i = 0; i < listOfExpenses.length; i++) {
       mapOfExpenses[listOfExpenses[i].category] = listOfExpenses[i].price;
     }
     dataMap.addAll(mapOfExpenses);
+    notifyListeners();
   }
 }
