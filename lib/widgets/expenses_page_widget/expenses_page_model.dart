@@ -10,6 +10,7 @@ class ExpensesPageModel extends ChangeNotifier {
   List<Color> listOfColors = [];
 
   Map<String, double> dataMap = {};
+  double sum = 0;
 
   void setup() async {
     final list = await readExpenses();
@@ -17,6 +18,7 @@ class ExpensesPageModel extends ChangeNotifier {
     _sortExpenses();
     _setDataMap();
     _setColors();
+    _setSum();
     notifyListeners();
   }
 
@@ -72,6 +74,15 @@ class ExpensesPageModel extends ChangeNotifier {
       mapOfExpenses[listOfExpenses[i].category] = listOfExpenses[i].price;
     }
     dataMap.addAll(mapOfExpenses);
+    notifyListeners();
+  }
+
+  void _setSum() {
+    sum = 0;
+    for (var i = 0; i < listOfExpenses.length; i++) {
+      sum += listOfExpenses[i].price;
+    }
+
     notifyListeners();
   }
 }

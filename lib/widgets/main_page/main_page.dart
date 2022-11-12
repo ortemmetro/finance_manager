@@ -13,12 +13,24 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final model = ExpensesPageModel();
-  final tab = const TabBar(
-    indicatorColor: Colors.transparent,
-    unselectedLabelColor: Color.fromARGB(255, 232, 232, 232),
-    tabs: <Tab>[
-      Tab(text: 'Расходы'),
-      Tab(text: 'Доходы'),
+  final tab = TabBar(
+    unselectedLabelColor: const Color.fromARGB(255, 232, 232, 232),
+    labelColor: Colors.black,
+    indicator: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(
+        color: Colors.white,
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.circular(15),
+    ),
+    labelStyle: const TextStyle(
+      fontSize: 15.5,
+      fontWeight: FontWeight.w500,
+    ),
+    tabs: const <Tab>[
+      Tab(text: 'Расходы', height: 39),
+      Tab(text: 'Доходы', height: 39),
     ],
   );
 
@@ -51,7 +63,7 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 70.0,
+      toolbarHeight: 68.0,
       backgroundColor: const Color.fromARGB(255, 93, 176, 117),
       title: const Text('Итого: \$999'),
       centerTitle: true,
@@ -62,10 +74,10 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
             side: BorderSide(
               color: Colors.white,
-              width: 2.0,
+              width: 2.5,
             ),
           ),
-          elevation: 26.0,
+          elevation: 0,
           color: Theme.of(context).primaryColor,
           child: tab,
         ),
@@ -74,5 +86,5 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 65.0);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 60.0);
 }

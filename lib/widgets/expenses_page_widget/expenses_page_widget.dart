@@ -76,10 +76,18 @@ class _PieChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sum = model.sum.toInt();
     return SizedBox(
       height: 200,
       width: 200,
       child: PieChart(
+        centerText: '$sum',
+        centerTextStyle: const TextStyle(
+          fontSize: 20,
+          foreground: null,
+          backgroundColor: Colors.transparent,
+          color: Colors.black,
+        ),
         dataMap: model.dataMap.isEmpty
             ? <String, double>{"yes": 20.0}
             : model.dataMap,
@@ -88,7 +96,10 @@ class _PieChartWidget extends StatelessWidget {
             model.listOfColors.isEmpty ? [Colors.grey] : model.listOfColors,
         ringStrokeWidth: 12.5,
         legendOptions: const LegendOptions(showLegends: false),
-        chartValuesOptions: const ChartValuesOptions(showChartValues: false),
+        chartValuesOptions: const ChartValuesOptions(
+          chartValueBackgroundColor: Colors.transparent,
+          showChartValues: false,
+        ),
       ),
     );
   }
@@ -163,7 +174,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
         ),
         title: Text(
           expenses[index].category.toString(),
-          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
         ),
         trailing: Text(expenses[index].price.toString()),
         contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
