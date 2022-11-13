@@ -10,7 +10,7 @@ class ExpensesPageModel extends ChangeNotifier {
   List<Color> listOfColors = [];
 
   Map<String, double> dataMap = {};
-  double sum = 0;
+  var sum = "";
 
   void setup() async {
     final list = await readExpenses();
@@ -78,10 +78,19 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   void _setSum() {
-    sum = 0;
+    sum = "";
+    double currentSum = 0;
     for (var i = 0; i < listOfExpenses.length; i++) {
-      sum += listOfExpenses[i].price;
+      currentSum += listOfExpenses[i].price;
     }
+    var sumString = currentSum.floor().toString().split('');
+
+    for (var i = sumString.length; i > 0; i--) {
+      if ((sumString.length - i) % 4 == 0) {
+        sumString.insert(i, ' ');
+      }
+    }
+    sum = sumString.join();
 
     notifyListeners();
   }

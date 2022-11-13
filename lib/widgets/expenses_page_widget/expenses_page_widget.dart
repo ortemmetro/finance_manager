@@ -76,12 +76,12 @@ class _PieChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sum = model.sum.toInt();
+    final sum = model.sum;
     return SizedBox(
       height: 200,
       width: 200,
       child: PieChart(
-        centerText: '$sum',
+        centerText: '$sum ₸',
         centerTextStyle: const TextStyle(
           fontSize: 20,
           foreground: null,
@@ -121,6 +121,8 @@ class _ExpensesListViewWidget extends StatelessWidget {
       },
       separatorBuilder: (BuildContext context, int index) {
         return const Divider(
+          indent: 10,
+          endIndent: 10,
           thickness: 1.5,
           height: 1,
         );
@@ -160,15 +162,18 @@ class _ExpensesListTileWidget extends StatelessWidget {
       child: ListTile(
         dense: false,
         minLeadingWidth: 25,
-        leading: SizedBox(
-          height: double.infinity,
-          child: Container(
-            width: 19,
-            height: 19,
-            decoration: BoxDecoration(
-              color: Color(int.parse(
-                  model.findCategory(expenses[index].category).color)),
-              shape: BoxShape.circle,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: SizedBox(
+            height: double.infinity,
+            child: Container(
+              width: 19,
+              height: 19,
+              decoration: BoxDecoration(
+                color: Color(int.parse(
+                    model.findCategory(expenses[index].category).color)),
+                shape: BoxShape.circle,
+              ),
             ),
           ),
         ),
@@ -176,7 +181,10 @@ class _ExpensesListTileWidget extends StatelessWidget {
           expenses[index].category.toString(),
           style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
         ),
-        trailing: Text(expenses[index].price.toString()),
+        trailing: Padding(
+          padding: const EdgeInsets.only(right: 12),
+          child: Text("${expenses[index].price.toInt().toString()} ₸"),
+        ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       ),
     );

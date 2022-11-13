@@ -1,22 +1,13 @@
+import 'package:finance_manager/entity/category.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'expense.g.dart';
 
 @JsonSerializable()
 class Expense {
-  String id;
-  final String? comment;
-  final String category;
-  final DateTime date;
-  final double price;
+  final List<Category> expenseCategories;
 
-  Expense({
-    this.id = '',
-    this.comment,
-    required this.category,
-    required this.date,
-    required this.price,
-  });
+  Expense({required this.expenseCategories});
 
   factory Expense.fromJson(Map<String, dynamic> json) =>
       _$ExpenseFromJson(json);
