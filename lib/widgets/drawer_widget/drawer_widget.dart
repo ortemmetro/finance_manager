@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/widgets/settings_widgets/rate_the_app/rate_the_app_dialog.dart';
 import 'package:flutter/material.dart';
+
+import '../../entity/myUser.dart';
 
 class DrawerIconTextFunction {
   final Icon icon;
@@ -107,6 +110,15 @@ class _UserTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final docUsersReference = FirebaseFirestore.instance
+        .collection('Users')
+        .doc('b5D2GOjlsaQZtYffHurw');
+    final userInfoMap = docUsersReference.snapshots();
+    final userInfo = userInfoMap.map((snapshot) {
+      MyUser.fromJson(snapshot.data()!);
+    }).toList();
+
+    // .docs.map((doc) => Expense.fromJson(doc.data())).toList())
     return const ListTile(
       title: Text(
         'Артём Руппель',

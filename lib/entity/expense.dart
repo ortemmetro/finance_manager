@@ -5,9 +5,17 @@ part 'expense.g.dart';
 
 @JsonSerializable()
 class Expense {
-  final List<Category> expenseCategories;
+  final String category;
+  final String? comment;
+  final DateTime date;
+  final double price;
 
-  Expense({required this.expenseCategories});
+  Expense({
+    required this.category,
+    this.comment,
+    required this.date,
+    required this.price,
+  });
 
   factory Expense.fromJson(Map<String, dynamic> json) =>
       _$ExpenseFromJson(json);

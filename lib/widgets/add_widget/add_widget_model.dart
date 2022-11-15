@@ -23,9 +23,11 @@ class AddWidgetModel extends ChangeNotifier {
     required BuildContext context,
   }) async {
     //Reference to document
-    final docExpense = FirebaseFirestore.instance.collection('Expenses').doc();
+    final docUsersReference = FirebaseFirestore.instance
+        .collection('Users')
+        .doc('b5D2GOjlsaQZtYffHurw');
+    final docExpenseReference = docUsersReference.collection('Expenses');
     final expense = Expense(
-      id: docExpense.id,
       comment: comment,
       category: category,
       date: date,
@@ -34,7 +36,7 @@ class AddWidgetModel extends ChangeNotifier {
 
     final json = expense.toJson();
 
-    await docExpense.set(json);
+    await docExpenseReference.add(json);
     expenseModel.setup();
 
     Navigator.of(context).pop();

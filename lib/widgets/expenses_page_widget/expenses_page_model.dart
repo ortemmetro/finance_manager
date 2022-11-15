@@ -23,8 +23,11 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   Future<List<Expense>> readExpenses() {
-    return FirebaseFirestore.instance
-        .collection('Expenses')
+    final docUsersReference = FirebaseFirestore.instance
+        .collection('Users')
+        .doc('b5D2GOjlsaQZtYffHurw');
+    final docExpenseReference = docUsersReference.collection('Expenses');
+    return docExpenseReference
         .snapshots()
         .map((snapshot) =>
             snapshot.docs.map((doc) => Expense.fromJson(doc.data())).toList())

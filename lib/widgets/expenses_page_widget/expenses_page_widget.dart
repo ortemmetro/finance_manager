@@ -150,7 +150,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) async {
-              await model.deleteExpense(expenses[index].id);
+              // await model.deleteExpense(expenses[index].id);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
