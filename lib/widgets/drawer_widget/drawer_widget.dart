@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/rate_the_app/rate_the_app_dialog.dart';
 import 'package:flutter/material.dart';
-
-import '../../entity/myUser.dart';
+import 'package:provider/provider.dart';
 
 class DrawerIconTextFunction {
   final Icon icon;
@@ -110,25 +109,18 @@ class _UserTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final docUsersReference = FirebaseFirestore.instance
-        .collection('Users')
-        .doc('b5D2GOjlsaQZtYffHurw');
-    final userInfoMap = docUsersReference.snapshots();
-    final userInfo = userInfoMap.map((snapshot) {
-      MyUser.fromJson(snapshot.data()!);
-    }).toList();
-
-    // .docs.map((doc) => Expense.fromJson(doc.data())).toList())
-    return const ListTile(
+    final model = Provider.of<DrawerWidgetModel>(context);
+    model.getUserInfo();
+    return ListTile(
       title: Text(
-        'Артём Руппель',
-        style: TextStyle(fontSize: 17),
+        '${model.userName} ${model.userSurname}',
+        style: const TextStyle(fontSize: 17),
       ),
-      subtitle: Text(
+      subtitle: const Text(
         'Остаток: \$999',
         style: TextStyle(fontSize: 17),
       ),
-      leading: CircleAvatar(
+      leading: const CircleAvatar(
         backgroundColor: Colors.black,
         radius: 25,
         child: CircleAvatar(

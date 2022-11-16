@@ -7,13 +7,13 @@ part 'myUser.g.dart';
 class MyUser {
   String id;
   final String name;
-  final String surName;
+  final String surname;
   final List<Expense>? expenses;
 
   MyUser({
     this.id = '',
     required this.name,
-    required this.surName,
+    required this.surname,
     required this.expenses,
   });
 

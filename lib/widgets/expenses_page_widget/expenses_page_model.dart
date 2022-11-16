@@ -13,7 +13,7 @@ class ExpensesPageModel extends ChangeNotifier {
   var sum = "";
 
   void setup() async {
-    final list = await readExpenses();
+    final list = await readExpenses() ?? [];
     _setExpenses(list);
     _sortExpenses();
     _setDataMap();
@@ -22,16 +22,20 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Expense>> readExpenses() {
+  Future<List<Expense>>? readExpenses() {
     final docUsersReference = FirebaseFirestore.instance
         .collection('Users')
         .doc('b5D2GOjlsaQZtYffHurw');
     final docExpenseReference = docUsersReference.collection('Expenses');
-    return docExpenseReference
-        .snapshots()
-        .map((snapshot) =>
-            snapshot.docs.map((doc) => Expense.fromJson(doc.data())).toList())
-        .first;
+    if (docExpenseReference.doc().path.isNotEmpty) {
+      return docExpenseReference
+          .snapshots()
+          .map((snapshot) =>
+              snapshot.docs.map((doc) => Expense.fromJson(doc.data())).toList())
+          .first;
+    }
+
+    return null;
   }
 
   void _setExpenses(List<Expense> currentListOfExpenses) {
@@ -40,11 +44,21 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   Future<void> deleteExpense(String id) async {
-    final docExpense =
-        FirebaseFirestore.instance.collection('Expenses').doc(id);
+    final docUsersReference = FirebaseFirestore.instance
+        .collection('Users')
+        .doc('b5D2GOjlsaQZtYffHurw');
+    final docExpenseReference = docUsersReference.collection('Expenses');
+    // .doc(id);
+    if (docExpenseReference.doc(id).path.isNotEmpty) {
+      await docExpenseReference.doc(id).delete();
+      setup();
+    }
 
-    await docExpense.delete();
     setup();
+    return;
+
+    // await docExpenseReference.delete();
+    // setup();
   }
 
   Category findCategory(String categoryName) {

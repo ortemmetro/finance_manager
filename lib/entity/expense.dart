@@ -5,12 +5,14 @@ part 'expense.g.dart';
 
 @JsonSerializable()
 class Expense {
+  String id;
   final String category;
   final String? comment;
   final DateTime date;
   final double price;
 
   Expense({
+    this.id = "",
     required this.category,
     this.comment,
     required this.date,

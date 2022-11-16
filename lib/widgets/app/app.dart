@@ -1,4 +1,5 @@
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
+import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/charts/charts_widget.dart';
@@ -18,6 +19,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
+        ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
       ],
       child: MaterialApp(
         theme: ThemeData(
