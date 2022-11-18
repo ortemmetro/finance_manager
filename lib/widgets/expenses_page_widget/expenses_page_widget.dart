@@ -1,4 +1,5 @@
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -24,10 +25,12 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<ExpensesPageModel>();
+    final user = FirebaseAuth.instance.currentUser!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         children: [
+          Text('Loged in as ${user.email!}'),
           const SizedBox(height: 20),
           SizedBox(
             width: 392.7,

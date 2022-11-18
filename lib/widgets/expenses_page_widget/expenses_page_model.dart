@@ -48,17 +48,15 @@ class ExpensesPageModel extends ChangeNotifier {
         .collection('Users')
         .doc('b5D2GOjlsaQZtYffHurw');
     final docExpenseReference = docUsersReference.collection('Expenses');
-    // .doc(id);
     if (docExpenseReference.doc(id).path.isNotEmpty) {
       await docExpenseReference.doc(id).delete();
       setup();
+      notifyListeners();
     }
 
     setup();
+    notifyListeners();
     return;
-
-    // await docExpenseReference.delete();
-    // setup();
   }
 
   Category findCategory(String categoryName) {
@@ -75,7 +73,10 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   void _setColors() {
-    if (listOfExpenses.isEmpty) return;
+    if (listOfExpenses.isEmpty) {
+      listOfColors.clear();
+      return;
+    }
     listOfColors.clear();
     for (var i = 0; i < listOfExpenses.length; i++) {
       listOfColors.add(

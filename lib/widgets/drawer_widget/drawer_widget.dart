@@ -1,5 +1,6 @@
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/rate_the_app/rate_the_app_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,37 +24,37 @@ class DrawerWidget extends StatelessWidget {
       icon: const Icon(Icons.home),
       text: 'Главная',
       onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page'),
+          Navigator.of(context).pushNamed('/main_page'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.attach_money),
       text: 'Счета',
       onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page/invoices'),
+          Navigator.of(context).pushNamed('/main_page/invoices'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.auto_graph_outlined),
       text: 'Графики',
       onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page/charts'),
+          Navigator.of(context).pushNamed('/main_page/charts'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.category),
       text: 'Категории',
       onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page/categories'),
+          Navigator.of(context).pushNamed('/main_page/categories'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.money),
       text: 'Валюта',
       onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page/currency'),
+          Navigator.of(context).pushNamed('/main_page/currency'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.settings),
       text: 'Настройки',
       onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('main_page/settings'),
+          Navigator.of(context).pushNamed('/main_page/settings'),
     ),
     DrawerIconTextFunction(
       icon: const Icon(Icons.share),
@@ -94,6 +95,18 @@ class DrawerWidget extends StatelessWidget {
                   onTap: () => function!(context),
                 );
               },
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ListTile(
+                  leading: Icon(Icons.door_front_door),
+                  title: Text('Выйти'),
+                  onTap: () => FirebaseAuth.instance.signOut(),
+                ),
+              ],
             ),
           ),
         ],
