@@ -1,17 +1,18 @@
-import 'package:finance_manager/widgets/auth/auth_widget_model.dart';
+import 'package:finance_manager/widgets/auth/sign_up_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AuthWidget extends StatefulWidget {
-  const AuthWidget({super.key});
+class SignUpWidget extends StatefulWidget {
+  const SignUpWidget({super.key});
 
   @override
-  State<AuthWidget> createState() => _AuthWidgetState();
+  State<SignUpWidget> createState() => _SignUpWidgetState();
 }
 
-class _AuthWidgetState extends State<AuthWidget> {
+class _SignUpWidgetState extends State<SignUpWidget> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
@@ -23,12 +24,9 @@ class _AuthWidgetState extends State<AuthWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<AuthWidgetModel>(context);
+    final model = Provider.of<SignUpWidgetModel>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Вход'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
@@ -37,7 +35,9 @@ class _AuthWidgetState extends State<AuthWidget> {
             Row(
               children: const [Text("Электронная почта")],
             ),
-            TextField(controller: emailController),
+            TextField(
+              controller: emailController,
+            ),
             const SizedBox(height: 30),
             Row(
               children: const [Text('Пароль')],
@@ -47,13 +47,25 @@ class _AuthWidgetState extends State<AuthWidget> {
               obscureText: true,
               enableSuggestions: false,
               autocorrect: false,
+              onEditingComplete: () => model.resetErrorText(),
+            ),
+            const SizedBox(height: 30),
+            Row(
+              children: const [Text('Подтвердите пароль')],
+            ),
+            TextField(
+              controller: confirmPasswordController,
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              onEditingComplete: () => model.resetErrorText(),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: () => model.signIn(
-                emailController.text.trim(),
-                passwordController.text.trim(),
-                context,
+              onPressed: () => model.signUp(
+                emailController.text,
+                passwordController.text,
+                confirmPasswordController.text,
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
@@ -64,15 +76,18 @@ class _AuthWidgetState extends State<AuthWidget> {
                 ),
               ),
               child: const Text(
-                'Войти',
+                'Зарегистрироваться',
                 style: TextStyle(fontSize: 17.5),
               ),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/sign_up');
-              },
-              child: const Text('Нет аккаунта? Нажмите сюда.'),
+            const SizedBox(height: 30),
+            Text(
+              model.notValidPasswordString,
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+              ),
             ),
           ],
         ),

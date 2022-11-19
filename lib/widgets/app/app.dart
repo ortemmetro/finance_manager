@@ -1,6 +1,8 @@
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
 import 'package:finance_manager/widgets/auth/auth_widget.dart';
 import 'package:finance_manager/widgets/auth/auth_widget_model.dart';
+import 'package:finance_manager/widgets/auth/sign_up_widget.dart';
+import 'package:finance_manager/widgets/auth/sign_up_widget_model.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
@@ -24,6 +26,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
         Provider(create: (context) => AuthWidgetModel()),
+        ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -40,7 +43,7 @@ class App extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
-                    return const Center(child: Text('Something went wrong!'));
+                    return const Center(child: Text('Что-то пошло не так!'));
                   } else if (snapshot.hasData) {
                     return const MainPage();
                   } else {
@@ -48,6 +51,7 @@ class App extends StatelessWidget {
                   }
                 },
               ),
+          '/sign_up': (context) => const SignUpWidget(),
           '/main_page': (context) => const MainPage(),
           '/main_page/add': (context) => AddWidget(),
           '/main_page/invoices': (context) => const InvoicesWidget(),
