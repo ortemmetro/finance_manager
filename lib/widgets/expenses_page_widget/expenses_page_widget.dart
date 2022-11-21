@@ -45,7 +45,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
                   right: 0,
                   child: RawMaterialButton(
                     onPressed: () =>
-                        Navigator.of(context).pushNamed('main_page/add'),
+                        Navigator.of(context).pushNamed('/main_page/add'),
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(12.0),

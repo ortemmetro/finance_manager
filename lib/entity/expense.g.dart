@@ -7,7 +7,7 @@ part of 'expense.dart';
 // **************************************************************************
 
 Expense _$ExpenseFromJson(Map<String, dynamic> json) => Expense(
-      id: json['id'] as String? ?? '',
+      id: json['id'] as String? ?? "",
       category: json['category'] as String,
       comment: json['comment'] as String?,
       date: DateTime.parse(json['date'] as String),

@@ -99,6 +99,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     firstName: _firstNameController.text,
                     lastName: _lastNameController.text,
                     age: int.parse(_ageController.text),
+                    context: context,
                   ),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(

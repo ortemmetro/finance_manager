@@ -3,6 +3,7 @@ import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/expense.dart';
 import 'package:flutter/material.dart';
 
+import '../../session/session_key.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidgetModel extends ChangeNotifier {
@@ -23,9 +24,13 @@ class AddWidgetModel extends ChangeNotifier {
     required BuildContext context,
   }) async {
     //Reference to document
-    final docUsersReference = FirebaseFirestore.instance
-        .collection('Users')
-        .doc('b5D2GOjlsaQZtYffHurw');
+    final docUsersReference = (await FirebaseFirestore.instance
+            .collection('Users')
+            .where("id", isEqualTo: SessionKey.currentUserId)
+            .get())
+        .docs
+        .first
+        .reference;
     final docExpenseReference = docUsersReference.collection('Expenses').doc();
     final expense = Expense(
       id: docExpenseReference.id,

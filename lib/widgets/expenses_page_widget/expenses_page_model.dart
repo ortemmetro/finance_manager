@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/default_data/default_categories_data.dart';
+import 'package:finance_manager/session/session_key.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../entity/category.dart';
@@ -22,10 +24,14 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Expense>>? readExpenses() {
-    final docUsersReference = FirebaseFirestore.instance
-        .collection('Users')
-        .doc('b5D2GOjlsaQZtYffHurw');
+  Future<List<Expense>>? readExpenses() async {
+    final docUsersReference = (await FirebaseFirestore.instance
+            .collection('Users')
+            .where("id", isEqualTo: SessionKey.currentUserId)
+            .get())
+        .docs
+        .first
+        .reference;
     final docExpenseReference = docUsersReference.collection('Expenses');
     if (docExpenseReference.doc().path.isNotEmpty) {
       return docExpenseReference
@@ -35,7 +41,7 @@ class ExpensesPageModel extends ChangeNotifier {
           .first;
     }
 
-    return null;
+    return [];
   }
 
   void _setExpenses(List<Expense> currentListOfExpenses) {
@@ -44,9 +50,13 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   Future<void> deleteExpense(String id) async {
-    final docUsersReference = FirebaseFirestore.instance
-        .collection('Users')
-        .doc('b5D2GOjlsaQZtYffHurw');
+    final docUsersReference = (await FirebaseFirestore.instance
+            .collection('Users')
+            .where("id", isEqualTo: SessionKey.currentUserId)
+            .get())
+        .docs
+        .first
+        .reference;
     final docExpenseReference = docUsersReference.collection('Expenses');
     if (docExpenseReference.doc(id).path.isNotEmpty) {
       await docExpenseReference.doc(id).delete();

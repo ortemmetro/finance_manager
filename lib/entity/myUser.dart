@@ -6,14 +6,16 @@ part 'myUser.g.dart';
 @JsonSerializable()
 class MyUser {
   String id;
-  final String name;
-  final String surname;
+  final String firstName;
+  final String lastName;
+  final int age;
   final List<Expense>? expenses;
 
   MyUser({
     this.id = '',
-    required this.name,
-    required this.surname,
+    required this.firstName,
+    required this.lastName,
+    required this.age,
     required this.expenses,
   });
 

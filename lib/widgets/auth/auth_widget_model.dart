@@ -1,3 +1,4 @@
+import 'package:finance_manager/session/session_key.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class AuthWidgetModel {
         email: email,
         password: password,
       );
+      SessionKey.currentUserId = FirebaseAuth.instance.currentUser!.uid;
     } on FirebaseAuthException catch (e) {
       print(e);
     }
