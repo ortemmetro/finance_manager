@@ -1,6 +1,7 @@
-import 'package:finance_manager/session/session_key.dart';
+import 'package:finance_manager/session/session_id_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthWidgetModel {
   Future signIn(String email, String password, BuildContext context) async {
@@ -14,7 +15,9 @@ class AuthWidgetModel {
         email: email,
         password: password,
       );
-      SessionKey.currentUserId = FirebaseAuth.instance.currentUser!.uid;
+      final sessionIdModel =
+          Provider.of<SessionIdModel>(context, listen: false);
+      await sessionIdModel.writeUserId(FirebaseAuth.instance.currentUser!.uid);
     } on FirebaseAuthException catch (e) {
       print(e);
     }

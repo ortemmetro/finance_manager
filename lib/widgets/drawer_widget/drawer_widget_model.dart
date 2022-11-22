@@ -1,16 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import '../../entity/myUser.dart';
-import '../../session/session_key.dart';
+import '../../session/session_id_model.dart';
 
 class DrawerWidgetModel extends ChangeNotifier {
   String userName = '';
   String userSurname = '';
-  void getUserInfo() async {
+
+  void getUserInfo(BuildContext context) async {
+    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
+    final userId = await sessionIdModel.readUserId("uid");
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: SessionKey.currentUserId)
+            .where("id", isEqualTo: userId)
             .get())
         .docs
         .first

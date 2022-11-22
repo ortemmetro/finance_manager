@@ -1,3 +1,4 @@
+import 'package:finance_manager/session/session_id_model.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
 import 'package:finance_manager/widgets/auth/auth_widget.dart';
 import 'package:finance_manager/widgets/auth/auth_widget_model.dart';
@@ -27,6 +28,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
         Provider(create: (context) => AuthWidgetModel()),
         ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),
+        Provider(create: (context) => SessionIdModel()),
       ],
       child: MaterialApp(
         theme: ThemeData(

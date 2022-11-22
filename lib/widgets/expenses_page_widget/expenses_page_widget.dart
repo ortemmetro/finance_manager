@@ -18,7 +18,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
   @override
   void initState() {
     Future.delayed(
-        Duration.zero, () => context.read<ExpensesPageModel>().setup());
+        Duration.zero, () => context.read<ExpensesPageModel>().setup(context));
     super.initState();
   }
 
@@ -153,7 +153,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) async {
-              await model.deleteExpense(expenses[index].id);
+              await model.deleteExpense(expenses[index].id, context);
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,

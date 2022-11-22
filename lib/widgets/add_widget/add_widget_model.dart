@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/expense.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../session/session_key.dart';
+import '../../session/session_id_model.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidgetModel extends ChangeNotifier {
@@ -23,10 +25,12 @@ class AddWidgetModel extends ChangeNotifier {
     required double price,
     required BuildContext context,
   }) async {
+    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
+    final userId = await sessionIdModel.readUserId("uid");
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: SessionKey.currentUserId)
+            .where("id", isEqualTo: userId)
             .get())
         .docs
         .first
@@ -43,7 +47,7 @@ class AddWidgetModel extends ChangeNotifier {
     final json = expense.toJson();
 
     await docExpenseReference.set(json);
-    expenseModel.setup();
+    expenseModel.setup(context);
 
     Navigator.of(context).pop();
     return;

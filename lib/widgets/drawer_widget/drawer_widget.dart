@@ -123,12 +123,12 @@ class _UserTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<DrawerWidgetModel>(context);
-    // model.getUserInfo();
+    model.getUserInfo(context);
     return ListTile(
-      // title: Text(
-      //   '${model.userName} ${model.userSurname}',
-      //   style: const TextStyle(fontSize: 17),
-      // ),
+      title: Text(
+        '${model.userName} ${model.userSurname}',
+        style: const TextStyle(fontSize: 17),
+      ),
       subtitle: const Text(
         'Остаток: \$999',
         style: TextStyle(fontSize: 17),
