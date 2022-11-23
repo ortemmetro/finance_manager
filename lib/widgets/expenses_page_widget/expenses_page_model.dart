@@ -10,12 +10,16 @@ import '../../entity/expense.dart';
 class ExpensesPageModel extends ChangeNotifier {
   List<Expense> listOfExpenses = [];
   List<Color> listOfColors = [];
+  String _userId = "";
 
   Map<String, double> dataMap = {};
   var sum = "";
 
-  void setup(BuildContext context) async {
-    final list = await readExpenses(context) ?? [];
+  Future<void> setup(
+    BuildContext context,
+    Future<String?> userId,
+  ) async {
+    final list = await readExpenses(context, userId) ?? [];
     _setExpenses(list);
     _sortExpenses();
     _setDataMap();
@@ -24,12 +28,13 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Expense>>? readExpenses(BuildContext context) async {
-    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
-    final userId = await sessionIdModel.readUserId("uid");
+  Future<List<Expense>>? readExpenses(
+    BuildContext context,
+    Future<String?> userId,
+  ) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where("id", isEqualTo: (await userId))
             .get())
         .docs
         .first
@@ -51,12 +56,14 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteExpense(String id, BuildContext context) async {
-    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
-    final userId = await sessionIdModel.readUserId("uid");
+  Future<void> deleteExpense(
+    String id,
+    BuildContext context,
+    Future<String?> userId,
+  ) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where("id", isEqualTo: await userId)
             .get())
         .docs
         .first
@@ -64,11 +71,11 @@ class ExpensesPageModel extends ChangeNotifier {
     final docExpenseReference = docUsersReference.collection('Expenses');
     if (docExpenseReference.doc(id).path.isNotEmpty) {
       await docExpenseReference.doc(id).delete();
-      setup(context);
+      setup(context, userId);
       notifyListeners();
+      return;
     }
-
-    setup(context);
+    setup(context, userId);
     notifyListeners();
     return;
   }
@@ -125,5 +132,11 @@ class ExpensesPageModel extends ChangeNotifier {
     sum = sumString.join();
 
     notifyListeners();
+  }
+
+  Future<void> _setUserId(Future<String?> futureUserId) async {
+    var temp = await futureUserId;
+    if (temp == null) return;
+    userId = temp;
   }
 }

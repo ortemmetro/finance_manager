@@ -24,11 +24,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider(create: (context) => SessionIdModel()),
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
         Provider(create: (context) => AuthWidgetModel()),
         ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),
-        Provider(create: (context) => SessionIdModel()),
       ],
       child: MaterialApp(
         theme: ThemeData(

@@ -6,6 +6,7 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
 import '../../entity/expense.dart';
+import '../../session/session_id_model.dart';
 
 class ExpensesPageWidget extends StatefulWidget {
   const ExpensesPageWidget({super.key});
@@ -17,8 +18,12 @@ class ExpensesPageWidget extends StatefulWidget {
 class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
   @override
   void initState() {
-    Future.delayed(
-        Duration.zero, () => context.read<ExpensesPageModel>().setup(context));
+    Future.delayed(Duration.zero, () {
+      final sessionIdModel =
+          Provider.of<SessionIdModel>(context, listen: false);
+      final userId = sessionIdModel.readUserId("uid");
+      context.read<ExpensesPageModel>().setup(context, userId);
+    });
     super.initState();
   }
 
@@ -61,7 +66,10 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
           ),
           const SizedBox(height: 20),
           Expanded(
-            child: _ExpensesListViewWidget(expenses: model.listOfExpenses),
+            child: _ExpensesListViewWidget(
+              expenses: model.listOfExpenses,
+              userId: userId,
+            ),
           ),
         ],
       ),
@@ -110,9 +118,11 @@ class _PieChartWidget extends StatelessWidget {
 
 class _ExpensesListViewWidget extends StatelessWidget {
   final List<Expense> expenses;
+  final Future<String?> userId;
   const _ExpensesListViewWidget({
     Key? key,
     required this.expenses,
+    required this.userId,
   }) : super(key: key);
 
   @override
@@ -120,7 +130,11 @@ class _ExpensesListViewWidget extends StatelessWidget {
     return ListView.separated(
       itemCount: expenses.length,
       itemBuilder: (BuildContext context, int index) {
-        return _ExpensesListTileWidget(expenses: expenses, index: index);
+        return _ExpensesListTileWidget(
+          expenses: expenses,
+          index: index,
+          userId: userId,
+        );
       },
       separatorBuilder: (BuildContext context, int index) {
         return const Divider(
@@ -137,9 +151,11 @@ class _ExpensesListViewWidget extends StatelessWidget {
 class _ExpensesListTileWidget extends StatelessWidget {
   final List<Expense> expenses;
   final int index;
+  final Future<String?> userId;
   const _ExpensesListTileWidget({
     required this.expenses,
     required this.index,
+    required this.userId,
   });
 
   @override
@@ -153,7 +169,11 @@ class _ExpensesListTileWidget extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) async {
-              await model.deleteExpense(expenses[index].id, context);
+              await model.deleteExpense(
+                expenses[index].id,
+                context,
+                userId,
+              );
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
