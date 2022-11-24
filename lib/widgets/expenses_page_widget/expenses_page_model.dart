@@ -17,7 +17,7 @@ class ExpensesPageModel extends ChangeNotifier {
 
   Future<void> setup(
     BuildContext context,
-    Future<String?> userId,
+    String? userId,
   ) async {
     final list = await readExpenses(context, userId) ?? [];
     _setExpenses(list);
@@ -30,7 +30,7 @@ class ExpensesPageModel extends ChangeNotifier {
 
   Future<List<Expense>>? readExpenses(
     BuildContext context,
-    Future<String?> userId,
+    String? userId,
   ) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
@@ -59,11 +59,11 @@ class ExpensesPageModel extends ChangeNotifier {
   Future<void> deleteExpense(
     String id,
     BuildContext context,
-    Future<String?> userId,
+    String? userId,
   ) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: await userId)
+            .where("id", isEqualTo: userId)
             .get())
         .docs
         .first
@@ -72,11 +72,9 @@ class ExpensesPageModel extends ChangeNotifier {
     if (docExpenseReference.doc(id).path.isNotEmpty) {
       await docExpenseReference.doc(id).delete();
       setup(context, userId);
-      notifyListeners();
       return;
     }
     setup(context, userId);
-    notifyListeners();
     return;
   }
 
@@ -132,11 +130,5 @@ class ExpensesPageModel extends ChangeNotifier {
     sum = sumString.join();
 
     notifyListeners();
-  }
-
-  Future<void> _setUserId(Future<String?> futureUserId) async {
-    var temp = await futureUserId;
-    if (temp == null) return;
-    userId = temp;
   }
 }

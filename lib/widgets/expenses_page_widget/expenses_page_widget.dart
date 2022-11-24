@@ -15,16 +15,20 @@ class ExpensesPageWidget extends StatefulWidget {
   State<ExpensesPageWidget> createState() => _ExpensesPageWidgetState();
 }
 
-class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
+class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
+    with AutomaticKeepAliveClientMixin<ExpensesPageWidget> {
+  String? uUserId;
+
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
       final sessionIdModel =
           Provider.of<SessionIdModel>(context, listen: false);
       final userId = sessionIdModel.readUserId("uid");
-      context.read<ExpensesPageModel>().setup(context, userId);
+      uUserId = await userId;
+      context.read<ExpensesPageModel>().setup(context, uUserId);
     });
-    super.initState();
   }
 
   @override
@@ -68,13 +72,16 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget> {
           Expanded(
             child: _ExpensesListViewWidget(
               expenses: model.listOfExpenses,
-              userId: userId,
+              userId: uUserId,
             ),
           ),
         ],
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _PieChartWidget extends StatelessWidget {
@@ -118,7 +125,7 @@ class _PieChartWidget extends StatelessWidget {
 
 class _ExpensesListViewWidget extends StatelessWidget {
   final List<Expense> expenses;
-  final Future<String?> userId;
+  final String? userId;
   const _ExpensesListViewWidget({
     Key? key,
     required this.expenses,
@@ -151,7 +158,7 @@ class _ExpensesListViewWidget extends StatelessWidget {
 class _ExpensesListTileWidget extends StatelessWidget {
   final List<Expense> expenses;
   final int index;
-  final Future<String?> userId;
+  final String? userId;
   const _ExpensesListTileWidget({
     required this.expenses,
     required this.index,

@@ -77,6 +77,7 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<DrawerWidgetModel>(context);
     return Drawer(
       child: Column(
         children: [
@@ -102,9 +103,12 @@ class DrawerWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ListTile(
-                  leading: Icon(Icons.door_front_door),
-                  title: Text('Выйти'),
-                  onTap: () => FirebaseAuth.instance.signOut(),
+                  leading: const Icon(Icons.door_front_door),
+                  title: const Text('Выйти'),
+                  onTap: () {
+                    model.signOut();
+                    Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                  },
                 ),
               ],
             ),
@@ -123,7 +127,9 @@ class _UserTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<DrawerWidgetModel>(context);
-    model.getUserInfo(context);
+    if (model.userName == "" || model.userSurname == "") {
+      model.getUserInfo(context);
+    }
     return ListTile(
       title: Text(
         '${model.userName} ${model.userSurname}',
