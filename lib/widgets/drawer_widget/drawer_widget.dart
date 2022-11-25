@@ -136,7 +136,7 @@ class _UserTileWidget extends StatelessWidget {
         style: const TextStyle(fontSize: 17),
       ),
       subtitle: const Text(
-        'Остаток: \$999',
+        'Итого: \$999',
         style: TextStyle(fontSize: 17),
       ),
       leading: const CircleAvatar(

@@ -183,18 +183,6 @@ class _CategoryCircleIconWidget extends StatelessWidget {
                 ),
               ),
             )
-          // Container(
-          //     margin: const EdgeInsets.all(12.0),
-          //     child: Container(
-          //       width: 65,
-          //       height: 65,
-          //       decoration: BoxDecoration(
-          //         color: Color(int.parse(model.listOfCategories[index].color)),
-          //         shape: BoxShape.circle,
-          //       ),
-          //       child: const Icon(Icons.done, size: 45),
-          //     ),
-          //   )
           : Container(
               margin: const EdgeInsets.all(12.0),
               child: Container(

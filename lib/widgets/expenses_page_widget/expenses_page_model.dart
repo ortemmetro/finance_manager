@@ -79,7 +79,7 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   Category findCategory(String categoryName) {
-    final categoryData = DefaultExpenseCategoriesData().listOfCategories;
+    final categoryData = DefaultExpenseCategoriesData().listOfExpenseCategories;
     final category =
         categoryData.firstWhere((element) => element.name == categoryName);
 

@@ -11,9 +11,12 @@ class DefaultExpenseCategoriesData {
     'local_taxi': Icons.local_taxi,
     'health_and_safety_outlined': Icons.health_and_safety_outlined,
     'wc': Icons.wc,
+    'payments': Icons.payments,
+    'school_outlined': Icons.school_outlined,
+    'question_mark_outlined': Icons.question_mark_outlined,
   };
 
-  final List<Category> listOfCategories = [
+  final List<Category> listOfExpenseCategories = [
     Category(
       name: 'Продукты',
       color: '0xff34dbeb',
@@ -58,6 +61,24 @@ class DefaultExpenseCategoriesData {
       name: 'Подарок',
       color: '0xfff02677',
       icon: 'wc',
+    ),
+  ];
+
+  final List<Category> listOfIncomesCategories = [
+    Category(
+      name: 'Зарплата',
+      color: '0xff49c520',
+      icon: 'payments',
+    ),
+    Category(
+      name: 'Стипендия',
+      color: '0xff2068c5',
+      icon: 'school_outlined',
+    ),
+    Category(
+      name: 'Другое',
+      color: '0xff20c5aa',
+      icon: 'question_mark_outlined',
     ),
   ];
 }

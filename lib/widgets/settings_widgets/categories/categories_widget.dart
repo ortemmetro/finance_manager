@@ -1,16 +1,30 @@
+import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/incomes_categories_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../drawer_widget/drawer_widget.dart';
 
 class CategoriesWidget extends StatelessWidget {
-  const CategoriesWidget({super.key});
+  CategoriesWidget({super.key});
 
-  final tab = const TabBar(
-    indicatorColor: Colors.transparent,
-    unselectedLabelColor: Color.fromARGB(255, 232, 232, 232),
-    tabs: <Tab>[
-      Tab(text: 'Расходы'),
-      Tab(text: 'Доходы'),
+  final tab = TabBar(
+    unselectedLabelColor: const Color.fromARGB(255, 232, 232, 232),
+    labelColor: Colors.black,
+    indicator: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(
+        color: Colors.white,
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.circular(15),
+    ),
+    labelStyle: const TextStyle(
+      fontSize: 15.5,
+      fontWeight: FontWeight.w500,
+    ),
+    tabs: const <Tab>[
+      Tab(text: 'Расходы', height: 39),
+      Tab(text: 'Доходы', height: 39),
     ],
   );
 
@@ -39,6 +53,12 @@ class CategoriesWidget extends StatelessWidget {
               child: tab,
             ),
           ),
+        ),
+        body: TabBarView(
+          children: [
+            ExpensesCategoriesPage(),
+            IncomesCategoriesPage(),
+          ],
         ),
       ),
     );

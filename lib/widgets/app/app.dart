@@ -58,7 +58,7 @@ class App extends StatelessWidget {
           '/main_page/add': (context) => AddWidget(),
           '/main_page/invoices': (context) => const InvoicesWidget(),
           '/main_page/charts': (context) => const ChartsWidget(),
-          '/main_page/categories': (context) => const CategoriesWidget(),
+          '/main_page/categories': (context) => CategoriesWidget(),
           '/main_page/currency': (context) => const CurrencyWidget(),
           '/main_page/settings': (context) => const SettingsWidget(),
         },
