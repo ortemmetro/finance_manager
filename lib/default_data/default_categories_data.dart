@@ -2,7 +2,7 @@ import 'package:finance_manager/entity/category.dart';
 import 'package:flutter/material.dart';
 
 class DefaultExpenseCategoriesData {
-  Map<String, IconData> iconsMap = {
+  static const Map<String, IconData> iconsMap = {
     'local_grocery_store_outlined': Icons.local_grocery_store_outlined,
     'monitor': Icons.monitor,
     'wine_bar': Icons.wine_bar,
@@ -16,7 +16,7 @@ class DefaultExpenseCategoriesData {
     'question_mark_outlined': Icons.question_mark_outlined,
   };
 
-  final List<Category> listOfExpenseCategories = [
+  static List<Category> listOfExpenseCategories = const [
     Category(
       name: 'Продукты',
       color: '0xff34dbeb',
@@ -64,7 +64,7 @@ class DefaultExpenseCategoriesData {
     ),
   ];
 
-  final List<Category> listOfIncomesCategories = [
+  static List<Category> listOfIncomesCategories = [
     Category(
       name: 'Зарплата',
       color: '0xff49c520',

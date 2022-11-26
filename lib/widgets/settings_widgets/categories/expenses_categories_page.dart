@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../../default_data/default_categories_data.dart';
 import '../../../entity/category.dart';
 
 class ExpensesCategoriesPage extends StatelessWidget {
   ExpensesCategoriesPage({super.key});
-  final listOfCategories =
-      DefaultExpenseCategoriesData().listOfExpenseCategories;
-  final iconsMap = DefaultExpenseCategoriesData().iconsMap;
+  final listOfCategories = DefaultExpenseCategoriesData.listOfExpenseCategories;
+  final iconsMap = DefaultExpenseCategoriesData.iconsMap;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +14,13 @@ class ExpensesCategoriesPage extends StatelessWidget {
       body: _ExpensesCategoriesGridView(
         listOfCategories: listOfCategories,
         iconsMap: iconsMap,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed("/main_page/categories/add");
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.add),
       ),
     );
   }

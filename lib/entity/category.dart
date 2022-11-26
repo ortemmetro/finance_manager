@@ -8,7 +8,7 @@ class Category {
   final String color;
   final String icon;
 
-  Category({
+  const Category({
     required this.name,
     required this.color,
     required this.icon,

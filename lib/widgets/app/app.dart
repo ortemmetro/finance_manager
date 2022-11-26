@@ -9,6 +9,7 @@ import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/charts/charts_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget.dart';
+import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../main_page/main_page.dart';
+import '../settings_widgets/categories/add_category_widget.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -29,6 +31,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
         Provider(create: (context) => AuthWidgetModel()),
         ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),
+        Provider(create: (context) => CurrencyWidgetModel())
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -55,10 +58,11 @@ class App extends StatelessWidget {
               ),
           '/sign_up': (context) => const SignUpWidget(),
           '/main_page': (context) => const MainPage(),
-          '/main_page/add': (context) => AddWidget(),
+          '/main_page/add': (context) => const AddWidget(),
           '/main_page/invoices': (context) => const InvoicesWidget(),
           '/main_page/charts': (context) => const ChartsWidget(),
           '/main_page/categories': (context) => CategoriesWidget(),
+          '/main_page/categories/add': (context) => const AddCategoryWidget(),
           '/main_page/currency': (context) => const CurrencyWidget(),
           '/main_page/settings': (context) => const SettingsWidget(),
         },
