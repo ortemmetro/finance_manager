@@ -18,6 +18,7 @@ import 'package:provider/provider.dart';
 
 import '../main_page/main_page.dart';
 import '../settings_widgets/categories/add_category_widget.dart';
+import '../settings_widgets/categories/add_category_widget_model.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -31,7 +32,8 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
         Provider(create: (context) => AuthWidgetModel()),
         ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),
-        Provider(create: (context) => CurrencyWidgetModel())
+        Provider(create: (context) => CurrencyWidgetModel()),
+        ChangeNotifierProvider(create: (context) => AddCategoryWidgetModel()),
       ],
       child: MaterialApp(
         theme: ThemeData(

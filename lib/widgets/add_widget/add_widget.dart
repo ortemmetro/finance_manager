@@ -13,7 +13,6 @@ class AddWidget extends StatefulWidget {
 
 class _AddWidgetState extends State<AddWidget> {
   final priceController = TextEditingController();
-
   final textController = TextEditingController();
 
   @override
