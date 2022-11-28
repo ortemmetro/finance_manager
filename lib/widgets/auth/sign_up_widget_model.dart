@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/entity/myUser.dart';
+import 'package:finance_manager/entity/my_user.dart';
 import 'package:finance_manager/session/session_id_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +57,7 @@ class SignUpWidgetModel extends ChangeNotifier {
       lastName: lastName,
       age: age,
       expenses: [],
+      ownCategories: [],
     );
 
     final json = user.toJson();

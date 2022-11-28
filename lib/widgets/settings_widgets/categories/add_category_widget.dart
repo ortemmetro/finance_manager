@@ -20,7 +20,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Row(
               children: const [
                 Text("Название категории"),
@@ -97,7 +97,6 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                           ],
                         ),
                       ),
-                      Text(model.listOfCategories[index].name),
                     ],
                   );
                 },
@@ -108,6 +107,40 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
               children: const [
                 Text("Выберите цвет"),
               ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: model.color,
+                  ),
+                  width: 50,
+                  height: 50,
+                ),
+                ElevatedButton(
+                  onPressed: () => model.pickColor(context),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.green)),
+                  child: const Text("Выбрать цвет"),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(const EdgeInsets.all(20.0)),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+                backgroundColor: MaterialStateProperty.all(Colors.green),
+              ),
+              child: const Text(
+                "Добавить",
+                style: TextStyle(fontSize: 25),
+              ),
             ),
           ],
         ),
@@ -146,11 +179,14 @@ class AddCategoryCircleIconWidget extends StatelessWidget {
                 child: Container(
                   width: 65,
                   height: 65,
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
+                  decoration: BoxDecoration(
+                    color: model.color,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.done, size: 45),
+                  child: Icon(
+                    iconsMap[listOfCategories[index].icon],
+                    size: 45,
+                  ),
                 ),
               ),
             )

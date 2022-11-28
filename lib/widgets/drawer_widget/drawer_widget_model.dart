@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import '../../entity/myUser.dart';
+import '../../entity/my_user.dart';
 import '../../session/session_id_model.dart';
 
 class DrawerWidgetModel extends ChangeNotifier {
