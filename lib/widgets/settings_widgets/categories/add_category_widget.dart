@@ -11,139 +11,148 @@ class AddCategoryWidget extends StatefulWidget {
 }
 
 class _AddCategoryWidgetState extends State<AddCategoryWidget> {
+  final nameOfCategoryController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            Row(
-              children: const [
-                Text("Название категории"),
-              ],
-            ),
-            TextField(),
-            const SizedBox(height: 30),
-            Row(
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
               children: [
-                SizedBox(
-                  width: 180,
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.all(0),
-                    title: const Text('Расходы'),
-                    leading: Radio<CategoryClass>(
-                      value: CategoryClass.expense,
-                      groupValue: model.categoryClass,
-                      onChanged: (CategoryClass? value) {
-                        setState(() {
-                          model.categoryClass = value;
-                        });
-                      },
-                    ),
-                  ),
+                const SizedBox(height: 20),
+                Row(
+                  children: const [
+                    Text("Название категории"),
+                  ],
                 ),
-                SizedBox(
-                  width: 180,
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.all(0),
-                    title: const Text('Доходы'),
-                    leading: Radio<CategoryClass>(
-                      value: CategoryClass.income,
-                      groupValue: model.categoryClass,
-                      onChanged: (CategoryClass? value) {
-                        setState(() {
-                          model.categoryClass = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            Row(
-              children: const [
-                Text("Иконки"),
-              ],
-            ),
-            Container(
-              height: 268,
-              margin: const EdgeInsets.only(top: 15),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: model.listOfCategories.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 4.0, vertical: 2.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AddCategoryCircleIconWidget(
-                              index: index,
-                              listOfCategories: model.listOfCategories,
-                              iconsMap: model.iconsMap,
-                              model: model,
-                            ),
-                          ],
+                TextField(controller: nameOfCategoryController),
+                const SizedBox(height: 30),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 180,
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(0),
+                        title: const Text('Расходы'),
+                        leading: Radio<CategoryClass>(
+                          value: CategoryClass.expense,
+                          groupValue: model.categoryClass,
+                          onChanged: (CategoryClass? value) {
+                            setState(() {
+                              model.categoryClass = value;
+                            });
+                          },
                         ),
                       ),
-                    ],
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 30),
-            Row(
-              children: const [
-                Text("Выберите цвет"),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+                    ),
+                    SizedBox(
+                      width: 180,
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(0),
+                        title: const Text('Доходы'),
+                        leading: Radio<CategoryClass>(
+                          value: CategoryClass.income,
+                          groupValue: model.categoryClass,
+                          onChanged: (CategoryClass? value) {
+                            setState(() {
+                              model.categoryClass = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Row(
+                  children: const [
+                    Text("Иконки"),
+                  ],
+                ),
                 Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: model.color,
+                  height: 268,
+                  margin: const EdgeInsets.only(top: 15),
+                  child: GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: model.listOfCategories.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0, vertical: 2.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AddCategoryCircleIconWidget(
+                                  index: index,
+                                  listOfCategories: model.listOfCategories,
+                                  iconsMap: model.iconsMap,
+                                  model: model,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
-                  width: 50,
-                  height: 50,
                 ),
+                const SizedBox(height: 30),
+                Row(
+                  children: const [
+                    Text("Выберите цвет"),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: model.color,
+                      ),
+                      width: 50,
+                      height: 50,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => model.pickColor(context),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green)),
+                      child: const Text("Выбрать цвет"),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => model.pickColor(context),
+                  onPressed: () =>
+                      model.addCategory(nameOfCategoryController.text, context),
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.green)),
-                  child: const Text("Выбрать цвет"),
+                    padding:
+                        MaterialStateProperty.all(const EdgeInsets.all(20.0)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0))),
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                  ),
+                  child: const Text(
+                    "Добавить",
+                    style: TextStyle(fontSize: 25),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(const EdgeInsets.all(20.0)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
-                backgroundColor: MaterialStateProperty.all(Colors.green),
-              ),
-              child: const Text(
-                "Добавить",
-                style: TextStyle(fontSize: 25),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -168,7 +177,7 @@ class AddCategoryCircleIconWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         model.isSelectedIndex(index);
-        model.selectedCategoryName = model.listOfCategories[index].name;
+        model.selectedCategoryIcon = model.listOfCategories[index].icon;
       },
       child: selectedIndex == index
           ? CircleAvatar(

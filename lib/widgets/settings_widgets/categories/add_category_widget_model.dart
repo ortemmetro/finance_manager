@@ -14,7 +14,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
   CategoryClass? categoryClass = CategoryClass.expense;
 
   var selectedIndex = -1;
-  String selectedCategoryName = "";
+  String selectedCategoryIcon = "";
 
   Color color = Colors.red;
 
@@ -62,7 +62,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     );
   }
 
-  Future<void> addCategory() async {
+  Future<void> addCategory(String categoryName, BuildContext context) async {
     final userId = await SessionIdModel().readUserId("uid");
     final userReference = (await FirebaseFirestore.instance
             .collection('Users')
@@ -71,7 +71,20 @@ class AddCategoryWidgetModel extends ChangeNotifier {
         .docs
         .first
         .reference;
-    // final category = Category(name: "name", color: color, icon: icon);
-    userReference.collection("Categories");
+    final stringColorList = color.value.toRadixString(16).split("");
+    stringColorList.insert(0, "0");
+    stringColorList.insert(1, "x");
+    final stringColor = stringColorList.join();
+
+    final categoryReference = userReference.collection("Categories").doc();
+    final category = Category(
+      name: categoryName,
+      color: stringColor,
+      icon: selectedCategoryIcon,
+    );
+    final json = category.toJson();
+    await categoryReference.set(json);
+    notifyListeners();
+    Navigator.of(context).pop();
   }
 }
