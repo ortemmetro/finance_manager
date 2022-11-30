@@ -5,9 +5,8 @@ import '../../../entity/category.dart';
 
 class IncomesCategoriesPage extends StatelessWidget {
   IncomesCategoriesPage({super.key});
-  final listOfIncomesCategories =
-      DefaultExpenseCategoriesData.listOfIncomesCategories;
-  final iconsMap = DefaultExpenseCategoriesData.iconsMap;
+  final listOfIncomesCategories = DefaultCategoriesData.listOfIncomesCategories;
+  final iconsMap = DefaultCategoriesData.iconsMap;
 
   @override
   Widget build(BuildContext context) {

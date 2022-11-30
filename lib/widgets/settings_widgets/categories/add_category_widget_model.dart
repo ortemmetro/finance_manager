@@ -8,10 +8,11 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 enum CategoryClass { expense, income }
 
 class AddCategoryWidgetModel extends ChangeNotifier {
-  final listOfCategories = DefaultExpenseCategoriesData.listOfExpenseCategories;
-  final iconsMap = DefaultExpenseCategoriesData.iconsMap;
+  var listOfCategories = DefaultCategoriesData.listOfExpenseCategories +
+      DefaultCategoriesData.listOfIncomesCategories;
+  final iconsMap = DefaultCategoriesData.iconsMap;
 
-  CategoryClass? categoryClass = CategoryClass.expense;
+  CategoryClass categoryClass = CategoryClass.expense;
 
   var selectedIndex = -1;
   String selectedCategoryIcon = "";
@@ -76,11 +77,27 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     stringColorList.insert(1, "x");
     final stringColor = stringColorList.join();
 
+    if (categoryClass == CategoryClass.income) {
+      final categoryReference = userReference.collection("Categories").doc();
+      final category = Category(
+        name: categoryName,
+        color: stringColor,
+        icon: selectedCategoryIcon,
+        categoryClass: categoryClass,
+      );
+      final json = category.toJson();
+      await categoryReference.set(json);
+      notifyListeners();
+      Navigator.of(context).pop();
+      return;
+    }
+
     final categoryReference = userReference.collection("Categories").doc();
     final category = Category(
       name: categoryName,
       color: stringColor,
       icon: selectedCategoryIcon,
+      categoryClass: categoryClass,
     );
     final json = category.toJson();
     await categoryReference.set(json);

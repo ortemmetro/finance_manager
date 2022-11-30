@@ -43,7 +43,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                           groupValue: model.categoryClass,
                           onChanged: (CategoryClass? value) {
                             setState(() {
-                              model.categoryClass = value;
+                              model.categoryClass = value!;
                             });
                           },
                         ),
@@ -59,7 +59,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                           groupValue: model.categoryClass,
                           onChanged: (CategoryClass? value) {
                             setState(() {
-                              model.categoryClass = value;
+                              model.categoryClass = value!;
                             });
                           },
                         ),
@@ -106,11 +106,22 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                     },
                   ),
                 ),
-                const SizedBox(height: 30),
                 Row(
-                  children: const [
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     Text("Выберите цвет"),
+                    TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        padding:
+                            MaterialStateProperty.all(const EdgeInsets.all(0)),
+                      ),
+                      child: const Text("Все иконки"),
+                    )
                   ],
+                ),
+                Row(
+                  children: const [],
                 ),
                 const SizedBox(height: 20),
                 Row(

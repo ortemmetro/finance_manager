@@ -12,8 +12,8 @@ class AddWidgetModel extends ChangeNotifier {
   var selectedIndex = -1;
   String selectedCategoryName = "";
 
-  final listOfCategories = DefaultExpenseCategoriesData.listOfExpenseCategories;
-  final iconsMap = DefaultExpenseCategoriesData.iconsMap;
+  final listOfCategories = DefaultCategoriesData.listOfExpenseCategories;
+  final iconsMap = DefaultCategoriesData.iconsMap;
 
   AddWidgetModel(this.expenseModel);
 

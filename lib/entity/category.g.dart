@@ -10,10 +10,17 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       name: json['name'] as String,
       color: json['color'] as String,
       icon: json['icon'] as String,
+      categoryClass: $enumDecode(_$CategoryClassEnumMap, json['categoryClass']),
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'name': instance.name,
       'color': instance.color,
       'icon': instance.icon,
+      'categoryClass': _$CategoryClassEnumMap[instance.categoryClass]!,
     };
+
+const _$CategoryClassEnumMap = {
+  CategoryClass.expense: 'expense',
+  CategoryClass.income: 'income',
+};
