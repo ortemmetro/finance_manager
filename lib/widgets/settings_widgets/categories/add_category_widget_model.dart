@@ -8,7 +8,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 enum CategoryClass { expense, income }
 
 class AddCategoryWidgetModel extends ChangeNotifier {
-  var listOfCategories = DefaultCategoriesData.listOfExpenseCategories +
+  final listOfCategories = DefaultCategoriesData.listOfExpenseCategories +
       DefaultCategoriesData.listOfIncomesCategories;
   final iconsMap = DefaultCategoriesData.iconsMap;
 

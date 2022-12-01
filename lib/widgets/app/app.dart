@@ -6,6 +6,7 @@ import 'package:finance_manager/widgets/auth/sign_up_widget.dart';
 import 'package:finance_manager/widgets/auth/sign_up_widget_model.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/all_categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/charts/charts_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget.dart';
@@ -65,6 +66,8 @@ class App extends StatelessWidget {
           '/main_page/charts': (context) => const ChartsWidget(),
           '/main_page/categories': (context) => CategoriesWidget(),
           '/main_page/categories/add': (context) => const AddCategoryWidget(),
+          '/main_page/categories/add/all_categories': (context) =>
+              const AllCategoriesWidget(),
           '/main_page/currency': (context) => const CurrencyWidget(),
           '/main_page/settings': (context) => const SettingsWidget(),
         },

@@ -84,24 +84,20 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                       crossAxisCount: 4,
                     ),
                     itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 4.0, vertical: 2.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                AddCategoryCircleIconWidget(
-                                  index: index,
-                                  listOfCategories: model.listOfCategories,
-                                  iconsMap: model.iconsMap,
-                                  model: model,
-                                ),
-                              ],
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4.0, vertical: 2.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AddCategoryCircleIconWidget(
+                              index: index,
+                              listOfCategories: model.listOfCategories,
+                              iconsMap: model.iconsMap,
+                              model: model,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   ),
@@ -109,9 +105,10 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Выберите цвет"),
+                    const Text("Выберите цвет"),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context).pushNamed(
+                          "/main_page/categories/add/all_categories"),
                       style: ButtonStyle(
                         padding:
                             MaterialStateProperty.all(const EdgeInsets.all(0)),
