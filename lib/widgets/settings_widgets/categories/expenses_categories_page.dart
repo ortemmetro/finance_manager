@@ -1,15 +1,18 @@
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../default_data/default_categories_data.dart';
 import '../../../entity/category.dart';
 
 class ExpensesCategoriesPage extends StatelessWidget {
   ExpensesCategoriesPage({super.key});
-  final listOfCategories = DefaultCategoriesData.listOfExpenseCategories;
-  final iconsMap = DefaultCategoriesData.iconsMap;
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
+    final listOfCategories = model.listOfCategories;
+    final iconsMap = model.iconsMap;
     return Scaffold(
       body: _ExpensesCategoriesGridView(
         listOfCategories: listOfCategories,

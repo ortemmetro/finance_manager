@@ -78,7 +78,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                   margin: const EdgeInsets.only(top: 15),
                   child: GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: model.listOfCategories.length,
+                    itemCount: 12,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
@@ -182,10 +182,12 @@ class AddCategoryCircleIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var selectedIndex = model.selectedIndex;
+    final listOfValues = iconsMap.entries.toList();
+
     return GestureDetector(
       onTap: () {
         model.isSelectedIndex(index);
-        model.selectedCategoryIcon = model.listOfCategories[index].icon;
+        model.selectedCategoryIcon = listOfValues[index].key;
       },
       child: selectedIndex == index
           ? CircleAvatar(
@@ -201,7 +203,7 @@ class AddCategoryCircleIconWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    iconsMap[listOfCategories[index].icon],
+                    listOfValues[index].value,
                     size: 45,
                   ),
                 ),
@@ -215,7 +217,7 @@ class AddCategoryCircleIconWidget extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                iconsMap[listOfCategories[index].icon],
+                listOfValues[index].value,
                 size: 45,
               ),
             ),

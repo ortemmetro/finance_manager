@@ -9,7 +9,8 @@ enum CategoryClass { expense, income }
 
 class AddCategoryWidgetModel extends ChangeNotifier {
   final listOfCategories =
-      DefaultCategoriesData.listOfAllIconsForAddingCategory;
+      DefaultCategoriesData.listOfAllIconsForAddingCategory +
+          DefaultCategoriesData().listOfTempCategories;
   final iconsMap = DefaultCategoriesData.iconsMap;
 
   CategoryClass categoryClass = CategoryClass.expense;
