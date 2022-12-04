@@ -5,9 +5,15 @@ import 'package:provider/provider.dart';
 import '../../../default_data/default_categories_data.dart';
 import '../../../entity/category.dart';
 
-class ExpensesCategoriesPage extends StatelessWidget {
-  ExpensesCategoriesPage({super.key});
+class ExpensesCategoriesPage extends StatefulWidget {
+  const ExpensesCategoriesPage({super.key});
 
+  @override
+  State<ExpensesCategoriesPage> createState() => _ExpensesCategoriesPageState();
+}
+
+class _ExpensesCategoriesPageState extends State<ExpensesCategoriesPage>
+    with AutomaticKeepAliveClientMixin<ExpensesCategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
@@ -27,6 +33,9 @@ class ExpensesCategoriesPage extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _ExpensesCategoriesGridView extends StatelessWidget {

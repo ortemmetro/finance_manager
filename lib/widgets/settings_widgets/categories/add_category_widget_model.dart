@@ -2,15 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/session/session_id_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:provider/provider.dart';
 
 enum CategoryClass { expense, income }
 
 class AddCategoryWidgetModel extends ChangeNotifier {
-  final listOfCategories =
-      DefaultCategoriesData.listOfAllIconsForAddingCategory +
-          DefaultCategoriesData().listOfTempCategories;
+  List<Category> listOfCategories = List.empty(growable: true);
+
   final iconsMap = DefaultCategoriesData.iconsMap;
 
   CategoryClass categoryClass = CategoryClass.expense;
@@ -19,6 +20,12 @@ class AddCategoryWidgetModel extends ChangeNotifier {
   String selectedCategoryIcon = "";
 
   Color color = Colors.red;
+
+  void setCategories() {
+    listOfCategories.clear();
+    listOfCategories
+        .addAll(DefaultCategoriesData.listOfAllIconsForAddingCategory);
+  }
 
   void isSelectedIndex(int index) {
     if (selectedIndex == index) {
@@ -88,6 +95,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
       );
       final json = category.toJson();
       await categoryReference.set(json);
+      await downloadCategories(context);
       notifyListeners();
       Navigator.of(context).pop();
       return;
@@ -102,7 +110,33 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     );
     final json = category.toJson();
     await categoryReference.set(json);
+    await downloadCategories(context);
     notifyListeners();
     Navigator.of(context).pop();
+  }
+
+  Future<void> downloadCategories(BuildContext context) async {
+    List<Category> tempList = [];
+    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
+    await sessionIdModel.writeUserId(FirebaseAuth.instance.currentUser!.uid);
+    final userId = await SessionIdModel().readUserId("uid");
+    final userReference = (await FirebaseFirestore.instance
+            .collection('Users')
+            .where("id", isEqualTo: userId)
+            .get())
+        .docs
+        .first
+        .reference;
+    final categoryReference = userReference.collection("Categories");
+    if (categoryReference.doc().path.isNotEmpty) {
+      tempList = await categoryReference
+          .snapshots()
+          .map((snapshot) => snapshot.docs
+              .map((doc) => Category.fromJson(doc.data()))
+              .toList())
+          .first;
+      DefaultCategoriesData.listOfTempCategories = tempList;
+      listOfCategories.addAll(DefaultCategoriesData.listOfTempCategories);
+    }
   }
 }
