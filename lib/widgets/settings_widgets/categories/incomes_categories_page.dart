@@ -1,18 +1,21 @@
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../default_data/default_categories_data.dart';
 import '../../../entity/category.dart';
 
 class IncomesCategoriesPage extends StatelessWidget {
-  IncomesCategoriesPage({super.key});
-  final listOfIncomesCategories = DefaultCategoriesData.listOfIncomesCategories;
-  final iconsMap = DefaultCategoriesData.iconsMap;
+  const IncomesCategoriesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<AddCategoryWidgetModel>(context);
+    final listOfIncomeCategories = model.listOfIncomeCategories;
+    final iconsMap = model.iconsMap;
     return Scaffold(
       body: _IncomesCategoriesGridView(
-        listOfCategories: listOfIncomesCategories,
+        listOfCategories: listOfIncomeCategories,
         iconsMap: iconsMap,
       ),
     );
@@ -55,7 +58,11 @@ class _IncomesCategoriesGridView extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(listOfCategories[index].name),
+              Text(
+                listOfCategories[index].name,
+                maxLines: 1,
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
+              ),
             ],
           );
         },

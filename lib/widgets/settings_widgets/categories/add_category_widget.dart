@@ -92,7 +92,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                           children: [
                             AddCategoryCircleIconWidget(
                               index: index,
-                              listOfCategories: model.listOfCategories,
+                              listOfCategories: model.listOfExpenseCategories,
                               iconsMap: model.iconsMap,
                               model: model,
                             ),

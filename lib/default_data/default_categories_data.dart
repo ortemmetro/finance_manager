@@ -201,7 +201,8 @@ class DefaultCategoriesData {
     'car_1214376': MyIconsClass.car_1214376,
   };
 
-  static List<Category> listOfTempCategories = [];
+  static List<Category> listOfTempExpenseCategories = [];
+  static List<Category> listOfTempIncomeCategories = [];
 
   static List<Category> listOfExpenseCategories = const [
     Category(

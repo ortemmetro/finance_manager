@@ -1,4 +1,5 @@
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,8 @@ class _AddWidgetBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<AddWidgetModel>();
+    final addCategoryWidgetModel = Provider.of<AddCategoryWidgetModel>(context);
+    model.listOfCategories = addCategoryWidgetModel.listOfExpenseCategories;
     DateTime? newDate;
     return Scaffold(
       appBar: AppBar(),
@@ -134,7 +137,11 @@ class _CategoriesListWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(model.listOfCategories[index].name),
+              Text(
+                model.listOfCategories[index].name,
+                maxLines: 1,
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
+              ),
             ],
           );
         },

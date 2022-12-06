@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 enum CategoryClass { expense, income }
 
 class AddCategoryWidgetModel extends ChangeNotifier {
-  List<Category> listOfCategories = List.empty(growable: true);
+  List<Category> listOfExpenseCategories = List.empty(growable: true);
+  List<Category> listOfIncomeCategories = List.empty(growable: true);
 
   final iconsMap = DefaultCategoriesData.iconsMap;
 
@@ -22,9 +23,15 @@ class AddCategoryWidgetModel extends ChangeNotifier {
   Color color = Colors.red;
 
   void setCategories() {
-    listOfCategories.clear();
-    listOfCategories
-        .addAll(DefaultCategoriesData.listOfAllIconsForAddingCategory);
+    listOfExpenseCategories.clear();
+    listOfIncomeCategories.clear();
+
+    listOfExpenseCategories.addAll(
+        DefaultCategoriesData.listOfExpenseCategories +
+            DefaultCategoriesData.listOfTempExpenseCategories);
+    listOfIncomeCategories.addAll(
+        DefaultCategoriesData.listOfIncomesCategories +
+            DefaultCategoriesData.listOfTempIncomeCategories);
   }
 
   void isSelectedIndex(int index) {
@@ -135,8 +142,13 @@ class AddCategoryWidgetModel extends ChangeNotifier {
               .map((doc) => Category.fromJson(doc.data()))
               .toList())
           .first;
-      DefaultCategoriesData.listOfTempCategories = tempList;
-      listOfCategories.addAll(DefaultCategoriesData.listOfTempCategories);
+      for (var i = 0; i < tempList.length; i++) {
+        if (tempList[i].categoryClass == CategoryClass.expense) {
+          DefaultCategoriesData.listOfTempExpenseCategories.add(tempList[i]);
+        } else {
+          DefaultCategoriesData.listOfTempIncomeCategories.add(tempList[i]);
+        }
+      }
     }
   }
 }

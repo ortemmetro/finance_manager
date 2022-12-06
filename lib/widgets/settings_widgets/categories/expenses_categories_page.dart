@@ -17,7 +17,7 @@ class _ExpensesCategoriesPageState extends State<ExpensesCategoriesPage>
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
-    final listOfCategories = model.listOfCategories;
+    final listOfCategories = model.listOfExpenseCategories;
     final iconsMap = model.iconsMap;
     return Scaffold(
       body: _ExpensesCategoriesGridView(
@@ -74,7 +74,11 @@ class _ExpensesCategoriesGridView extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(listOfCategories[index].name),
+              Text(
+                listOfCategories[index].name,
+                maxLines: 1,
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
+              ),
             ],
           );
         },

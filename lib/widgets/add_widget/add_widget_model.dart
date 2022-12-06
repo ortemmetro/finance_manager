@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/default_data/default_categories_data.dart';
+import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/entity/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class AddWidgetModel extends ChangeNotifier {
   var selectedIndex = -1;
   String selectedCategoryName = "";
 
-  final listOfCategories = DefaultCategoriesData.listOfExpenseCategories;
+  List<Category> listOfCategories = List.empty(growable: true);
   final iconsMap = DefaultCategoriesData.iconsMap;
 
   AddWidgetModel(this.expenseModel);
