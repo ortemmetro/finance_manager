@@ -2,7 +2,6 @@ import 'package:finance_manager/widgets/settings_widgets/categories/add_category
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../default_data/default_categories_data.dart';
 import '../../../entity/category.dart';
 
 class ExpensesCategoriesPage extends StatefulWidget {
@@ -12,8 +11,7 @@ class ExpensesCategoriesPage extends StatefulWidget {
   State<ExpensesCategoriesPage> createState() => _ExpensesCategoriesPageState();
 }
 
-class _ExpensesCategoriesPageState extends State<ExpensesCategoriesPage>
-    with AutomaticKeepAliveClientMixin<ExpensesCategoriesPage> {
+class _ExpensesCategoriesPageState extends State<ExpensesCategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
@@ -33,9 +31,6 @@ class _ExpensesCategoriesPageState extends State<ExpensesCategoriesPage>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 class _ExpensesCategoriesGridView extends StatelessWidget {

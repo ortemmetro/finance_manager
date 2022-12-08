@@ -2,7 +2,6 @@ import 'package:finance_manager/widgets/settings_widgets/categories/add_category
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../default_data/default_categories_data.dart';
 import '../../../entity/category.dart';
 
 class IncomesCategoriesPage extends StatelessWidget {
@@ -17,6 +16,13 @@ class IncomesCategoriesPage extends StatelessWidget {
       body: _IncomesCategoriesGridView(
         listOfCategories: listOfIncomeCategories,
         iconsMap: iconsMap,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed("/main_page/categories/add");
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.add),
       ),
     );
   }

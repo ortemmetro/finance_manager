@@ -40,7 +40,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
     super.initState();
     Future.delayed(Duration.zero, () async {
       final model = Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      model.setCategories();
+      await model.setCategories(context);
     });
   }
 
@@ -70,7 +70,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             ),
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             ExpensesCategoriesPage(),
             IncomesCategoriesPage(),

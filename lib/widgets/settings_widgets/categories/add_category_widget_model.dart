@@ -22,9 +22,13 @@ class AddCategoryWidgetModel extends ChangeNotifier {
 
   Color color = Colors.red;
 
-  void setCategories() {
+  Future<void> setCategories(BuildContext context) async {
     listOfExpenseCategories.clear();
     listOfIncomeCategories.clear();
+    DefaultCategoriesData.listOfTempExpenseCategories.clear();
+    DefaultCategoriesData.listOfTempIncomeCategories.clear();
+
+    await downloadCategories(context);
 
     listOfExpenseCategories.addAll(
         DefaultCategoriesData.listOfExpenseCategories +
@@ -32,6 +36,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     listOfIncomeCategories.addAll(
         DefaultCategoriesData.listOfIncomesCategories +
             DefaultCategoriesData.listOfTempIncomeCategories);
+    notifyListeners();
   }
 
   void isSelectedIndex(int index) {
@@ -102,7 +107,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
       );
       final json = category.toJson();
       await categoryReference.set(json);
-      await downloadCategories(context);
+      await setCategories(context);
       notifyListeners();
       Navigator.of(context).pop();
       return;
@@ -117,7 +122,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     );
     final json = category.toJson();
     await categoryReference.set(json);
-    await downloadCategories(context);
+    await setCategories(context);
     notifyListeners();
     Navigator.of(context).pop();
   }

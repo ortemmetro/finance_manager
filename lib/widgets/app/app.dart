@@ -64,7 +64,7 @@ class App extends StatelessWidget {
           '/main_page/add': (context) => const AddWidget(),
           '/main_page/invoices': (context) => const InvoicesWidget(),
           '/main_page/charts': (context) => const ChartsWidget(),
-          '/main_page/categories': (context) => CategoriesWidget(),
+          '/main_page/categories': (context) => const CategoriesWidget(),
           '/main_page/categories/add': (context) => const AddCategoryWidget(),
           '/main_page/categories/add/all_categories': (context) =>
               const AllCategoriesWidget(),

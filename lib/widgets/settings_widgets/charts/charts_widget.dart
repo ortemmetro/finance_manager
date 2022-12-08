@@ -22,7 +22,7 @@ class ChartsWidget extends StatelessWidget {
       child: Scaffold(
         drawer: DrawerWidget(),
         appBar: AppBar(
-          title: Text('Графики'),
+          title: const Text('Графики'),
           centerTitle: true,
           toolbarHeight: 70,
           bottom: PreferredSize(

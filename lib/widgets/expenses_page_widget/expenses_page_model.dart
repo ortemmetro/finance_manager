@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/default_data/default_categories_data.dart';
-import 'package:finance_manager/session/session_id_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../entity/category.dart';
 import '../../entity/expense.dart';
@@ -34,7 +32,7 @@ class ExpensesPageModel extends ChangeNotifier {
   ) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: (await userId))
+            .where("id", isEqualTo: (userId))
             .get())
         .docs
         .first

@@ -1,4 +1,5 @@
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -27,6 +28,9 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
           Provider.of<SessionIdModel>(context, listen: false);
       final userId = sessionIdModel.readUserId("uid");
       uUserId = await userId;
+      final addCategoryWidgetModel =
+          Provider.of<AddCategoryWidgetModel>(context, listen: false);
+      await addCategoryWidgetModel.downloadCategories(context);
       context.read<ExpensesPageModel>().setup(context, uUserId);
     });
   }

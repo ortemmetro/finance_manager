@@ -20,10 +20,10 @@ class InvoicesWidget extends StatelessWidget {
       ),
       body: Column(
         children: [
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Center(
             child: Column(
-              children: [
+              children: const [
                 Text(
                   'Итого:',
                   style: TextStyle(
@@ -38,7 +38,7 @@ class InvoicesWidget extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -46,18 +46,18 @@ class InvoicesWidget extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {},
-                    child: Icon(Icons.history),
+                    child: const Icon(Icons.history),
                   ),
-                  Text('История переводов'),
+                  const Text('История переводов'),
                 ],
               ),
               Column(
                 children: [
                   ElevatedButton(
                     onPressed: () {},
-                    child: Icon(Icons.compare_arrows),
+                    child: const Icon(Icons.compare_arrows),
                   ),
-                  Text('Создать перевод'),
+                  const Text('Создать перевод'),
                 ],
               ),
             ],
