@@ -96,7 +96,9 @@ class CategoryCircleIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed("/main_page/categories/one_category");
+      },
       child: Container(
         margin: const EdgeInsets.all(1.0),
         child: Container(

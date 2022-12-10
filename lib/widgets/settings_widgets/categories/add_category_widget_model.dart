@@ -156,4 +156,26 @@ class AddCategoryWidgetModel extends ChangeNotifier {
       }
     }
   }
+
+  Future<void> deleteCategory(
+    String id,
+    BuildContext context,
+    String? userId,
+  ) async {
+    final docUsersReference = (await FirebaseFirestore.instance
+            .collection('Users')
+            .where("id", isEqualTo: userId)
+            .get())
+        .docs
+        .first
+        .reference;
+    final docCategoryReference = docUsersReference.collection('Categories');
+    if (docCategoryReference.doc(id).path.isNotEmpty) {
+      await docCategoryReference.doc(id).delete();
+      await setCategories(context);
+      return;
+    }
+    await setCategories(context);
+    return;
+  }
 }
