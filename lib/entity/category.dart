@@ -5,12 +5,14 @@ part 'category.g.dart';
 
 @JsonSerializable()
 class Category {
+  String id;
   final String name;
   final String color;
   final String icon;
   final CategoryClass categoryClass;
 
-  const Category({
+  Category({
+    this.id = "",
     required this.name,
     required this.color,
     required this.icon,

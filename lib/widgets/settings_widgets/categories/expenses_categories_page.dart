@@ -1,26 +1,43 @@
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:finance_manager/session/session_id_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+
 import '../../../entity/category.dart';
 
-class ExpensesCategoriesPage extends StatefulWidget {
-  const ExpensesCategoriesPage({super.key});
+class CategoryInfo {
+  final String userId;
+  final Category category;
 
-  @override
-  State<ExpensesCategoriesPage> createState() => _ExpensesCategoriesPageState();
+  CategoryInfo({
+    required this.userId,
+    required this.category,
+  });
 }
 
-class _ExpensesCategoriesPageState extends State<ExpensesCategoriesPage> {
+class ExpensesCategoriesPage extends StatelessWidget {
+  ExpensesCategoriesPage({
+    super.key,
+    required this.userId,
+    required this.listOfCategories,
+    required this.iconsMap,
+  });
+  final String? userId;
+  final List<Category> listOfCategories;
+  final Map<String, IconData> iconsMap;
+
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
-    final listOfCategories = model.listOfExpenseCategories;
-    final iconsMap = model.iconsMap;
+    if (userId == null) {
+      return const SizedBox.shrink();
+    }
     return Scaffold(
       body: _ExpensesCategoriesGridView(
         listOfCategories: listOfCategories,
         iconsMap: iconsMap,
+        userId: userId!,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -31,6 +48,9 @@ class _ExpensesCategoriesPageState extends State<ExpensesCategoriesPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _ExpensesCategoriesGridView extends StatelessWidget {
@@ -38,10 +58,12 @@ class _ExpensesCategoriesGridView extends StatelessWidget {
     Key? key,
     required this.listOfCategories,
     required this.iconsMap,
+    required this.userId,
   }) : super(key: key);
 
   final List<Category> listOfCategories;
   final Map<String, IconData> iconsMap;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +87,7 @@ class _ExpensesCategoriesGridView extends StatelessWidget {
                       index: index,
                       listOfCategories: listOfCategories,
                       iconsMap: iconsMap,
+                      userId: userId,
                     ),
                   ],
                 ),
@@ -88,16 +111,24 @@ class CategoryCircleIconWidget extends StatelessWidget {
     required this.index,
     required this.listOfCategories,
     required this.iconsMap,
+    required this.userId,
   }) : super(key: key);
   final List<Category> listOfCategories;
   final Map<String, IconData> iconsMap;
   final int index;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed("/main_page/categories/one_category");
+        Navigator.of(context).pushNamed(
+          "/main_page/categories/one_category",
+          arguments: CategoryInfo(
+            category: listOfCategories[index],
+            userId: userId,
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.all(1.0),

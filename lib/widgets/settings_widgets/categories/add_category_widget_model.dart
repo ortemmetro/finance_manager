@@ -22,6 +22,8 @@ class AddCategoryWidgetModel extends ChangeNotifier {
 
   Color color = Colors.red;
 
+  String? userId = "";
+
   Future<void> setCategories(BuildContext context) async {
     listOfExpenseCategories.clear();
     listOfIncomeCategories.clear();
@@ -100,6 +102,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     if (categoryClass == CategoryClass.income) {
       final categoryReference = userReference.collection("Categories").doc();
       final category = Category(
+        id: categoryReference.id,
         name: categoryName,
         color: stringColor,
         icon: selectedCategoryIcon,
@@ -115,6 +118,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
 
     final categoryReference = userReference.collection("Categories").doc();
     final category = Category(
+      id: categoryReference.id,
       name: categoryName,
       color: stringColor,
       icon: selectedCategoryIcon,

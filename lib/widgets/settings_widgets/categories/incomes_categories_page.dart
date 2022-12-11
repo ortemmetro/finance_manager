@@ -1,21 +1,32 @@
+import 'package:finance_manager/session/session_id_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../entity/category.dart';
 
 class IncomesCategoriesPage extends StatelessWidget {
-  const IncomesCategoriesPage({super.key});
+  const IncomesCategoriesPage({
+    super.key,
+    required this.userId,
+    required this.listOfCategories,
+    required this.iconsMap,
+  });
+  final String? userId;
+  final List<Category> listOfCategories;
+  final Map<String, IconData> iconsMap;
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<AddCategoryWidgetModel>(context);
-    final listOfIncomeCategories = model.listOfIncomeCategories;
-    final iconsMap = model.iconsMap;
+    if (userId == null) {
+      return const SizedBox.shrink();
+    }
     return Scaffold(
       body: _IncomesCategoriesGridView(
-        listOfCategories: listOfIncomeCategories,
+        listOfCategories: listOfCategories,
         iconsMap: iconsMap,
+        userId: userId!,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -26,6 +37,9 @@ class IncomesCategoriesPage extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _IncomesCategoriesGridView extends StatelessWidget {
@@ -33,10 +47,12 @@ class _IncomesCategoriesGridView extends StatelessWidget {
     Key? key,
     required this.listOfCategories,
     required this.iconsMap,
+    required this.userId,
   }) : super(key: key);
 
   final List<Category> listOfCategories;
   final Map<String, IconData> iconsMap;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +76,7 @@ class _IncomesCategoriesGridView extends StatelessWidget {
                       index: index,
                       listOfCategories: listOfCategories,
                       iconsMap: iconsMap,
+                      userId: userId,
                     ),
                   ],
                 ),
@@ -83,15 +100,25 @@ class CategoryCircleIconWidget extends StatelessWidget {
     required this.index,
     required this.listOfCategories,
     required this.iconsMap,
+    required this.userId,
   }) : super(key: key);
   final List<Category> listOfCategories;
   final Map<String, IconData> iconsMap;
   final int index;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          "/main_page/categories/one_category",
+          arguments: CategoryInfo(
+            category: listOfCategories[index],
+            userId: userId,
+          ),
+        );
+      },
       child: Container(
         margin: const EdgeInsets.all(1.0),
         child: Container(

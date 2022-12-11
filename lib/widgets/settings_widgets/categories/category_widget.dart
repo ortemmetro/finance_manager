@@ -1,5 +1,7 @@
+import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +11,9 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AddCategoryWidgetModel>(context, listen: false);
+    final iconsMap = model.iconsMap;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as CategoryInfo;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Изменение категории"),
@@ -27,15 +32,21 @@ class CategoryWidget extends StatelessWidget {
                   child: Container(
                     width: 40,
                     height: 40,
-                    decoration: const BoxDecoration(
-                        color: Colors.red, shape: BoxShape.circle),
-                    child: const Icon(Icons.add, size: 35),
+                    decoration: BoxDecoration(
+                      color: Color(int.parse(arguments.category.color)),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      iconsMap[arguments.category.icon],
+                      size: 35,
+                    ),
                   ),
                 ),
                 Expanded(
                   child: TextField(
                     decoration: const InputDecoration(isDense: true),
-                    controller: TextEditingController(text: "Да да я"),
+                    controller:
+                        TextEditingController(text: arguments.category.name),
                   ),
                 ),
               ],
@@ -54,8 +65,10 @@ class CategoryWidget extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Row(
-              children: const [
-                Text("Расходы"),
+              children: [
+                Text(arguments.category.categoryClass == CategoryClass.expense
+                    ? "Расходы"
+                    : "Доходы"),
               ],
             ),
             const SizedBox(height: 16),
@@ -111,6 +124,7 @@ class CategoryWidget extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 170),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -119,7 +133,14 @@ class CategoryWidget extends StatelessWidget {
                   child: const Text("Сохранить"),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await model.deleteCategory(
+                      arguments.category.id,
+                      context,
+                      arguments.userId,
+                    );
+                    Navigator.of(context).pop();
+                  },
                   child: const Text("Удалить категорию"),
                 ),
               ],

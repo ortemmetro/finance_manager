@@ -204,7 +204,7 @@ class DefaultCategoriesData {
   static List<Category> listOfTempExpenseCategories = [];
   static List<Category> listOfTempIncomeCategories = [];
 
-  static List<Category> listOfExpenseCategories = const [
+  static List<Category> listOfExpenseCategories = [
     Category(
       name: 'Продукты',
       color: '0xff34dbeb',
@@ -255,7 +255,7 @@ class DefaultCategoriesData {
     ),
   ];
 
-  static List<Category> listOfIncomesCategories = const [
+  static List<Category> listOfIncomesCategories = [
     Category(
       name: 'Зарплата',
       color: '0xff49c520',
@@ -276,7 +276,7 @@ class DefaultCategoriesData {
     ),
   ];
 
-  static List<Category> listOfAllIconsForAddingCategory = const [
+  static List<Category> listOfAllIconsForAddingCategory = [
     Category(
       name: 'Зарплата',
       color: '0xff49c520',

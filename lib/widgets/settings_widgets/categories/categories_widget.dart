@@ -1,3 +1,4 @@
+import 'package:finance_manager/session/session_id_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/incomes_categories_page.dart';
@@ -41,11 +42,19 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
     Future.delayed(Duration.zero, () async {
       final model = Provider.of<AddCategoryWidgetModel>(context, listen: false);
       await model.setCategories(context);
+      final sessionIdModel =
+          Provider.of<SessionIdModel>(context, listen: false);
+      final userId = sessionIdModel.readUserId("uid");
+      model.userId = await userId;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
+    final listOfExpenseCategories = model.listOfExpenseCategories;
+    final listOfIncomeCategories = model.listOfIncomeCategories;
+    final iconsMap = model.iconsMap;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -70,10 +79,18 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             ),
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            ExpensesCategoriesPage(),
-            IncomesCategoriesPage(),
+            ExpensesCategoriesPage(
+              userId: model.userId,
+              iconsMap: iconsMap,
+              listOfCategories: listOfExpenseCategories,
+            ),
+            IncomesCategoriesPage(
+              userId: model.userId,
+              iconsMap: iconsMap,
+              listOfCategories: listOfIncomeCategories,
+            ),
           ],
         ),
       ),
