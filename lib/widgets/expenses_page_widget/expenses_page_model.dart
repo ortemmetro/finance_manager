@@ -8,7 +8,6 @@ import '../../entity/expense.dart';
 class ExpensesPageModel extends ChangeNotifier {
   List<Expense> listOfExpenses = [];
   List<Color> listOfColors = [];
-  String _userId = "";
 
   Map<String, double> dataMap = {};
   var sum = "";

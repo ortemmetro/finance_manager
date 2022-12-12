@@ -1,4 +1,3 @@
-import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';

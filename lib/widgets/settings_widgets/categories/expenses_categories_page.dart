@@ -1,9 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:finance_manager/session/session_id_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 
 import '../../../entity/category.dart';
 
@@ -18,7 +14,7 @@ class CategoryInfo {
 }
 
 class ExpensesCategoriesPage extends StatelessWidget {
-  ExpensesCategoriesPage({
+  const ExpensesCategoriesPage({
     super.key,
     required this.userId,
     required this.listOfCategories,
@@ -39,18 +35,8 @@ class ExpensesCategoriesPage extends StatelessWidget {
         iconsMap: iconsMap,
         userId: userId!,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed("/main_page/categories/add");
-        },
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
-      ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 class _ExpensesCategoriesGridView extends StatelessWidget {

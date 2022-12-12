@@ -38,6 +38,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AddCategoryWidgetModel()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color.fromARGB(255, 93, 176, 117),
           disabledColor: const Color.fromARGB(255, 232, 232, 232),
