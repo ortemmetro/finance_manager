@@ -1,3 +1,4 @@
+import 'package:finance_manager/my_icons_class/my_icons_class.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,6 +67,43 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                       Icons.add,
                       size: 25,
                       color: Colors.white,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  bottom: 0,
+                  child: RawMaterialButton(
+                    onPressed: () {},
+                    fillColor: const Color.fromARGB(255, 93, 176, 117),
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(12.0),
+                    child: const Icon(
+                      MyIconsClass.bar_graph_1214113,
+                      size: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: TextButton(
+                    onPressed: () => model.showDateChangeDialog(context),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Text(
+                          "День",
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right,
+                          color: Colors.green,
+                        ),
+                      ],
                     ),
                   ),
                 ),

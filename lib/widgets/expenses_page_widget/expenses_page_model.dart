@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../entity/category.dart';
 import '../../entity/expense.dart';
@@ -128,5 +129,39 @@ class ExpensesPageModel extends ChangeNotifier {
     sum = sumString.join();
 
     notifyListeners();
+  }
+
+  void showDateChangeDialog(BuildContext context) {
+    showMaterialModalBottomSheet(
+      context: context,
+      expand: false,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            SizedBox(height: 10),
+            ListTile(
+              leading: Text("День"),
+            ),
+            Divider(),
+            ListTile(
+              leading: Text("Неделя"),
+            ),
+            Divider(),
+            ListTile(
+              leading: Text("Месяц"),
+            ),
+            Divider(),
+            ListTile(
+              leading: Text("Год"),
+            ),
+            Divider(),
+            ListTile(
+              leading: Text("Период"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
