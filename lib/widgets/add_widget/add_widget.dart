@@ -15,6 +15,15 @@ class AddWidget extends StatefulWidget {
 class _AddWidgetState extends State<AddWidget> {
   final priceController = TextEditingController();
   final textController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      final categoryModel =
+          Provider.of<AddCategoryWidgetModel>(context, listen: false);
+      await categoryModel.setCategories(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

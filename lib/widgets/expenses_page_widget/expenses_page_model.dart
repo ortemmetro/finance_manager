@@ -50,6 +50,13 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   void _setExpenses(List<Expense> currentListOfExpenses) {
+    for (var i = 0; i < currentListOfExpenses.length; i++) {
+      for (var j = i + 1; j < currentListOfExpenses.length - 1; j++) {
+        if (currentListOfExpenses[i].category ==
+            currentListOfExpenses[j].category) {}
+      }
+    }
+
     listOfExpenses = currentListOfExpenses;
     notifyListeners();
   }
