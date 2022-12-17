@@ -6,6 +6,7 @@ import 'package:finance_manager/widgets/auth/sign_up_widget.dart';
 import 'package:finance_manager/widgets/auth/sign_up_widget_model.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/main_page/category_view_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/all_categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/category_widget.dart';
@@ -63,6 +64,7 @@ class App extends StatelessWidget {
               ),
           '/sign_up': (context) => const SignUpWidget(),
           '/main_page': (context) => const MainPage(),
+          '/main_page/category_view': (context) => const CategoryViewWidget(),
           '/main_page/add': (context) => const AddWidget(),
           '/main_page/invoices': (context) => const InvoicesWidget(),
           '/main_page/charts': (context) => const ChartsWidget(),

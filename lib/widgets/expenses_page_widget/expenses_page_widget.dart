@@ -210,55 +210,57 @@ class _ExpensesListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<ExpensesPageModel>(context);
-    return Slidable(
-      groupTag: 0,
-      endActionPane: ActionPane(
-        extentRatio: 0.25,
-        motion: const ScrollMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (context) async {
-              await model.deleteExpense(
-                expenses[index].id,
-                context,
-                userId,
-              );
-            },
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-            label: 'Удалить',
-          ),
-        ],
-      ),
-      child: ListTile(
-        dense: false,
-        minLeadingWidth: 25,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: SizedBox(
-            height: double.infinity,
-            child: Container(
-              width: 19,
-              height: 19,
-              decoration: BoxDecoration(
-                color: Color(int.parse(
-                    model.findCategory(expenses[index].category).color)),
-                shape: BoxShape.circle,
-              ),
+    return
+        // Slidable(
+        //   groupTag: 0,
+        //   endActionPane: ActionPane(
+        //     extentRatio: 0.25,
+        //     motion: const ScrollMotion(),
+        //     children: [
+        //       SlidableAction(
+        //         onPressed: (context) async {
+        //           await model.deleteExpense(
+        //             expenses[index].id,
+        //             context,
+        //             userId,
+        //           );
+        //         },
+        //         backgroundColor: Colors.red,
+        //         foregroundColor: Colors.white,
+        //         icon: Icons.delete,
+        //         label: 'Удалить',
+        //       ),
+        //     ],
+        //   ),
+        //   child:
+        ListTile(
+      onTap: () => Navigator.of(context).pushNamed('/main_page/category_view'),
+      dense: false,
+      minLeadingWidth: 25,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: SizedBox(
+          height: double.infinity,
+          child: Container(
+            width: 19,
+            height: 19,
+            decoration: BoxDecoration(
+              color: Color(int.parse(
+                  model.findCategory(expenses[index].category).color)),
+              shape: BoxShape.circle,
             ),
           ),
         ),
-        title: Text(
-          expenses[index].category.toString(),
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-        ),
-        trailing: Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: Text("${expenses[index].price.toInt().toString()} ₸"),
-        ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       ),
+      title: Text(
+        expenses[index].category.toString(),
+        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+      ),
+      trailing: Padding(
+        padding: const EdgeInsets.only(right: 12),
+        child: Text("${expenses[index].price.toInt().toString()} ₸"),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
     );
   }
 }

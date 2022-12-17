@@ -8,6 +8,7 @@ import '../../entity/expense.dart';
 
 class ExpensesPageModel extends ChangeNotifier {
   List<Expense> listOfExpenses = [];
+  List<Expense> listOfShortenExpenses = [];
   List<Color> listOfColors = [];
 
   Map<String, double> dataMap = {};
@@ -50,14 +51,30 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   void _setExpenses(List<Expense> currentListOfExpenses) {
+    listOfShortenExpenses.clear();
     for (var i = 0; i < currentListOfExpenses.length; i++) {
-      for (var j = i + 1; j < currentListOfExpenses.length - 1; j++) {
+      for (var j = i + 1; j < currentListOfExpenses.length; j++) {
         if (currentListOfExpenses[i].category ==
-            currentListOfExpenses[j].category) {}
+                currentListOfExpenses[j].category &&
+            i != j) {
+          listOfShortenExpenses.add(Expense(
+            category: currentListOfExpenses[i].category,
+            date: currentListOfExpenses[i].date,
+            price:
+                currentListOfExpenses[i].price + currentListOfExpenses[j].price,
+          ));
+          currentListOfExpenses.removeAt(j);
+          break;
+        } else if (j == currentListOfExpenses.length - 1) {
+          listOfShortenExpenses.add(currentListOfExpenses[i]);
+        }
+      }
+      if (i == currentListOfExpenses.length - 1) {
+        listOfShortenExpenses.add(currentListOfExpenses[i]);
       }
     }
 
-    listOfExpenses = currentListOfExpenses;
+    listOfExpenses = listOfShortenExpenses;
     notifyListeners();
   }
 
