@@ -28,12 +28,9 @@ class _AddWidgetState extends State<AddWidget> {
   @override
   Widget build(BuildContext context) {
     final expenseModel = context.read<ExpensesPageModel>();
-    return ChangeNotifierProvider(
-      create: (context) => AddWidgetModel(expenseModel),
-      child: _AddWidgetBody(
-        priceController: priceController,
-        textController: textController,
-      ),
+    return _AddWidgetBody(
+      priceController: priceController,
+      textController: textController,
     );
   }
 }
@@ -50,7 +47,7 @@ class _AddWidgetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<AddWidgetModel>();
+    final model = Provider.of<AddWidgetModel>(context);
     final addCategoryWidgetModel = Provider.of<AddCategoryWidgetModel>(context);
     model.listOfCategories = addCategoryWidgetModel.listOfExpenseCategories;
     DateTime? newDate;

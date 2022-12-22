@@ -19,6 +19,8 @@ class ExpensesPageModel extends ChangeNotifier {
     String? userId,
   ) async {
     final list = await readExpenses(context, userId) ?? [];
+    listOfExpenses.clear();
+    listOfExpenses = List.from(list);
     _setExpenses(list);
     _sortExpenses();
     _setDataMap();
@@ -74,7 +76,6 @@ class ExpensesPageModel extends ChangeNotifier {
       }
     }
 
-    listOfExpenses = listOfShortenExpenses;
     notifyListeners();
   }
 
@@ -110,19 +111,19 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   void _sortExpenses() {
-    listOfExpenses.sort((a, b) => a.price.compareTo(b.price) * -1);
+    listOfShortenExpenses.sort((a, b) => a.price.compareTo(b.price) * -1);
     notifyListeners();
   }
 
   void _setColors() {
-    if (listOfExpenses.isEmpty) {
+    if (listOfShortenExpenses.isEmpty) {
       listOfColors.clear();
       return;
     }
     listOfColors.clear();
-    for (var i = 0; i < listOfExpenses.length; i++) {
-      listOfColors.add(
-          Color(int.parse(findCategory(listOfExpenses[i].category).color)));
+    for (var i = 0; i < listOfShortenExpenses.length; i++) {
+      listOfColors.add(Color(
+          int.parse(findCategory(listOfShortenExpenses[i].category).color)));
     }
     notifyListeners();
   }
@@ -130,8 +131,9 @@ class ExpensesPageModel extends ChangeNotifier {
   void _setDataMap() {
     final Map<String, double> mapOfExpenses = {};
     dataMap.clear();
-    for (var i = 0; i < listOfExpenses.length; i++) {
-      mapOfExpenses[listOfExpenses[i].category] = listOfExpenses[i].price;
+    for (var i = 0; i < listOfShortenExpenses.length; i++) {
+      mapOfExpenses[listOfShortenExpenses[i].category] =
+          listOfShortenExpenses[i].price;
     }
     dataMap.addAll(mapOfExpenses);
     notifyListeners();
@@ -140,8 +142,8 @@ class ExpensesPageModel extends ChangeNotifier {
   void _setSum() {
     sum = "";
     double currentSum = 0;
-    for (var i = 0; i < listOfExpenses.length; i++) {
-      currentSum += listOfExpenses[i].price;
+    for (var i = 0; i < listOfShortenExpenses.length; i++) {
+      currentSum += listOfShortenExpenses[i].price;
     }
     var sumString = currentSum.floor().toString().split('');
 

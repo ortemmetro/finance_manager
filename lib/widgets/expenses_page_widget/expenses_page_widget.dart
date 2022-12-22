@@ -3,12 +3,21 @@ import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
 import '../../entity/expense.dart';
 import '../../session/session_id_model.dart';
+
+class ExpenseInfo {
+  final List<Expense> listOfExpenses;
+  final String category;
+
+  ExpenseInfo({
+    required this.listOfExpenses,
+    required this.category,
+  });
+}
 
 class ExpensesPageWidget extends StatefulWidget {
   const ExpensesPageWidget({super.key});
@@ -113,7 +122,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
           const SizedBox(height: 20),
           Expanded(
             child: _ExpensesListViewWidget(
-              expenses: model.listOfExpenses,
+              expenses: model.listOfShortenExpenses,
               userId: uUserId,
             ),
           ),
@@ -234,7 +243,15 @@ class _ExpensesListTileWidget extends StatelessWidget {
         //   ),
         //   child:
         ListTile(
-      onTap: () => Navigator.of(context).pushNamed('/main_page/category_view'),
+      onTap: () {
+        final arguments = ExpenseInfo(
+            category: expenses[index].category,
+            listOfExpenses: model.listOfExpenses);
+        Navigator.of(context).pushNamed(
+          '/main_page/category_view',
+          arguments: arguments,
+        );
+      },
       dense: false,
       minLeadingWidth: 25,
       leading: Padding(
