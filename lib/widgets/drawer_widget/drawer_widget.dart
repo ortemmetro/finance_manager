@@ -97,7 +97,8 @@ class DrawerWidget extends StatelessWidget {
               },
             ),
           ),
-          Expanded(
+          SizedBox(
+            height: 100,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

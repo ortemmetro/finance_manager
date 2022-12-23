@@ -18,6 +18,7 @@ import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widge
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../main_page/main_page.dart';
@@ -29,6 +30,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //width of design is 393,
+    //height is 803
     return MultiProvider(
       providers: [
         Provider(create: (context) => SessionIdModel()),
@@ -42,46 +45,49 @@ class App extends StatelessWidget {
             create: (context) => AddWidgetModel(
                 Provider.of<ExpensesPageModel>(context, listen: false))),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: const Color.fromARGB(255, 93, 176, 117),
-          disabledColor: const Color.fromARGB(255, 232, 232, 232),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Color.fromARGB(255, 93, 176, 117),
+      child: ScreenUtilInit(
+        builder: (context, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: const Color.fromARGB(255, 93, 176, 117),
+            disabledColor: const Color.fromARGB(255, 232, 232, 232),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Color.fromARGB(255, 93, 176, 117),
+            ),
           ),
+          routes: {
+            '/': (context) => StreamBuilder<User?>(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Что-то пошло не так!'));
+                    } else if (snapshot.hasData) {
+                      return const MainPage();
+                    } else {
+                      return const AuthWidget();
+                    }
+                  },
+                ),
+            '/sign_up': (context) => const SignUpWidget(),
+            '/main_page': (context) => const MainPage(),
+            '/main_page/category_view': (context) => const CategoryViewWidget(),
+            '/main_page/add': (context) => const AddWidget(),
+            '/main_page/invoices': (context) => const InvoicesWidget(),
+            '/main_page/charts': (context) => const ChartsWidget(),
+            '/main_page/categories': (context) => const CategoriesWidget(),
+            '/main_page/categories/add': (context) => const AddCategoryWidget(),
+            '/main_page/categories/one_category': (context) =>
+                const CategoryWidget(),
+            '/main_page/categories/add/all_categories': (context) =>
+                const AllCategoriesWidget(),
+            '/main_page/currency': (context) => const CurrencyWidget(),
+            '/main_page/settings': (context) => const SettingsWidget(),
+          },
+          initialRoute: '/',
         ),
-        routes: {
-          '/': (context) => StreamBuilder<User?>(
-                stream: FirebaseAuth.instance.authStateChanges(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return const Center(child: Text('Что-то пошло не так!'));
-                  } else if (snapshot.hasData) {
-                    return const MainPage();
-                  } else {
-                    return const AuthWidget();
-                  }
-                },
-              ),
-          '/sign_up': (context) => const SignUpWidget(),
-          '/main_page': (context) => const MainPage(),
-          '/main_page/category_view': (context) => const CategoryViewWidget(),
-          '/main_page/add': (context) => const AddWidget(),
-          '/main_page/invoices': (context) => const InvoicesWidget(),
-          '/main_page/charts': (context) => const ChartsWidget(),
-          '/main_page/categories': (context) => const CategoriesWidget(),
-          '/main_page/categories/add': (context) => const AddCategoryWidget(),
-          '/main_page/categories/one_category': (context) =>
-              const CategoryWidget(),
-          '/main_page/categories/add/all_categories': (context) =>
-              const AllCategoriesWidget(),
-          '/main_page/currency': (context) => const CurrencyWidget(),
-          '/main_page/settings': (context) => const SettingsWidget(),
-        },
-        initialRoute: '/',
+        designSize: const Size(393, 803),
       ),
     );
   }
