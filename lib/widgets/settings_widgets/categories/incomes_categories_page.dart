@@ -1,5 +1,6 @@
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../entity/category.dart';
 
@@ -44,7 +45,7 @@ class _IncomesCategoriesGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 15),
+      margin: EdgeInsets.only(top: 15.h),
       child: GridView.builder(
         itemCount: listOfCategories.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -55,7 +56,7 @@ class _IncomesCategoriesGridView extends StatelessWidget {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                    EdgeInsets.symmetric(horizontal: 4.0.w, vertical: 2.0.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -71,7 +72,10 @@ class _IncomesCategoriesGridView extends StatelessWidget {
               Text(
                 listOfCategories[index].name,
                 maxLines: 1,
-                style: const TextStyle(overflow: TextOverflow.ellipsis),
+                style: TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 14.sp,
+                ),
               ),
             ],
           );
@@ -107,17 +111,17 @@ class CategoryCircleIconWidget extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.all(1.0),
+        margin: EdgeInsets.symmetric(horizontal: 1.0.w, vertical: 1.0.h),
         child: Container(
-          width: 65,
-          height: 65,
+          width: 65.w,
+          height: 65.h,
           decoration: BoxDecoration(
             color: Color(int.parse(listOfCategories[index].color)),
             shape: BoxShape.circle,
           ),
           child: Icon(
             iconsMap[listOfCategories[index].icon],
-            size: 45,
+            size: 45.r,
           ),
         ),
       ),

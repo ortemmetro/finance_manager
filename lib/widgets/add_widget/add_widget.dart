@@ -1,6 +1,7 @@
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../expenses_page_widget/expenses_page_model.dart';
@@ -57,19 +58,22 @@ class _AddWidgetBody extends StatelessWidget {
         children: [
           Column(
             children: [
-              const SizedBox(height: 45),
+              SizedBox(height: 45.h),
               _InputFieldWithCurrencyWidget(priceController: priceController),
-              const SizedBox(height: 45),
+              SizedBox(height: 45.h),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: 12.0.w),
                 child: Row(
-                  children: const [
-                    Text('Категории'),
+                  children: [
+                    Text(
+                      'Категории',
+                      style: TextStyle(fontSize: 18.sp),
+                    ),
                   ],
                 ),
               ),
               _CategoriesListWidget(model: model),
-              const SizedBox(height: 45),
+              SizedBox(height: 45.h),
               ElevatedButton(
                 onPressed: () async {
                   newDate = await model.myShowDatePicker(newDate, context);
@@ -79,11 +83,14 @@ class _AddWidgetBody extends StatelessWidget {
                     Color.fromARGB(255, 93, 176, 117),
                   ),
                 ),
-                child: const Text('Выбрать дату'),
+                child: Text(
+                  'Выбрать дату',
+                  style: TextStyle(fontSize: 15.sp),
+                ),
               ),
-              const SizedBox(height: 50),
+              SizedBox(height: 50.h),
               _CommentFieldWidget(textController: textController),
-              const SizedBox(height: 50),
+              SizedBox(height: 50.h),
               ElevatedButton(
                 onPressed: () async {
                   await model.createExpense(
@@ -99,11 +106,12 @@ class _AddWidgetBody extends StatelessWidget {
                     const Color.fromARGB(255, 93, 176, 117),
                   ),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(20.0),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 20.0.w, vertical: 20.0.h),
                   child: Text(
                     'Добавить',
-                    style: TextStyle(fontSize: 19),
+                    style: TextStyle(fontSize: 19.sp),
                   ),
                 ),
               ),
@@ -135,7 +143,7 @@ class _CategoriesListWidget extends StatelessWidget {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                    EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 4.0.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -146,7 +154,8 @@ class _CategoriesListWidget extends StatelessWidget {
               Text(
                 model.listOfCategories[index].name,
                 maxLines: 1,
-                style: const TextStyle(overflow: TextOverflow.ellipsis),
+                style: TextStyle(
+                    overflow: TextOverflow.ellipsis, fontSize: 14.5.sp),
               ),
             ],
           );
@@ -176,37 +185,42 @@ class _CategoryCircleIconWidget extends StatelessWidget {
       },
       child: selectedIndex == index
           ? Container(
-              margin: const EdgeInsets.all(12.0),
+              margin:
+                  EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 12.0.h),
               child: CircleAvatar(
-                radius: 32.5,
+                radius: 32.5.r,
                 backgroundColor: Colors.black,
                 child: CircleAvatar(
-                  radius: 29,
+                  radius: 29.r,
                   child: Container(
-                    width: 65,
-                    height: 65,
+                    width: 65.w,
+                    height: 65.h,
                     decoration: BoxDecoration(
                       color:
                           Color(int.parse(model.listOfCategories[index].color)),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.done, size: 45),
+                    child: Icon(
+                      Icons.done,
+                      size: 45.r,
+                    ),
                   ),
                 ),
               ),
             )
           : Container(
-              margin: const EdgeInsets.all(12.0),
+              margin:
+                  EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 12.0.h),
               child: Container(
-                width: 65,
-                height: 65,
+                width: 65.w,
+                height: 65.h,
                 decoration: BoxDecoration(
                   color: Color(int.parse(model.listOfCategories[index].color)),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   model.iconsMap[model.listOfCategories[index].icon],
-                  size: 45,
+                  size: 45.r,
                 ),
               ),
             ),
@@ -229,15 +243,18 @@ class _InputFieldWithCurrencyWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: 10,
-            width: 100,
+            height: 10.h,
+            width: 100.w,
             child: TextField(
               controller: priceController,
               decoration: const InputDecoration(),
             ),
           ),
-          const SizedBox(width: 5),
-          const Text('KZT'),
+          SizedBox(width: 5.w),
+          Text(
+            'KZT',
+            style: TextStyle(fontSize: 15.sp),
+          ),
         ],
       ),
     );
@@ -255,15 +272,18 @@ class _CommentFieldWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: EdgeInsets.symmetric(horizontal: 12.0.w),
           child: Row(
-            children: const [
-              Text('Комментарий'),
+            children: [
+              Text(
+                'Комментарий',
+                style: TextStyle(fontSize: 18.sp),
+              ),
             ],
           ),
         ),
         SizedBox(
-          width: 367,
+          width: 367.w,
           child: TextField(
             controller: textController,
           ),

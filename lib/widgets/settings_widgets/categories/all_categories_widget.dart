@@ -1,5 +1,6 @@
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class AllCategoriesWidget extends StatelessWidget {
@@ -11,16 +12,16 @@ class AllCategoriesWidget extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(
+        child: Icon(
           Icons.done,
-          size: 35,
+          size: 35.r,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(),
       body: Column(
         children: [
-          const SizedBox(height: 30),
+          SizedBox(height: 30.h),
           Expanded(
             child: GridView.builder(
               itemCount: model.iconsMap.length,
@@ -29,8 +30,8 @@ class AllCategoriesWidget extends StatelessWidget {
               ),
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 4.0, vertical: 2.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 4.0.w, vertical: 2.0.h),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -74,34 +75,34 @@ class AddAllCategoryCircleIconWidget extends StatelessWidget {
       },
       child: selectedIndex == index
           ? CircleAvatar(
-              radius: 32.5,
+              radius: 32.5.r,
               backgroundColor: Colors.black,
               child: CircleAvatar(
-                radius: 29,
+                radius: 29.r,
                 child: Container(
-                  width: 65,
-                  height: 65,
+                  width: 65.w,
+                  height: 65.h,
                   decoration: BoxDecoration(
                     color: model.color,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     listOfValues[index].value,
-                    size: 45,
+                    size: 45.r,
                   ),
                 ),
               ),
             )
           : Container(
-              width: 65,
-              height: 65,
+              width: 65.w,
+              height: 65.h,
               decoration: const BoxDecoration(
                 color: Colors.grey,
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 listOfValues[index].value,
-                size: 45,
+                size: 45.r,
               ),
             ),
     );

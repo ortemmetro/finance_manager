@@ -3,6 +3,7 @@ import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
@@ -50,46 +51,48 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
     final model = context.watch<ExpensesPageModel>();
     final user = FirebaseAuth.instance.currentUser!;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Column(
         children: [
           Text('Loged in as ${user.email!}'),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           SizedBox(
-            width: 392.7,
-            height: 200,
+            width: 392.7.w,
+            height: 200.h,
             child: Stack(
               children: [
                 Center(
                   child: _PieChartWidget(model: model),
                 ),
                 Positioned(
-                  bottom: 0,
-                  right: 0,
+                  bottom: 0.h,
+                  right: 0.w,
                   child: RawMaterialButton(
                     onPressed: () =>
                         Navigator.of(context).pushNamed('/main_page/add'),
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(12.0),
-                    child: const Icon(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 12.0.w, vertical: 12.0.h),
+                    child: Icon(
                       Icons.add,
-                      size: 25,
+                      size: 25.w,
                       color: Colors.white,
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 0,
-                  bottom: 0,
+                  left: 0.w,
+                  bottom: 0.h,
                   child: RawMaterialButton(
                     onPressed: () {},
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(12.0),
-                    child: const Icon(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 12.0.w, vertical: 12.0.h),
+                    child: Icon(
                       MyIconsClass.bar_graph_1214113,
-                      size: 25,
+                      size: 25.w,
                       color: Colors.white,
                     ),
                   ),
@@ -101,16 +104,18 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                     onPressed: () => model.showDateChangeDialog(context),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: const [
+                      children: [
                         Text(
                           "День",
                           style: TextStyle(
                             color: Colors.green,
+                            fontSize: 15.sp,
                           ),
                         ),
                         Icon(
                           Icons.chevron_right,
                           color: Colors.green,
+                          size: 24.w,
                         ),
                       ],
                     ),
@@ -119,7 +124,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Expanded(
             child: _ExpensesListViewWidget(
               expenses: model.listOfShortenExpenses,
@@ -147,12 +152,12 @@ class _PieChartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final sum = model.sum;
     return SizedBox(
-      height: 200,
-      width: 200,
+      height: 200.h,
+      width: 200.w,
       child: PieChart(
         centerText: '$sum ₸',
-        centerTextStyle: const TextStyle(
-          fontSize: 20,
+        centerTextStyle: TextStyle(
+          fontSize: 20.sp,
           foreground: null,
           backgroundColor: Colors.transparent,
           color: Colors.black,
@@ -163,7 +168,7 @@ class _PieChartWidget extends StatelessWidget {
         chartType: ChartType.ring,
         colorList:
             model.listOfColors.isEmpty ? [Colors.grey] : model.listOfColors,
-        ringStrokeWidth: 12.5,
+        ringStrokeWidth: 12.5.w,
         legendOptions: const LegendOptions(showLegends: false),
         chartValuesOptions: const ChartValuesOptions(
           chartValueBackgroundColor: Colors.transparent,
@@ -195,11 +200,11 @@ class _ExpensesListViewWidget extends StatelessWidget {
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return const Divider(
-          indent: 10,
-          endIndent: 10,
-          thickness: 1.5,
-          height: 1,
+        return Divider(
+          indent: 10.w,
+          endIndent: 10.w,
+          thickness: 1.5.h,
+          height: 1.h,
         );
       },
     );
@@ -219,30 +224,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<ExpensesPageModel>(context);
-    return
-        // Slidable(
-        //   groupTag: 0,
-        //   endActionPane: ActionPane(
-        //     extentRatio: 0.25,
-        //     motion: const ScrollMotion(),
-        //     children: [
-        //       SlidableAction(
-        //         onPressed: (context) async {
-        //           await model.deleteExpense(
-        //             expenses[index].id,
-        //             context,
-        //             userId,
-        //           );
-        //         },
-        //         backgroundColor: Colors.red,
-        //         foregroundColor: Colors.white,
-        //         icon: Icons.delete,
-        //         label: 'Удалить',
-        //       ),
-        //     ],
-        //   ),
-        //   child:
-        ListTile(
+    return ListTile(
       onTap: () {
         final arguments = ExpenseInfo(
             category: expenses[index].category,
@@ -253,14 +235,14 @@ class _ExpensesListTileWidget extends StatelessWidget {
         );
       },
       dense: false,
-      minLeadingWidth: 25,
+      minLeadingWidth: 25.w,
       leading: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: EdgeInsets.only(left: 10.w),
         child: SizedBox(
           height: double.infinity,
           child: Container(
-            width: 19,
-            height: 19,
+            width: 19.w,
+            height: 19.h,
             decoration: BoxDecoration(
               color: Color(int.parse(
                   model.findCategory(expenses[index].category).color)),
@@ -271,13 +253,18 @@ class _ExpensesListTileWidget extends StatelessWidget {
       ),
       title: Text(
         expenses[index].category.toString(),
-        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.sp),
       ),
       trailing: Padding(
-        padding: const EdgeInsets.only(right: 12),
-        child: Text("${expenses[index].price.toInt().toString()} ₸"),
+        padding: EdgeInsets.only(right: 12.w),
+        child: Text(
+          "${expenses[index].price.toInt().toString()} ₸",
+          style: TextStyle(
+            fontSize: 15.sp,
+          ),
+        ),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      contentPadding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 0.h),
     );
   }
 }

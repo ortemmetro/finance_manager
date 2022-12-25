@@ -1,6 +1,7 @@
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/rate_the_app/rate_the_app_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class DrawerIconTextFunction {
@@ -20,48 +21,48 @@ class DrawerWidget extends StatelessWidget {
 
   final drawerTileList = <DrawerIconTextFunction>[
     DrawerIconTextFunction(
-      icon: const Icon(Icons.home),
+      icon: Icon(Icons.home, size: 28.w),
       text: 'Главная',
       onTap: (BuildContext context) =>
           Navigator.of(context).pushNamed('/main_page'),
     ),
     DrawerIconTextFunction(
-      icon: const Icon(Icons.attach_money),
+      icon: Icon(Icons.attach_money, size: 28.w),
       text: 'Счета',
       onTap: (BuildContext context) =>
           Navigator.of(context).pushNamed('/main_page/invoices'),
     ),
     DrawerIconTextFunction(
-      icon: const Icon(Icons.auto_graph_outlined),
+      icon: Icon(Icons.auto_graph_outlined, size: 28.w),
       text: 'Графики',
       onTap: (BuildContext context) =>
           Navigator.of(context).pushNamed('/main_page/charts'),
     ),
     DrawerIconTextFunction(
-      icon: const Icon(Icons.category),
+      icon: Icon(Icons.category, size: 28.w),
       text: 'Категории',
       onTap: (BuildContext context) =>
           Navigator.of(context).pushNamed('/main_page/categories'),
     ),
     DrawerIconTextFunction(
-      icon: const Icon(Icons.money),
+      icon: Icon(Icons.money, size: 28.w),
       text: 'Валюта',
       onTap: (BuildContext context) =>
           Navigator.of(context).pushNamed('/main_page/currency'),
     ),
     DrawerIconTextFunction(
-      icon: const Icon(Icons.settings),
+      icon: Icon(Icons.settings, size: 28.w),
       text: 'Настройки',
       onTap: (BuildContext context) =>
           Navigator.of(context).pushNamed('/main_page/settings'),
     ),
     DrawerIconTextFunction(
-      icon: const Icon(Icons.share),
+      icon: Icon(Icons.share, size: 28.w),
       text: 'Поделиться с друзьями',
       onTap: null,
     ),
     DrawerIconTextFunction(
-      icon: const Icon(Icons.star),
+      icon: Icon(Icons.star, size: 28.w),
       text: 'Оценить приложение',
       onTap: (BuildContext context) async {
         await showDialog<void>(
@@ -80,31 +81,39 @@ class DrawerWidget extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          const SizedBox(height: 35),
+          SizedBox(height: 20.h),
           const _UserTileWidget(),
-          const Divider(thickness: 2.0),
+          Divider(thickness: 2.0.w),
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 1.h),
               itemCount: drawerTileList.length,
               itemBuilder: (context, index) {
                 final function = drawerTileList[index].onTap;
                 return ListTile(
+                  dense: true,
+                  minVerticalPadding: 17.h,
                   leading: drawerTileList[index].icon,
-                  title: Text(drawerTileList[index].text),
+                  title: Text(
+                    drawerTileList[index].text,
+                    style: TextStyle(fontSize: 14.5.sp),
+                  ),
                   onTap: () => function!(context),
                 );
               },
             ),
           ),
           SizedBox(
-            height: 100,
+            height: 100.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ListTile(
-                  leading: const Icon(Icons.door_front_door),
-                  title: const Text('Выйти'),
+                  leading: Icon(Icons.door_front_door, size: 28.w),
+                  title: Text(
+                    'Выйти',
+                    style: TextStyle(fontSize: 14.5.sp),
+                  ),
                   onTap: () {
                     model.signOut();
                     Navigator.of(context).popUntil(ModalRoute.withName('/'));
@@ -133,20 +142,15 @@ class _UserTileWidget extends StatelessWidget {
     return ListTile(
       title: Text(
         '${model.userName} ${model.userSurname}',
-        style: const TextStyle(fontSize: 17),
+        style: TextStyle(fontSize: 17.5.sp),
       ),
-      subtitle: const Text(
-        'Итого: \$999',
-        style: TextStyle(fontSize: 17),
-      ),
-      leading: const CircleAvatar(
+      subtitle: Text('Итого: \$999', style: TextStyle(fontSize: 16.5.sp)),
+      leading: CircleAvatar(
         backgroundColor: Colors.black,
-        radius: 25,
+        radius: 25.w,
         child: CircleAvatar(
-          radius: 22.75,
-          backgroundImage: AssetImage(
-            'images/user_image.jpg',
-          ),
+          radius: 22.75.w,
+          backgroundImage: const AssetImage('images/user_image.jpg'),
         ),
       ),
     );

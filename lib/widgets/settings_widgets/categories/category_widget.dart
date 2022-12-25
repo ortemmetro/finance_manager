@@ -2,6 +2,7 @@ import 'package:finance_manager/widgets/settings_widgets/categories/add_category
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class CategoryWidget extends StatelessWidget {
@@ -15,29 +16,30 @@ class CategoryWidget extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as CategoryInfo;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Изменение категории"),
+        title: Text("Изменение категории", style: TextStyle(fontSize: 20.sp)),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        padding: EdgeInsets.symmetric(horizontal: 12.0.w),
         child: Column(
           children: [
-            const SizedBox(height: 10),
+            SizedBox(height: 10.h),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  margin: const EdgeInsets.all(1.0),
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 1.0.w, vertical: 1.0.h),
                   child: Container(
-                    width: 40,
-                    height: 40,
+                    width: 40.w,
+                    height: 40.h,
                     decoration: BoxDecoration(
                       color: Color(int.parse(arguments.category.color)),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       iconsMap[arguments.category.icon],
-                      size: 35,
+                      size: 35.r,
                     ),
                   ),
                 ),
@@ -50,41 +52,44 @@ class CategoryWidget extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
-              children: const [
+              children: [
                 Text(
                   "Тип",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 18.sp,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Row(
               children: [
-                Text(arguments.category.categoryClass == CategoryClass.expense
-                    ? "Расходы"
-                    : "Доходы"),
+                Text(
+                  arguments.category.categoryClass == CategoryClass.expense
+                      ? "Расходы"
+                      : "Доходы",
+                  style: TextStyle(fontSize: 14.sp),
+                ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Row(
-              children: const [
+              children: [
                 Text(
                   "Иконки",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 18.sp,
                   ),
                 ),
               ],
             ),
             Container(
-              height: 268,
-              margin: const EdgeInsets.only(top: 15),
+              height: 268.h,
+              margin: EdgeInsets.only(top: 15.h),
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 12,
@@ -93,8 +98,8 @@ class CategoryWidget extends StatelessWidget {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 4.0, vertical: 2.0),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 4.0.w, vertical: 2.0.h),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -119,17 +124,26 @@ class CategoryWidget extends StatelessWidget {
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
                   ),
-                  child: const Text("Все иконки"),
+                  child: Text(
+                    "Все иконки",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 170),
+            SizedBox(height: 170.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                   onPressed: () {},
-                  child: const Text("Сохранить"),
+                  child: Text(
+                    "Сохранить",
+                    style: TextStyle(fontSize: 15.sp),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -140,7 +154,10 @@ class CategoryWidget extends StatelessWidget {
                     );
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Удалить категорию"),
+                  child: Text(
+                    "Удалить категорию",
+                    style: TextStyle(fontSize: 15.sp),
+                  ),
                 ),
               ],
             ),

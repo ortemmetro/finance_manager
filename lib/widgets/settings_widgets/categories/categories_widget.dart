@@ -3,6 +3,7 @@ import 'package:finance_manager/widgets/settings_widgets/categories/add_category
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/incomes_categories_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../drawer_widget/drawer_widget.dart';
@@ -17,9 +18,9 @@ class CategoriesWidget extends StatefulWidget {
 class _CategoriesWidgetState extends State<CategoriesWidget>
     with TickerProviderStateMixin {
   late TabController? _tabController;
-  final myTabs = const <Tab>[
-    Tab(text: 'Расходы', height: 39),
-    Tab(text: 'Доходы', height: 39),
+  final myTabs = <Tab>[
+    Tab(text: 'Расходы', height: 39.h),
+    Tab(text: 'Доходы', height: 39.h),
   ];
 
   @override
@@ -62,24 +63,21 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
           Navigator.of(context).pushNamed("/main_page/categories/add");
         },
         backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add, size: 29.w),
       ),
       drawer: DrawerWidget(),
       appBar: AppBar(
-        toolbarHeight: 70.0,
-        title: const Text('Категории'),
+        toolbarHeight: 70.0.h,
+        title: Text('Категории', style: TextStyle(fontSize: 20.sp)),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(40.0),
+          preferredSize: Size.fromHeight(40.0.h),
           child: Card(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0)),
-              side: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
+            shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+              side: BorderSide(color: Colors.white, width: 2.0.w),
             ),
-            elevation: 26.0,
+            elevation: 26.0.h,
             color: Theme.of(context).primaryColor,
             child: TabBar(
               onTap: (index) {
@@ -94,14 +92,11 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
               labelColor: Colors.black,
               indicator: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(
-                  color: Colors.white,
-                  width: 2.0,
-                ),
+                border: Border.all(color: Colors.white, width: 2.0.w),
                 borderRadius: BorderRadius.circular(15),
               ),
-              labelStyle: const TextStyle(
-                fontSize: 15.5,
+              labelStyle: TextStyle(
+                fontSize: 15.5.sp,
                 fontWeight: FontWeight.w500,
               ),
               tabs: myTabs,
