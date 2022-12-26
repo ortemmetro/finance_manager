@@ -365,13 +365,13 @@ class MyIconsClass {
       IconData(0xe8ae, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData basket_1214048 =
       IconData(0xe8af, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData card_search_1784369 =
+  static const IconData cardSearch_1784369 =
       IconData(0xe8b0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData card_to_card_transaction_1784371 =
+  static const IconData cardToCardTransaction_1784371 =
       IconData(0xe8b1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData cart_1214043 =
       IconData(0xe8b2, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData hand_truck_1214380 =
+  static const IconData handTruck_1214380 =
       IconData(0xe8b3, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData luggage_1214387 =
       IconData(0xe8b4, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -379,11 +379,11 @@ class MyIconsClass {
       IconData(0xe8b5, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData metro_1408700 =
       IconData(0xe8b6, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData school_bus_1214385 =
+  static const IconData schoolBus_1214385 =
       IconData(0xe8b7, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData school_bus_1214386 =
+  static const IconData schoolBus_1214386 =
       IconData(0xe8b8, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData shipping_truck_1214384 =
+  static const IconData shippingTruck1214384 =
       IconData(0xe8b9, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData train_1214382 =
       IconData(0xe8ba, fontFamily: _kFontFam, fontPackage: _kFontPkg);

@@ -6,8 +6,11 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../entity/category.dart';
 import '../../entity/expense.dart';
 
+enum Period { day, week, month, customPeriod }
+
 class ExpensesPageModel extends ChangeNotifier {
-  List<Expense> listOfExpenses = [];
+  List<Expense> listOfAllExpenses = [];
+  List<Expense> listOfNeededExpenses = [];
   List<Expense> listOfShortenExpenses = [];
   List<Color> listOfColors = [];
 
@@ -19,8 +22,6 @@ class ExpensesPageModel extends ChangeNotifier {
     String? userId,
   ) async {
     final list = await readExpenses(context, userId) ?? [];
-    listOfExpenses.clear();
-    listOfExpenses = List.from(list);
     _setExpenses(list);
     _sortExpenses();
     _setDataMap();
@@ -54,6 +55,8 @@ class ExpensesPageModel extends ChangeNotifier {
 
   void _setExpenses(List<Expense> currentListOfExpenses) {
     listOfShortenExpenses.clear();
+    listOfAllExpenses.clear();
+    listOfAllExpenses = List.from(currentListOfExpenses);
     for (var i = 0; i < currentListOfExpenses.length; i++) {
       for (var j = i + 1; j < currentListOfExpenses.length; j++) {
         if (currentListOfExpenses[i].category ==
@@ -157,6 +160,25 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _changePeriod(Period period, DateTime currentDate) {
+    if (period == Period.day) {
+      listOfNeededExpenses = List.from(listOfAllExpenses);
+      listOfNeededExpenses.removeWhere((element) {
+        final a = currentDate.subtract(const Duration(days: 1));
+        var b = true;
+        if (element.date.isAfter(a) && element.date.isBefore(currentDate)) {
+          b = false;
+        }
+        return b;
+      });
+      _setExpenses(listOfNeededExpenses);
+      _sortExpenses();
+      _setDataMap();
+      _setColors();
+      _setSum();
+    }
+  }
+
   void showDateChangeDialog(BuildContext context) {
     showMaterialModalBottomSheet(
       context: context,
@@ -164,10 +186,11 @@ class ExpensesPageModel extends ChangeNotifier {
       builder: (context) {
         return Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             SizedBox(height: 10),
             ListTile(
-              leading: Text("День"),
+              leading: const Text("День"),
+              onTap: () => _changePeriod(Period.day, DateTime.now()),
             ),
             Divider(),
             ListTile(

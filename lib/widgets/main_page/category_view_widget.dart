@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/entity/expense.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../expenses_page_widget/expenses_page_widget.dart';
@@ -75,6 +78,8 @@ class _ListTileInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final format = DateFormat.MMMMEEEEd("ru"); // .H(); //.EEEE();
+    final dateString = format.format(expense.date);
     return ListTile(
       leading: Container(
         margin: const EdgeInsets.all(1.0),
@@ -98,6 +103,9 @@ class _ListTileInfoWidget extends StatelessWidget {
           color: Color.fromARGB(255, 83, 83, 83),
           fontSize: 18,
         ),
+      ),
+      subtitle: Text(
+        dateString,
       ),
       trailing: Text(
         "${expense.price.toInt()} ₸",

@@ -228,7 +228,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
       onTap: () {
         final arguments = ExpenseInfo(
             category: expenses[index].category,
-            listOfExpenses: model.listOfExpenses);
+            listOfExpenses: model.listOfAllExpenses);
         Navigator.of(context).pushNamed(
           '/main_page/category_view',
           arguments: arguments,
