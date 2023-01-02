@@ -1,17 +1,29 @@
-import 'dart:math';
-
 import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/entity/expense.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../expenses_page_widget/expenses_page_widget.dart';
 
-class CategoryViewWidget extends StatelessWidget {
+class CategoryViewWidget extends StatefulWidget {
   const CategoryViewWidget({super.key});
+
+  @override
+  State<CategoryViewWidget> createState() => _CategoryViewWidgetState();
+}
+
+class _CategoryViewWidgetState extends State<CategoryViewWidget> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      await initializeDateFormatting('ru', null);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +90,7 @@ class _ListTileInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final format = DateFormat.MMMMEEEEd("ru"); // .H(); //.EEEE();
+    final format = DateFormat.MMMMEEEEd("ru");
     final dateString = format.format(expense.date);
     return ListTile(
       leading: Container(

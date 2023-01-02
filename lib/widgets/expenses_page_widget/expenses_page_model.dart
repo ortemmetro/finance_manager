@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../entity/category.dart';
 import '../../entity/expense.dart';
 
-enum Period { day, week, month, customPeriod }
+enum Period { day, week, month, year, customPeriod }
 
 class ExpensesPageModel extends ChangeNotifier {
+  List<Expense> listOfALLALLExpenses = [];
   List<Expense> listOfAllExpenses = [];
   List<Expense> listOfNeededExpenses = [];
   List<Expense> listOfShortenExpenses = [];
@@ -16,12 +18,23 @@ class ExpensesPageModel extends ChangeNotifier {
 
   Map<String, double> dataMap = {};
   var sum = "";
+  String? currentUserId;
 
-  Future<void> setup(
-    BuildContext context,
-    String? userId,
-  ) async {
-    final list = await readExpenses(context, userId) ?? [];
+  Future<void> _setALLExpenses(String? userId) async {
+    if (listOfALLALLExpenses.isEmpty) {
+      listOfALLALLExpenses = await readExpenses(userId) ?? [];
+      currentUserId = userId;
+      return;
+    } else if (listOfALLALLExpenses.isNotEmpty && currentUserId != userId) {
+      listOfALLALLExpenses.clear();
+      listOfALLALLExpenses = await readExpenses(userId) ?? [];
+      currentUserId = userId;
+    }
+  }
+
+  Future<void> setup(String? userId) async {
+    final list = await readExpenses(userId) ?? [];
+    _setALLExpenses(userId);
     _setExpenses(list);
     _sortExpenses();
     _setDataMap();
@@ -30,10 +43,7 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Expense>>? readExpenses(
-    BuildContext context,
-    String? userId,
-  ) async {
+  Future<List<Expense>>? readExpenses(String? userId) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
             .where("id", isEqualTo: (userId))
@@ -49,7 +59,6 @@ class ExpensesPageModel extends ChangeNotifier {
               snapshot.docs.map((doc) => Expense.fromJson(doc.data())).toList())
           .first;
     }
-
     return [];
   }
 
@@ -58,27 +67,21 @@ class ExpensesPageModel extends ChangeNotifier {
     listOfAllExpenses.clear();
     listOfAllExpenses = List.from(currentListOfExpenses);
     for (var i = 0; i < currentListOfExpenses.length; i++) {
+      var currentPrice = currentListOfExpenses[i].price;
+
       for (var j = i + 1; j < currentListOfExpenses.length; j++) {
         if (currentListOfExpenses[i].category ==
-                currentListOfExpenses[j].category &&
-            i != j) {
-          listOfShortenExpenses.add(Expense(
-            category: currentListOfExpenses[i].category,
-            date: currentListOfExpenses[i].date,
-            price:
-                currentListOfExpenses[i].price + currentListOfExpenses[j].price,
-          ));
+            currentListOfExpenses[j].category) {
+          currentPrice += currentListOfExpenses[j].price;
           currentListOfExpenses.removeAt(j);
-          break;
-        } else if (j == currentListOfExpenses.length - 1) {
-          listOfShortenExpenses.add(currentListOfExpenses[i]);
         }
       }
-      if (i == currentListOfExpenses.length - 1) {
-        listOfShortenExpenses.add(currentListOfExpenses[i]);
-      }
+      listOfShortenExpenses.add(Expense(
+        category: currentListOfExpenses[i].category,
+        date: currentListOfExpenses[i].date,
+        price: currentPrice,
+      ));
     }
-
     notifyListeners();
   }
 
@@ -97,10 +100,10 @@ class ExpensesPageModel extends ChangeNotifier {
     final docExpenseReference = docUsersReference.collection('Expenses');
     if (docExpenseReference.doc(id).path.isNotEmpty) {
       await docExpenseReference.doc(id).delete();
-      setup(context, userId);
+      setup(userId);
       return;
     }
-    setup(context, userId);
+    setup(userId);
     return;
   }
 
@@ -162,7 +165,7 @@ class ExpensesPageModel extends ChangeNotifier {
 
   void _changePeriod(Period period, DateTime currentDate) {
     if (period == Period.day) {
-      listOfNeededExpenses = List.from(listOfAllExpenses);
+      listOfNeededExpenses = List.from(listOfALLALLExpenses);
       listOfNeededExpenses.removeWhere((element) {
         final a = currentDate.subtract(const Duration(days: 1));
         var b = true;
@@ -176,6 +179,55 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
+      notifyListeners();
+    } else if (period == Period.week) {
+      listOfNeededExpenses = List.from(listOfALLALLExpenses);
+      listOfNeededExpenses.removeWhere((element) {
+        final a = currentDate.subtract(const Duration(days: 7));
+        var b = true;
+        if (element.date.isAfter(a) && element.date.isBefore(currentDate)) {
+          b = false;
+        }
+        return b;
+      });
+      _setExpenses(listOfNeededExpenses);
+      _sortExpenses();
+      _setDataMap();
+      _setColors();
+      _setSum();
+      notifyListeners();
+    } else if (period == Period.month) {
+      listOfNeededExpenses = List.from(listOfALLALLExpenses);
+      listOfNeededExpenses.removeWhere((element) {
+        final a = currentDate.subtract(const Duration(days: 30));
+        var b = true;
+        if (element.date.isAfter(a) && element.date.isBefore(currentDate)) {
+          b = false;
+        }
+        return b;
+      });
+      _setExpenses(listOfNeededExpenses);
+      _sortExpenses();
+      _setDataMap();
+      _setColors();
+      _setSum();
+      notifyListeners();
+    } else if (period == Period.year) {
+      listOfNeededExpenses = List.from(listOfALLALLExpenses);
+      listOfNeededExpenses.removeWhere((element) {
+        final a = currentDate.subtract(const Duration(days: 365));
+        var b = true;
+        if (element.date.isAfter(a) && element.date.isBefore(currentDate)) {
+          b = false;
+        }
+        return b;
+      });
+      _setExpenses(listOfNeededExpenses);
+      _sortExpenses();
+      _setDataMap();
+      _setColors();
+      _setSum();
+      notifyListeners();
     }
   }
 
@@ -187,24 +239,27 @@ class ExpensesPageModel extends ChangeNotifier {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             ListTile(
               leading: const Text("День"),
               onTap: () => _changePeriod(Period.day, DateTime.now()),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              leading: Text("Неделя"),
+              leading: const Text("Неделя"),
+              onTap: () => _changePeriod(Period.week, DateTime.now()),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              leading: Text("Месяц"),
+              leading: const Text("Месяц"),
+              onTap: () => _changePeriod(Period.month, DateTime.now()),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              leading: Text("Год"),
+              leading: const Text("Год"),
+              onTap: () => _changePeriod(Period.year, DateTime.now()),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
               leading: Text("Период"),
             ),

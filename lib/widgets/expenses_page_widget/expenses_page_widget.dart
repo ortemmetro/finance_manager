@@ -42,7 +42,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
       final addCategoryWidgetModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
       await addCategoryWidgetModel.downloadCategories(context);
-      context.read<ExpensesPageModel>().setup(context, uUserId);
+      context.read<ExpensesPageModel>().setup(uUserId);
     });
   }
 
