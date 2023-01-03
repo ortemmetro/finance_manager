@@ -10,7 +10,7 @@ class DrawerWidgetModel extends ChangeNotifier {
   String userName = "";
   String userSurname = "";
 
-  void getUserInfo(BuildContext context) async {
+  Future<void> getUserInfo(BuildContext context) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) return;
     final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);

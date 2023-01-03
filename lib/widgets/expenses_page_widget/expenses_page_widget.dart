@@ -102,11 +102,14 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                   top: 0,
                   child: TextButton(
                     onPressed: () => model.showDateChangeDialog(context),
+                    style: ButtonStyle(
+                        padding:
+                            MaterialStateProperty.all(const EdgeInsets.all(0))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "День",
+                          model.selectedPeriod,
                           style: TextStyle(
                             color: Colors.green,
                             fontSize: 15.sp,
@@ -126,9 +129,11 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
           ),
           SizedBox(height: 20.h),
           Expanded(
-            child: _ExpensesListViewWidget(
-              expenses: model.listOfShortenExpenses,
-              userId: uUserId,
+            child: Scrollbar(
+              child: _ExpensesListViewWidget(
+                expenses: model.listOfShortenExpenses,
+                userId: uUserId,
+              ),
             ),
           ),
         ],

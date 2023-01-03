@@ -47,7 +47,9 @@ class AddWidgetModel extends ChangeNotifier {
     final json = expense.toJson();
 
     await docExpenseReference.set(json);
-    expenseModel.setup(userId);
+    await expenseModel.setup(userId);
+    expenseModel.listOfALLALLExpenses.clear();
+    expenseModel.setALLExpenses(userId);
 
     Navigator.of(context).pop();
     return;

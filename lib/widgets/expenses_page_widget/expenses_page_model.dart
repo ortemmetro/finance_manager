@@ -20,7 +20,9 @@ class ExpensesPageModel extends ChangeNotifier {
   var sum = "";
   String? currentUserId;
 
-  Future<void> _setALLExpenses(String? userId) async {
+  String selectedPeriod = "За всё время";
+
+  Future<void> setALLExpenses(String? userId) async {
     if (listOfALLALLExpenses.isEmpty) {
       listOfALLALLExpenses = await readExpenses(userId) ?? [];
       currentUserId = userId;
@@ -34,7 +36,7 @@ class ExpensesPageModel extends ChangeNotifier {
 
   Future<void> setup(String? userId) async {
     final list = await readExpenses(userId) ?? [];
-    _setALLExpenses(userId);
+    setALLExpenses(userId);
     _setExpenses(list);
     _sortExpenses();
     _setDataMap();
@@ -101,9 +103,13 @@ class ExpensesPageModel extends ChangeNotifier {
     if (docExpenseReference.doc(id).path.isNotEmpty) {
       await docExpenseReference.doc(id).delete();
       setup(userId);
+      listOfALLALLExpenses.clear();
+      await setALLExpenses(userId);
       return;
     }
-    setup(userId);
+    await setup(userId);
+    listOfALLALLExpenses.clear();
+    await setALLExpenses(userId);
     return;
   }
 
@@ -179,6 +185,7 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
+      selectedPeriod = "День";
       notifyListeners();
     } else if (period == Period.week) {
       listOfNeededExpenses = List.from(listOfALLALLExpenses);
@@ -195,6 +202,7 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
+      selectedPeriod = "Неделя";
       notifyListeners();
     } else if (period == Period.month) {
       listOfNeededExpenses = List.from(listOfALLALLExpenses);
@@ -211,6 +219,7 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
+      selectedPeriod = "Месяц";
       notifyListeners();
     } else if (period == Period.year) {
       listOfNeededExpenses = List.from(listOfALLALLExpenses);
@@ -227,6 +236,7 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
+      selectedPeriod = "Год";
       notifyListeners();
     }
   }
@@ -242,22 +252,34 @@ class ExpensesPageModel extends ChangeNotifier {
             SizedBox(height: 10.h),
             ListTile(
               leading: const Text("День"),
-              onTap: () => _changePeriod(Period.day, DateTime.now()),
+              onTap: () {
+                _changePeriod(Period.day, DateTime.now());
+                Navigator.of(context).pop();
+              },
             ),
             const Divider(),
             ListTile(
               leading: const Text("Неделя"),
-              onTap: () => _changePeriod(Period.week, DateTime.now()),
+              onTap: () {
+                _changePeriod(Period.week, DateTime.now());
+                Navigator.of(context).pop();
+              },
             ),
             const Divider(),
             ListTile(
               leading: const Text("Месяц"),
-              onTap: () => _changePeriod(Period.month, DateTime.now()),
+              onTap: () {
+                _changePeriod(Period.month, DateTime.now());
+                Navigator.of(context).pop();
+              },
             ),
             const Divider(),
             ListTile(
               leading: const Text("Год"),
-              onTap: () => _changePeriod(Period.year, DateTime.now()),
+              onTap: () {
+                _changePeriod(Period.year, DateTime.now());
+                Navigator.of(context).pop();
+              },
             ),
             const Divider(),
             ListTile(
