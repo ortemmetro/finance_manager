@@ -76,6 +76,7 @@ class ExpensesPageModel extends ChangeNotifier {
             currentListOfExpenses[j].category) {
           currentPrice += currentListOfExpenses[j].price;
           currentListOfExpenses.removeAt(j);
+          j = j - 1;
         }
       }
       listOfShortenExpenses.add(Expense(

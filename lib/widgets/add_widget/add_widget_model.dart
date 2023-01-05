@@ -52,6 +52,7 @@ class AddWidgetModel extends ChangeNotifier {
     expenseModel.setALLExpenses(userId);
 
     Navigator.of(context).pop();
+    selectedIndex = -1;
     return;
   }
 

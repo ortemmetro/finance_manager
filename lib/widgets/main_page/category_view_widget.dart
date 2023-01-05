@@ -3,53 +3,43 @@ import 'package:finance_manager/entity/expense.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../session/session_id_model.dart';
 import '../expenses_page_widget/expenses_page_widget.dart';
 
-class CategoryViewWidget extends StatefulWidget {
+class CategoryViewWidget extends StatelessWidget {
   const CategoryViewWidget({super.key});
 
   @override
-  State<CategoryViewWidget> createState() => _CategoryViewWidgetState();
-}
-
-class _CategoryViewWidgetState extends State<CategoryViewWidget> {
-  List<Expense> listOfExpensesOfCurrentCategory = [];
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      final arguments =
-          ModalRoute.of(context)!.settings.arguments as ExpenseInfo;
-      for (var i = 0; i < arguments.listOfExpenses.length; i++) {
-        if (arguments.listOfExpenses[i].category == arguments.category) {
-          listOfExpensesOfCurrentCategory.add(arguments.listOfExpenses[i]);
-        }
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final addModel = Provider.of<AddWidgetModel>(context, listen: false);
+    final addModel = Provider.of<AddWidgetModel>(context, listen: true);
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
     final userId = sessionIdModel.readUserId("uid");
+    List<Expense> listOfExpensesOfCurrentCategory = [];
+    final arguments = ModalRoute.of(context)!.settings.arguments as ExpenseInfo;
+    for (var i = 0; i < expenseModel.listOfALLALLExpenses.length; i++) {
+      if (expenseModel.listOfALLALLExpenses[i].category == arguments.category) {
+        listOfExpensesOfCurrentCategory
+            .add(expenseModel.listOfALLALLExpenses[i]);
+      }
+    }
+    if (listOfExpensesOfCurrentCategory.isNotEmpty) {}
+    final category = listOfExpensesOfCurrentCategory.isNotEmpty
+        ? expenseModel.findCategory(listOfExpensesOfCurrentCategory[0].category)
+        : null;
 
-    final category =
-        expenseModel.findCategory(listOfExpensesOfCurrentCategory[0].category);
     return Scaffold(
       appBar: AppBar(
-        title: Text(category.name),
+        title: Text(category == null ? "Null" : category.name),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
+        padding: EdgeInsets.only(top: 10.0.h),
         child: Column(
           children: [
             Expanded(
@@ -63,6 +53,8 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                     category: category,
                     expenseModel: expenseModel,
                     userId: userId,
+                    listOfExpensesOfCurrentCategory:
+                        listOfExpensesOfCurrentCategory,
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
@@ -91,13 +83,15 @@ class _ListTileInfoWidget extends StatelessWidget {
     required this.category,
     required this.expenseModel,
     required this.userId,
+    required this.listOfExpensesOfCurrentCategory,
   }) : super(key: key);
   final Expense expense;
   final Map<String, IconData> iconsMap;
   final List<Category> listOfCategories;
-  final Category category;
+  final Category? category;
   final ExpensesPageModel expenseModel;
   final Future<String?> userId;
+  final List<Expense> listOfExpensesOfCurrentCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -110,12 +104,15 @@ class _ListTileInfoWidget extends StatelessWidget {
         children: [
           SlidableAction(
             flex: 1,
-            onPressed: (BuildContext context) async {
+            onPressed: (context) async {
               await expenseModel.deleteExpense(
                 expense.id,
                 context,
                 await userId,
               );
+              if (listOfExpensesOfCurrentCategory.length == 1) {
+                Navigator.pop(context);
+              }
             },
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
@@ -131,11 +128,12 @@ class _ListTileInfoWidget extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: Color(int.parse(category.color)),
+              color: Color(
+                  int.parse(category == null ? "fx0060b5f3" : category!.color)),
               shape: BoxShape.circle,
             ),
             child: Icon(
-              iconsMap[category.icon],
+              category == null ? Icons.done : iconsMap[category!.icon],
               size: 35,
               color: Colors.black,
             ),
