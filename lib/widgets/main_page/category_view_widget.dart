@@ -55,6 +55,7 @@ class CategoryViewWidget extends StatelessWidget {
                     userId: userId,
                     listOfExpensesOfCurrentCategory:
                         listOfExpensesOfCurrentCategory,
+                    navigatorContext: context,
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
@@ -84,6 +85,7 @@ class _ListTileInfoWidget extends StatelessWidget {
     required this.expenseModel,
     required this.userId,
     required this.listOfExpensesOfCurrentCategory,
+    required this.navigatorContext,
   }) : super(key: key);
   final Expense expense;
   final Map<String, IconData> iconsMap;
@@ -92,6 +94,7 @@ class _ListTileInfoWidget extends StatelessWidget {
   final ExpensesPageModel expenseModel;
   final Future<String?> userId;
   final List<Expense> listOfExpensesOfCurrentCategory;
+  final BuildContext navigatorContext;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +114,7 @@ class _ListTileInfoWidget extends StatelessWidget {
                 await userId,
               );
               if (listOfExpensesOfCurrentCategory.length == 1) {
-                Navigator.pop(context);
+                Navigator.of(navigatorContext).pop();
               }
             },
             backgroundColor: const Color(0xFFFE4A49),

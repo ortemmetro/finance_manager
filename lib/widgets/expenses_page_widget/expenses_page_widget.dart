@@ -2,9 +2,10 @@ import 'package:finance_manager/my_icons_class/my_icons_class.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pie_chart/pie_chart.dart';
+import 'package:pie_chart/pie_chart.dart' as pie;
 import 'package:provider/provider.dart';
 
 import '../../entity/expense.dart';
@@ -62,7 +63,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
             child: Stack(
               children: [
                 Center(
-                  child: _PieChartWidget(model: model),
+                  child: BarChartWidget(), //_PieChartWidget(model: model),
                 ),
                 Positioned(
                   bottom: 0.h,
@@ -145,6 +146,17 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
   bool get wantKeepAlive => true;
 }
 
+class BarChartWidget extends StatelessWidget {
+  const BarChartWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: BarChart(BarChartData()),
+    );
+  }
+}
+
 class _PieChartWidget extends StatelessWidget {
   const _PieChartWidget({
     Key? key,
@@ -159,7 +171,7 @@ class _PieChartWidget extends StatelessWidget {
     return SizedBox(
       height: 200.h,
       width: 200.w,
-      child: PieChart(
+      child: pie.PieChart(
         centerText: '$sum ₸',
         centerTextStyle: TextStyle(
           fontSize: 20.sp,
@@ -170,12 +182,12 @@ class _PieChartWidget extends StatelessWidget {
         dataMap: model.dataMap.isEmpty
             ? <String, double>{"yes": 20.0}
             : model.dataMap,
-        chartType: ChartType.ring,
+        chartType: pie.ChartType.ring,
         colorList:
             model.listOfColors.isEmpty ? [Colors.grey] : model.listOfColors,
         ringStrokeWidth: 12.5.w,
-        legendOptions: const LegendOptions(showLegends: false),
-        chartValuesOptions: const ChartValuesOptions(
+        legendOptions: const pie.LegendOptions(showLegends: false),
+        chartValuesOptions: const pie.ChartValuesOptions(
           chartValueBackgroundColor: Colors.transparent,
           showChartValues: false,
         ),
