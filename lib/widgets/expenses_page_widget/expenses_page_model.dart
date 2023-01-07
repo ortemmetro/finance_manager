@@ -123,6 +123,17 @@ class ExpensesPageModel extends ChangeNotifier {
     return category;
   }
 
+  double findMaxPrice(List<Expense> list) {
+    var max = list[0].price;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].price > max) {
+        max = list[i].price;
+      }
+    }
+
+    return max;
+  }
+
   void _sortExpenses() {
     listOfShortenExpenses.sort((a, b) => a.price.compareTo(b.price) * -1);
     notifyListeners();

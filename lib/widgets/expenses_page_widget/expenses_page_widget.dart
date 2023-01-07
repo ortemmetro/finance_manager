@@ -63,7 +63,9 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
             child: Stack(
               children: [
                 Center(
-                  child: BarChartWidget(), //_PieChartWidget(model: model),
+                  child: BarChartWidget(
+                    model: model,
+                  ), //_PieChartWidget(model: model),
                 ),
                 Positioned(
                   bottom: 0.h,
@@ -147,12 +149,66 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
 }
 
 class BarChartWidget extends StatelessWidget {
-  const BarChartWidget({super.key});
+  const BarChartWidget({
+    super.key,
+    required this.model,
+  });
+  final ExpensesPageModel model;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: BarChart(BarChartData()),
+      child: BarChart(
+        BarChartData(
+          gridData: FlGridData(
+            drawHorizontalLine: true,
+            drawVerticalLine: false,
+            getDrawingHorizontalLine: (value) => FlLine(
+              color: Colors.black,
+              strokeWidth: 1.0,
+            ),
+          ),
+          alignment: BarChartAlignment.center,
+          maxY: model.findMaxPrice(model.listOfShortenExpenses),
+          minY: 0,
+          groupsSpace: 20,
+          barTouchData: BarTouchData(enabled: true),
+          barGroups: model.listOfShortenExpenses
+              .map(
+                (data) => BarChartGroupData(
+                  x: data.date.day,
+                  barRods: [
+                    BarChartRodData(
+                      fromY: 0,
+                      toY: data.price,
+                      color: Color(
+                          int.parse(model.findCategory(data.category).color)),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+              .toList(),
+          // BarChartGroupData(
+          //   x: 10,
+          //   barRods: [
+          //     BarChartRodData(
+          //       fromY: 0,
+          //       toY: 10,
+          //       width: 6.0,
+          //       color: Colors.red,
+          //       borderRadius: const BorderRadius.only(
+          //         topLeft: Radius.circular(6),
+          //         topRight: Radius.circular(6),
+          //       ),
+          //     ),
+          //   ],
+          // )
+        ),
+      ),
     );
   }
 }
