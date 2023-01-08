@@ -1,3 +1,4 @@
+import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
@@ -59,13 +60,11 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
           SizedBox(height: 20.h),
           SizedBox(
             width: 392.7.w,
-            height: 200.h,
+            height: 310.h,
             child: Stack(
               children: [
-                Center(
-                  child: BarChartWidget(
-                    model: model,
-                  ), //_PieChartWidget(model: model),
+                BarChartWidget(
+                  model: model,
                 ),
                 Positioned(
                   bottom: 0.h,
@@ -157,59 +156,156 @@ class BarChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: BarChart(
-        BarChartData(
-          gridData: FlGridData(
-            drawHorizontalLine: true,
-            drawVerticalLine: false,
-            getDrawingHorizontalLine: (value) => FlLine(
-              color: Colors.black,
-              strokeWidth: 1.0,
-            ),
-          ),
-          alignment: BarChartAlignment.center,
-          maxY: model.findMaxPrice(model.listOfShortenExpenses),
-          minY: 0,
-          groupsSpace: 20,
-          barTouchData: BarTouchData(enabled: true),
-          barGroups: model.listOfShortenExpenses
-              .map(
-                (data) => BarChartGroupData(
-                  x: data.date.day,
-                  barRods: [
-                    BarChartRodData(
-                      fromY: 0,
-                      toY: data.price,
-                      color: Color(
-                          int.parse(model.findCategory(data.category).color)),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(6),
-                        topRight: Radius.circular(6),
+    return Card(
+      color: Colors.white,
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 1.4,
+              child: BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.spaceBetween,
+                  borderData: FlBorderData(
+                    show: true,
+                    border: const Border.symmetric(
+                      horizontal: BorderSide(color: Color(0xFFececec)),
+                    ),
+                  ),
+                  titlesData: FlTitlesData(
+                    show: true,
+                    leftTitles: AxisTitles(
+                      drawBehindEverything: true,
+                      sideTitles: SideTitles(
+                        interval: 20000,
+                        showTitles: true,
+                        reservedSize: 30,
+                        getTitlesWidget: (value, meta) {
+                          return Text(
+                            value.toInt().toString().length > 3
+                                ? value.toInt().toString().substring(0, 2) + "K"
+                                : value.toInt().toString(),
+                            style: const TextStyle(
+                              color: Color(0xFF606060),
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.left,
+                          );
+                        },
                       ),
                     ),
-                  ],
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 36,
+                        getTitlesWidget: (value, meta) {
+                          final index = value.toInt();
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            child: Icon(
+                              DefaultCategoriesData.iconsMap[model
+                                  .findCategory(model
+                                      .listOfShortenExpenses[index].category)
+                                  .icon],
+                              color: Color(int.parse(model
+                                  .findCategory(model
+                                      .listOfShortenExpenses[index].category)
+                                  .color)),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    rightTitles: AxisTitles(),
+                    topTitles: AxisTitles(),
+                  ),
+                  gridData: FlGridData(
+                    show: true,
+                    drawVerticalLine: false,
+                    getDrawingHorizontalLine: (value) => FlLine(
+                      color: const Color(0xFFececec),
+                      strokeWidth: 1,
+                    ),
+                  ),
+                  barGroups: model.listOfShortenExpenses
+                      .map(
+                        (data) => BarChartGroupData(
+                          x: model.listOfShortenExpenses.indexOf(data),
+                          barRods: [
+                            BarChartRodData(
+                              toY: data.price,
+                              color: Color(int.parse(
+                                  model.findCategory(data.category).color)),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(6),
+                                topRight: Radius.circular(6),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
                 ),
-              )
-              .toList(),
-          // BarChartGroupData(
-          //   x: 10,
-          //   barRods: [
-          //     BarChartRodData(
-          //       fromY: 0,
-          //       toY: 10,
-          //       width: 6.0,
-          //       color: Colors.red,
-          //       borderRadius: const BorderRadius.only(
-          //         topLeft: Radius.circular(6),
-          //         topRight: Radius.circular(6),
-          //       ),
-          //     ),
-          //   ],
-          // )
+              ),
+            ),
+          ],
         ),
       ),
     );
+    // SizedBox(
+    //   child: BarChart(
+    //     BarChartData(
+    //       gridData: FlGridData(
+    //         drawHorizontalLine: true,
+    //         drawVerticalLine: false,
+    //         getDrawingHorizontalLine: (value) => FlLine(
+    //           color: Colors.green,
+    //           strokeWidth: 1.0,
+    //         ),
+    //       ),
+    //       alignment: BarChartAlignment.spaceBetween,
+    //       maxY: model.findMaxPrice(model.listOfShortenExpenses),
+    //       barTouchData: BarTouchData(enabled: true),
+    //       barGroups: model.listOfShortenExpenses
+    //           .map(
+    //             (data) => BarChartGroupData(
+    //               x: data.date.day,
+    //               barRods: [
+    //                 BarChartRodData(
+    //                   toY: data.price,
+    //                   color: Color(
+    //                       int.parse(model.findCategory(data.category).color)),
+    //                   borderRadius: const BorderRadius.only(
+    //                     topLeft: Radius.circular(6),
+    //                     topRight: Radius.circular(6),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           )
+    //           .toList(),
+    // BarChartGroupData(
+    //   x: 10,
+    //   barRods: [
+    //     BarChartRodData(
+    //       fromY: 0,
+    //       toY: 10,
+    //       width: 6.0,
+    //       color: Colors.red,
+    //       borderRadius: const BorderRadius.only(
+    //         topLeft: Radius.circular(6),
+    //         topRight: Radius.circular(6),
+    //       ),
+    //     ),
+    //   ],
+    // )
+    // ),
+    //   ),
+    // );
   }
 }
 

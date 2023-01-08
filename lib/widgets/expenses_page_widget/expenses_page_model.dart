@@ -124,6 +124,9 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   double findMaxPrice(List<Expense> list) {
+    if (list.isEmpty) {
+      return 0;
+    }
     var max = list[0].price;
     for (var i = 0; i < list.length; i++) {
       if (list[i].price > max) {
