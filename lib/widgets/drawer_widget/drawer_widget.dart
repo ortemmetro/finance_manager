@@ -1,4 +1,5 @@
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/rate_the_app/rate_the_app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -136,6 +137,7 @@ class _UserTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<DrawerWidgetModel>(context);
+    final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     if (model.userName == "" || model.userSurname == "") {
       model.getUserInfo(context);
     }
@@ -144,7 +146,8 @@ class _UserTileWidget extends StatelessWidget {
         '${model.userName} ${model.userSurname}',
         style: TextStyle(fontSize: 17.5.sp),
       ),
-      subtitle: Text('Итого: \$999', style: TextStyle(fontSize: 16.5.sp)),
+      subtitle: Text('Итого: -${expenseModel.sum}₸',
+          style: TextStyle(fontSize: 16.5.sp)),
       leading: CircleAvatar(
         backgroundColor: Colors.black,
         radius: 25.w,

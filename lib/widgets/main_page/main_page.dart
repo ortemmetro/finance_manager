@@ -3,7 +3,6 @@ import 'package:finance_manager/widgets/income_page_widget/income_page_widget.da
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_custom.dart';
-// import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/date_time_patterns.dart';
 import 'package:provider/provider.dart';
@@ -79,11 +78,12 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     return AppBar(
       toolbarHeight: 68.0.h,
       backgroundColor: const Color.fromARGB(255, 93, 176, 117),
       title: Text(
-        'Итого: \$999',
+        'Итого: -${expenseModel.sum}₸',
         style: TextStyle(fontSize: 20.sp),
       ),
       centerTitle: true,

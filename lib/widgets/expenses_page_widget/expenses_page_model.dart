@@ -22,6 +22,8 @@ class ExpensesPageModel extends ChangeNotifier {
 
   String selectedPeriod = "За всё время";
 
+  bool isPieChart = true;
+
   Future<void> setALLExpenses(String? userId) async {
     if (listOfALLALLExpenses.isEmpty) {
       listOfALLALLExpenses = await readExpenses(userId) ?? [];
@@ -38,7 +40,7 @@ class ExpensesPageModel extends ChangeNotifier {
     final list = await readExpenses(userId) ?? [];
     setALLExpenses(userId);
     _setExpenses(list);
-    _sortExpenses();
+    _sortExpensesByPrice();
     _setDataMap();
     _setColors();
     _setSum();
@@ -137,8 +139,21 @@ class ExpensesPageModel extends ChangeNotifier {
     return max;
   }
 
-  void _sortExpenses() {
+  void _sortExpensesByPrice() {
     listOfShortenExpenses.sort((a, b) => a.price.compareTo(b.price) * -1);
+    notifyListeners();
+  }
+
+  List<Expense> sortExpensesByDate(List<Expense> list) {
+    final List<Expense> newList = List.from(list);
+    newList.sort((a, b) => a.date.compareTo(b.date));
+
+    return newList;
+  }
+
+  void changePieToBar() {
+    isPieChart = !isPieChart;
+
     notifyListeners();
   }
 
@@ -196,7 +211,7 @@ class ExpensesPageModel extends ChangeNotifier {
         return b;
       });
       _setExpenses(listOfNeededExpenses);
-      _sortExpenses();
+      _sortExpensesByPrice();
       _setDataMap();
       _setColors();
       _setSum();
@@ -213,7 +228,7 @@ class ExpensesPageModel extends ChangeNotifier {
         return b;
       });
       _setExpenses(listOfNeededExpenses);
-      _sortExpenses();
+      _sortExpensesByPrice();
       _setDataMap();
       _setColors();
       _setSum();
@@ -230,7 +245,7 @@ class ExpensesPageModel extends ChangeNotifier {
         return b;
       });
       _setExpenses(listOfNeededExpenses);
-      _sortExpenses();
+      _sortExpensesByPrice();
       _setDataMap();
       _setColors();
       _setSum();
@@ -247,7 +262,7 @@ class ExpensesPageModel extends ChangeNotifier {
         return b;
       });
       _setExpenses(listOfNeededExpenses);
-      _sortExpenses();
+      _sortExpensesByPrice();
       _setDataMap();
       _setColors();
       _setSum();

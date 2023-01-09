@@ -50,22 +50,22 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<ExpensesPageModel>();
+    final model = Provider.of<ExpensesPageModel>(context, listen: true);
     final user = FirebaseAuth.instance.currentUser!;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Column(
         children: [
-          Text('Loged in as ${user.email!}'),
+          Text('Logged in as ${user.email!}'),
           SizedBox(height: 20.h),
           SizedBox(
             width: 392.7.w,
-            height: 310.h,
+            height: model.isPieChart ? 220.h : 310.h,
             child: Stack(
               children: [
-                BarChartWidget(
-                  model: model,
-                ),
+                model.isPieChart
+                    ? _PieChartWidget(model: model)
+                    : BarChartWidget(model: model),
                 Positioned(
                   bottom: 0.h,
                   right: 0.w,
@@ -78,7 +78,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                         horizontal: 12.0.w, vertical: 12.0.h),
                     child: Icon(
                       Icons.add,
-                      size: 25.w,
+                      size: 25.r,
                       color: Colors.white,
                     ),
                   ),
@@ -87,16 +87,16 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                   left: 0.w,
                   bottom: 0.h,
                   child: RawMaterialButton(
-                    onPressed: () {},
+                    onPressed: () => model.changePieToBar(),
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
                     padding: EdgeInsets.symmetric(
                         horizontal: 12.0.w, vertical: 12.0.h),
-                    child: Icon(
-                      MyIconsClass.bar_graph_1214113,
-                      size: 25.w,
-                      color: Colors.white,
-                    ),
+                    child: model.isPieChart
+                        ? Icon(MyIconsClass.bar_graph_1214113,
+                            size: 25.r, color: Colors.white)
+                        : Icon(Icons.pie_chart_outline,
+                            size: 25.r, color: Colors.white),
                   ),
                 ),
                 Positioned(
@@ -156,6 +156,7 @@ class BarChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final newList = model.sortExpensesByDate(model.listOfShortenExpenses);
     return Card(
       color: Colors.white,
       elevation: 4,
@@ -208,12 +209,10 @@ class BarChartWidget extends StatelessWidget {
                             axisSide: meta.axisSide,
                             child: Icon(
                               DefaultCategoriesData.iconsMap[model
-                                  .findCategory(model
-                                      .listOfShortenExpenses[index].category)
+                                  .findCategory(newList[index].category)
                                   .icon],
                               color: Color(int.parse(model
-                                  .findCategory(model
-                                      .listOfShortenExpenses[index].category)
+                                  .findCategory(newList[index].category)
                                   .color)),
                             ),
                           );
@@ -231,10 +230,10 @@ class BarChartWidget extends StatelessWidget {
                       strokeWidth: 1,
                     ),
                   ),
-                  barGroups: model.listOfShortenExpenses
+                  barGroups: newList
                       .map(
                         (data) => BarChartGroupData(
-                          x: model.listOfShortenExpenses.indexOf(data),
+                          x: newList.indexOf(data),
                           barRods: [
                             BarChartRodData(
                               toY: data.price,
@@ -256,56 +255,6 @@ class BarChartWidget extends StatelessWidget {
         ),
       ),
     );
-    // SizedBox(
-    //   child: BarChart(
-    //     BarChartData(
-    //       gridData: FlGridData(
-    //         drawHorizontalLine: true,
-    //         drawVerticalLine: false,
-    //         getDrawingHorizontalLine: (value) => FlLine(
-    //           color: Colors.green,
-    //           strokeWidth: 1.0,
-    //         ),
-    //       ),
-    //       alignment: BarChartAlignment.spaceBetween,
-    //       maxY: model.findMaxPrice(model.listOfShortenExpenses),
-    //       barTouchData: BarTouchData(enabled: true),
-    //       barGroups: model.listOfShortenExpenses
-    //           .map(
-    //             (data) => BarChartGroupData(
-    //               x: data.date.day,
-    //               barRods: [
-    //                 BarChartRodData(
-    //                   toY: data.price,
-    //                   color: Color(
-    //                       int.parse(model.findCategory(data.category).color)),
-    //                   borderRadius: const BorderRadius.only(
-    //                     topLeft: Radius.circular(6),
-    //                     topRight: Radius.circular(6),
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           )
-    //           .toList(),
-    // BarChartGroupData(
-    //   x: 10,
-    //   barRods: [
-    //     BarChartRodData(
-    //       fromY: 0,
-    //       toY: 10,
-    //       width: 6.0,
-    //       color: Colors.red,
-    //       borderRadius: const BorderRadius.only(
-    //         topLeft: Radius.circular(6),
-    //         topRight: Radius.circular(6),
-    //       ),
-    //     ),
-    //   ],
-    // )
-    // ),
-    //   ),
-    // );
   }
 }
 
@@ -320,28 +269,30 @@ class _PieChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sum = model.sum;
-    return SizedBox(
-      height: 200.h,
-      width: 200.w,
-      child: pie.PieChart(
-        centerText: '$sum ₸',
-        centerTextStyle: TextStyle(
-          fontSize: 20.sp,
-          foreground: null,
-          backgroundColor: Colors.transparent,
-          color: Colors.black,
-        ),
-        dataMap: model.dataMap.isEmpty
-            ? <String, double>{"yes": 20.0}
-            : model.dataMap,
-        chartType: pie.ChartType.ring,
-        colorList:
-            model.listOfColors.isEmpty ? [Colors.grey] : model.listOfColors,
-        ringStrokeWidth: 12.5.w,
-        legendOptions: const pie.LegendOptions(showLegends: false),
-        chartValuesOptions: const pie.ChartValuesOptions(
-          chartValueBackgroundColor: Colors.transparent,
-          showChartValues: false,
+    return Center(
+      child: SizedBox(
+        height: 200.h,
+        width: 200.w,
+        child: pie.PieChart(
+          centerText: '$sum ₸',
+          centerTextStyle: TextStyle(
+            fontSize: 20.sp,
+            foreground: null,
+            backgroundColor: Colors.transparent,
+            color: Colors.black,
+          ),
+          dataMap: model.dataMap.isEmpty
+              ? <String, double>{"yes": 20.0}
+              : model.dataMap,
+          chartType: pie.ChartType.ring,
+          colorList:
+              model.listOfColors.isEmpty ? [Colors.grey] : model.listOfColors,
+          ringStrokeWidth: 12.5.w,
+          legendOptions: const pie.LegendOptions(showLegends: false),
+          chartValuesOptions: const pie.ChartValuesOptions(
+            chartValueBackgroundColor: Colors.transparent,
+            showChartValues: false,
+          ),
         ),
       ),
     );
@@ -422,7 +373,10 @@ class _ExpensesListTileWidget extends StatelessWidget {
       ),
       title: Text(
         expenses[index].category.toString(),
-        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.sp),
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 18.sp,
+        ),
       ),
       trailing: Padding(
         padding: EdgeInsets.only(right: 12.w),
