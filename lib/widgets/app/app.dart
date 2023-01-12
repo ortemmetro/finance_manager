@@ -7,6 +7,7 @@ import 'package:finance_manager/widgets/auth/sign_up_widget.dart';
 import 'package:finance_manager/widgets/auth/sign_up_widget_model.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:finance_manager/widgets/main_page/category_view_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/all_categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
@@ -36,6 +37,7 @@ class App extends StatelessWidget {
       providers: [
         Provider(create: (context) => SessionIdModel()),
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
+        ChangeNotifierProvider(create: (context) => IncomesPageModel()),
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
         Provider(create: (context) => AuthWidgetModel()),
         ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),

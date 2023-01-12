@@ -1,16 +1,15 @@
-import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pie_chart/pie_chart.dart' as pie;
 import 'package:provider/provider.dart';
 
 import '../../entity/expense.dart';
 import '../../session/session_id_model.dart';
+import '../charts/bar_chart_widget.dart';
+import '../charts/pie_chart_widget.dart';
 
 class ExpenseInfo {
   final List<Expense> listOfExpenses;
@@ -57,21 +56,30 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
       child: Column(
         children: [
           Text('Logged in as ${user.email!}'),
-          SizedBox(height: 20.h),
           SizedBox(
             width: 392.7.w,
             height: model.isPieChart ? 220.h : 310.h,
             child: Stack(
               children: [
                 model.isPieChart
-                    ? _PieChartWidget(model: model)
-                    : BarChartWidget(model: model),
+                    ? PieChartWidget(
+                        dataMap: model.dataMap,
+                        listOfColors: model.listOfColors,
+                        sum: model.sum,
+                      )
+                    : BarChartWidget(
+                        findCategory: model.findCategory,
+                        listOfExpensesOrIncomesSortedByDate: model
+                            .sortExpensesByDate(model.listOfShortenExpenses),
+                      ),
                 Positioned(
                   bottom: 0.h,
                   right: 0.w,
                   child: RawMaterialButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed('/main_page/add'),
+                    onPressed: () => Navigator.of(context).pushNamed(
+                        '/main_page/add',
+                        arguments: ExpenseInfo(
+                            listOfExpenses: [], category: "expense")),
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
                     padding: EdgeInsets.symmetric(
@@ -145,158 +153,6 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
 
   @override
   bool get wantKeepAlive => true;
-}
-
-class BarChartWidget extends StatelessWidget {
-  const BarChartWidget({
-    super.key,
-    required this.model,
-  });
-  final ExpensesPageModel model;
-
-  @override
-  Widget build(BuildContext context) {
-    final newList = model.sortExpensesByDate(model.listOfShortenExpenses);
-    return Card(
-      color: Colors.white,
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AspectRatio(
-              aspectRatio: 1.4,
-              child: BarChart(
-                BarChartData(
-                  alignment: BarChartAlignment.spaceBetween,
-                  borderData: FlBorderData(
-                    show: true,
-                    border: const Border.symmetric(
-                      horizontal: BorderSide(color: Color(0xFFececec)),
-                    ),
-                  ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    leftTitles: AxisTitles(
-                      drawBehindEverything: true,
-                      sideTitles: SideTitles(
-                        interval: 20000,
-                        showTitles: true,
-                        reservedSize: 30,
-                        getTitlesWidget: (value, meta) {
-                          return Text(
-                            value.toInt().toString().length > 3
-                                ? value.toInt().toString().substring(0, 2) + "K"
-                                : value.toInt().toString(),
-                            style: const TextStyle(
-                              color: Color(0xFF606060),
-                              fontSize: 12,
-                            ),
-                            textAlign: TextAlign.left,
-                          );
-                        },
-                      ),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 36,
-                        getTitlesWidget: (value, meta) {
-                          final index = value.toInt();
-                          return SideTitleWidget(
-                            axisSide: meta.axisSide,
-                            child: Icon(
-                              DefaultCategoriesData.iconsMap[model
-                                  .findCategory(newList[index].category)
-                                  .icon],
-                              color: Color(int.parse(model
-                                  .findCategory(newList[index].category)
-                                  .color)),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    rightTitles: AxisTitles(),
-                    topTitles: AxisTitles(),
-                  ),
-                  gridData: FlGridData(
-                    show: true,
-                    drawVerticalLine: false,
-                    getDrawingHorizontalLine: (value) => FlLine(
-                      color: const Color(0xFFececec),
-                      strokeWidth: 1,
-                    ),
-                  ),
-                  barGroups: newList
-                      .map(
-                        (data) => BarChartGroupData(
-                          x: newList.indexOf(data),
-                          barRods: [
-                            BarChartRodData(
-                              toY: data.price,
-                              color: Color(int.parse(
-                                  model.findCategory(data.category).color)),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(6),
-                                topRight: Radius.circular(6),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PieChartWidget extends StatelessWidget {
-  const _PieChartWidget({
-    Key? key,
-    required this.model,
-  }) : super(key: key);
-
-  final ExpensesPageModel model;
-
-  @override
-  Widget build(BuildContext context) {
-    final sum = model.sum;
-    return Center(
-      child: SizedBox(
-        height: 200.h,
-        width: 200.w,
-        child: pie.PieChart(
-          centerText: '$sum ₸',
-          centerTextStyle: TextStyle(
-            fontSize: 20.sp,
-            foreground: null,
-            backgroundColor: Colors.transparent,
-            color: Colors.black,
-          ),
-          dataMap: model.dataMap.isEmpty
-              ? <String, double>{"yes": 20.0}
-              : model.dataMap,
-          chartType: pie.ChartType.ring,
-          colorList:
-              model.listOfColors.isEmpty ? [Colors.grey] : model.listOfColors,
-          ringStrokeWidth: 12.5.w,
-          legendOptions: const pie.LegendOptions(showLegends: false),
-          chartValuesOptions: const pie.ChartValuesOptions(
-            chartValueBackgroundColor: Colors.transparent,
-            showChartValues: false,
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 class _ExpensesListViewWidget extends StatelessWidget {

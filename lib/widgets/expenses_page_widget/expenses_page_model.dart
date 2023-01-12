@@ -153,7 +153,6 @@ class ExpensesPageModel extends ChangeNotifier {
 
   void changePieToBar() {
     isPieChart = !isPieChart;
-
     notifyListeners();
   }
 

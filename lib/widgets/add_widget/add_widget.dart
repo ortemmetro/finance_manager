@@ -1,4 +1,5 @@
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +30,8 @@ class _AddWidgetState extends State<AddWidget> {
   @override
   Widget build(BuildContext context) {
     final expenseModel = context.read<ExpensesPageModel>();
+    final arguments = ModalRoute.of(context)!.settings.arguments;
+    if (arguments.runtimeType == ExpenseInfo) {}
     return _AddWidgetBody(
       priceController: priceController,
       textController: textController,

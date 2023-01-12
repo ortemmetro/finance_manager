@@ -60,7 +60,7 @@ class _MainPageState extends State<MainPage> {
         body: const TabBarView(
           children: [
             ExpensesPageWidget(),
-            IncomePageWidget(),
+            IncomesPageWidget(),
           ],
         ),
       ),
