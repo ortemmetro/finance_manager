@@ -45,7 +45,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AddCategoryWidgetModel()),
         ChangeNotifierProvider(
             create: (context) => AddWidgetModel(
-                Provider.of<ExpensesPageModel>(context, listen: false))),
+                  Provider.of<ExpensesPageModel>(context, listen: false),
+                  Provider.of<IncomesPageModel>(context, listen: false),
+                )),
       ],
       child: ScreenUtilInit(
         builder: (context, child) => MaterialApp(

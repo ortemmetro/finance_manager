@@ -28,7 +28,7 @@ class BarChartWidget extends StatelessWidget {
               aspectRatio: 1.4,
               child: BarChart(
                 BarChartData(
-                  alignment: BarChartAlignment.spaceBetween,
+                  alignment: BarChartAlignment.spaceAround,
                   borderData: FlBorderData(
                     show: true,
                     border: const Border.symmetric(
@@ -46,7 +46,9 @@ class BarChartWidget extends StatelessWidget {
                         getTitlesWidget: (value, meta) {
                           return Text(
                             value.toInt().toString().length > 3
-                                ? "${value.toInt().toString().substring(0, 2)}K"
+                                ? (value.toInt().toString().length >= 6
+                                    ? "${value.toInt().toString().substring(0, 3)}K"
+                                    : "${value.toInt().toString().substring(0, 2)}K")
                                 : value.toInt().toString(),
                             style: const TextStyle(
                               color: Color(0xFF606060),

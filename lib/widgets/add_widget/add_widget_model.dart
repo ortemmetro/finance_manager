@@ -2,21 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/entity/expense.dart';
+import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../entity/income.dart';
 import '../../session/session_id_model.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidgetModel extends ChangeNotifier {
   final ExpensesPageModel expenseModel;
+  final IncomesPageModel incomeModel;
   var selectedIndex = -1;
   String selectedCategoryName = "";
 
   List<Category> listOfCategories = List.empty(growable: true);
   final iconsMap = DefaultCategoriesData.iconsMap;
 
-  AddWidgetModel(this.expenseModel);
+  AddWidgetModel(this.expenseModel, this.incomeModel);
 
   Future<void>? createExpense({
     required String comment,
@@ -36,7 +39,7 @@ class AddWidgetModel extends ChangeNotifier {
         .first
         .reference;
     final docExpenseReference = docUsersReference.collection('Expenses').doc();
-    final expense = Expense(
+    final expense = Income(
       id: docExpenseReference.id,
       comment: comment,
       category: category,
@@ -50,6 +53,44 @@ class AddWidgetModel extends ChangeNotifier {
     await expenseModel.setup(userId);
     expenseModel.listOfALLALLExpenses.clear();
     expenseModel.setALLExpenses(userId);
+
+    Navigator.of(context).pop();
+    selectedIndex = -1;
+    return;
+  }
+
+  Future<void>? createIncome({
+    required String comment,
+    required String category,
+    required DateTime date,
+    required double price,
+    required BuildContext context,
+  }) async {
+    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
+    final userId = await sessionIdModel.readUserId("uid");
+    //Reference to document
+    final docUsersReference = (await FirebaseFirestore.instance
+            .collection('Users')
+            .where("id", isEqualTo: userId)
+            .get())
+        .docs
+        .first
+        .reference;
+    final docIncomeReference = docUsersReference.collection('Incomes').doc();
+    final income = Income(
+      id: docIncomeReference.id,
+      comment: comment,
+      category: category,
+      date: date,
+      price: price,
+    );
+
+    final json = income.toJson();
+
+    await docIncomeReference.set(json);
+    await incomeModel.setup(userId);
+    incomeModel.listOfALLALLIncomes.clear();
+    incomeModel.setALLIncomes(userId);
 
     Navigator.of(context).pop();
     selectedIndex = -1;

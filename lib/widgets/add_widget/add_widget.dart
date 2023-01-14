@@ -31,10 +31,10 @@ class _AddWidgetState extends State<AddWidget> {
   Widget build(BuildContext context) {
     final expenseModel = context.read<ExpensesPageModel>();
     final arguments = ModalRoute.of(context)!.settings.arguments;
-    if (arguments.runtimeType == ExpenseInfo) {}
     return _AddWidgetBody(
       priceController: priceController,
       textController: textController,
+      arguments: arguments,
     );
   }
 }
@@ -44,16 +44,20 @@ class _AddWidgetBody extends StatelessWidget {
     Key? key,
     required this.priceController,
     required this.textController,
+    required this.arguments,
   }) : super(key: key);
 
   final TextEditingController priceController;
   final TextEditingController textController;
+  final Object? arguments;
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AddWidgetModel>(context);
     final addCategoryWidgetModel = Provider.of<AddCategoryWidgetModel>(context);
-    model.listOfCategories = addCategoryWidgetModel.listOfExpenseCategories;
+    model.listOfCategories = arguments.runtimeType == ExpenseInfo
+        ? addCategoryWidgetModel.listOfExpenseCategories
+        : addCategoryWidgetModel.listOfIncomeCategories;
     DateTime? newDate;
     return Scaffold(
       appBar: AppBar(),
@@ -96,13 +100,21 @@ class _AddWidgetBody extends StatelessWidget {
               SizedBox(height: 50.h),
               ElevatedButton(
                 onPressed: () async {
-                  await model.createExpense(
-                    comment: textController.text,
-                    category: model.selectedCategoryName,
-                    price: double.parse(priceController.text),
-                    date: newDate ?? DateTime(0),
-                    context: context,
-                  );
+                  arguments.runtimeType == ExpenseInfo
+                      ? await model.createExpense(
+                          comment: textController.text,
+                          category: model.selectedCategoryName,
+                          price: double.parse(priceController.text),
+                          date: newDate ?? DateTime(0),
+                          context: context,
+                        )
+                      : await model.createIncome(
+                          comment: textController.text,
+                          category: model.selectedCategoryName,
+                          price: double.parse(priceController.text),
+                          date: newDate ?? DateTime(0),
+                          context: context,
+                        );
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(

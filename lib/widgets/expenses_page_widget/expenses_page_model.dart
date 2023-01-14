@@ -18,6 +18,7 @@ class ExpensesPageModel extends ChangeNotifier {
 
   Map<String, double> dataMap = {};
   var sum = "";
+  double doubleSum = 0.0;
   String? currentUserId;
 
   String selectedPeriod = "За всё время";
@@ -182,11 +183,13 @@ class ExpensesPageModel extends ChangeNotifier {
 
   void _setSum() {
     sum = "";
+    doubleSum = 0.0;
     double currentSum = 0;
     for (var i = 0; i < listOfShortenExpenses.length; i++) {
       currentSum += listOfShortenExpenses[i].price;
     }
     var sumString = currentSum.floor().toString().split('');
+    doubleSum = double.parse(sumString.join());
 
     for (var i = sumString.length; i > 0; i--) {
       if ((sumString.length - i) % 4 == 0) {

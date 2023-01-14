@@ -8,8 +8,19 @@ import '../../entity/income.dart';
 import '../../session/session_id_model.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';
+import '../expenses_page_widget/expenses_page_model.dart';
 import '../settings_widgets/categories/add_category_widget_model.dart';
 import 'incomes_page_model.dart';
+
+class IncomeInfo {
+  final List<Income> listOfIncomes;
+  final String category;
+
+  IncomeInfo({
+    required this.listOfIncomes,
+    required this.category,
+  });
+}
 
 class IncomesPageWidget extends StatefulWidget {
   const IncomesPageWidget({super.key});
@@ -33,7 +44,10 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
       final addCategoryWidgetModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
       await addCategoryWidgetModel.downloadCategories(context);
-      context.read<IncomesPageModel>().setup(uUserId);
+      await Provider.of<ExpensesPageModel>(context, listen: false)
+          .setup(uUserId);
+      await Provider.of<IncomesPageModel>(context, listen: false)
+          .setup(uUserId);
     });
   }
 
@@ -190,12 +204,13 @@ class _IncomesListTileWidget extends StatelessWidget {
     final model = Provider.of<IncomesPageModel>(context);
     return ListTile(
       onTap: () {
-        // final arguments = ExpenseInfo(
-        //     category: incomes[index].category,
-        //     listOfExpenses: model.listOfAllIncomes);
+        final arguments = IncomeInfo(
+          category: incomes[index].category,
+          listOfIncomes: model.listOfAllIncomes,
+        );
         Navigator.of(context).pushNamed(
           '/main_page/category_view',
-          // arguments: arguments,
+          arguments: arguments,
         );
       },
       dense: false,

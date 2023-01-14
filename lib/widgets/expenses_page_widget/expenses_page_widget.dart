@@ -10,6 +10,7 @@ import '../../entity/expense.dart';
 import '../../session/session_id_model.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';
+import '../income_page_widget/incomes_page_model.dart';
 
 class ExpenseInfo {
   final List<Expense> listOfExpenses;
@@ -43,7 +44,8 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
       final addCategoryWidgetModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
       await addCategoryWidgetModel.downloadCategories(context);
-      context.read<ExpensesPageModel>().setup(uUserId);
+      Provider.of<ExpensesPageModel>(context, listen: false).setup(uUserId);
+      Provider.of<IncomesPageModel>(context, listen: false).setup(uUserId);
     });
   }
 

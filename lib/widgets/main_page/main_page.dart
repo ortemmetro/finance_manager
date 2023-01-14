@@ -1,10 +1,9 @@
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/income_page_widget.dart';
+import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/date_symbol_data_custom.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/date_time_patterns.dart';
 import 'package:provider/provider.dart';
 import '../drawer_widget/drawer_widget.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
@@ -79,11 +78,12 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
+    final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
     return AppBar(
       toolbarHeight: 68.0.h,
       backgroundColor: const Color.fromARGB(255, 93, 176, 117),
       title: Text(
-        'Итого: -${expenseModel.sum}₸',
+        'Итого: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()}₸',
         style: TextStyle(fontSize: 20.sp),
       ),
       centerTitle: true,
@@ -91,7 +91,7 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
         preferredSize: tab.preferredSize,
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: BorderRadius.all(Radius.circular(15.0.r)),
             side: BorderSide(
               color: Colors.white,
               width: 2.5.w,

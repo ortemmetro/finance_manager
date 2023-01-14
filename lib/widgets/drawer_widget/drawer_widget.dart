@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../income_page_widget/incomes_page_model.dart';
+
 class DrawerIconTextFunction {
   final Icon icon;
   final String text;
@@ -138,6 +140,7 @@ class _UserTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<DrawerWidgetModel>(context);
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
+    final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
     if (model.userName == "" || model.userSurname == "") {
       model.getUserInfo(context);
     }
@@ -146,7 +149,8 @@ class _UserTileWidget extends StatelessWidget {
         '${model.userName} ${model.userSurname}',
         style: TextStyle(fontSize: 17.5.sp),
       ),
-      subtitle: Text('Итого: -${expenseModel.sum}₸',
+      subtitle: Text(
+          'Итого: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()}₸',
           style: TextStyle(fontSize: 16.5.sp)),
       leading: CircleAvatar(
         backgroundColor: Colors.black,

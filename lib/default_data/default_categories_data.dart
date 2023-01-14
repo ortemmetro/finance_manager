@@ -268,12 +268,6 @@ class DefaultCategoriesData {
       icon: 'mortarboard_1214168',
       categoryClass: CategoryClass.income,
     ),
-    Category(
-      name: 'Другое',
-      color: '0xff20c5aa',
-      icon: 'question_mark_outlined',
-      categoryClass: CategoryClass.income,
-    ),
   ];
 
   static List<Category> listOfAllIconsForAddingCategory = [
