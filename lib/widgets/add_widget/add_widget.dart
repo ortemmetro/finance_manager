@@ -58,14 +58,14 @@ class _AddWidgetBody extends StatelessWidget {
     model.listOfCategories = arguments.runtimeType == ExpenseInfo
         ? addCategoryWidgetModel.listOfExpenseCategories
         : addCategoryWidgetModel.listOfIncomeCategories;
-    DateTime? newDate;
+    var newDate;
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
         children: [
           Column(
             children: [
-              SizedBox(height: 45.h),
+              SizedBox(height: 25.h),
               _InputFieldWithCurrencyWidget(priceController: priceController),
               SizedBox(height: 45.h),
               Padding(
@@ -83,7 +83,8 @@ class _AddWidgetBody extends StatelessWidget {
               SizedBox(height: 45.h),
               ElevatedButton(
                 onPressed: () async {
-                  newDate = await model.myShowDatePicker(newDate, context);
+                  newDate = model.myShowDatePicker(context);
+                  newDate.whenComplete(() => model.changeShowDate());
                 },
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
@@ -95,6 +96,9 @@ class _AddWidgetBody extends StatelessWidget {
                   style: TextStyle(fontSize: 15.sp),
                 ),
               ),
+              model.isShowDate
+                  ? Text(newDate.toString())
+                  : const Text("Дата не выбрана"),
               SizedBox(height: 50.h),
               _CommentFieldWidget(textController: textController),
               SizedBox(height: 50.h),
@@ -258,9 +262,12 @@ class _InputFieldWithCurrencyWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: 10.h,
-            width: 100.w,
+            height: 30.h,
+            width: 120.w,
             child: TextField(
+              autofocus: true,
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
               controller: priceController,
               decoration: const InputDecoration(),
             ),
