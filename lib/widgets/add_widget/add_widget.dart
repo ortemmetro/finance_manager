@@ -3,6 +3,7 @@ import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widge
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../expenses_page_widget/expenses_page_model.dart';
@@ -24,6 +25,7 @@ class _AddWidgetState extends State<AddWidget> {
       final categoryModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
       await categoryModel.setCategories(context);
+      Provider.of<AddWidgetModel>(context, listen: false).currentDate = null;
     });
   }
 
@@ -58,7 +60,7 @@ class _AddWidgetBody extends StatelessWidget {
     model.listOfCategories = arguments.runtimeType == ExpenseInfo
         ? addCategoryWidgetModel.listOfExpenseCategories
         : addCategoryWidgetModel.listOfIncomeCategories;
-    var newDate;
+    final format = DateFormat.MMMMEEEEd("ru");
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -83,8 +85,7 @@ class _AddWidgetBody extends StatelessWidget {
               SizedBox(height: 45.h),
               ElevatedButton(
                 onPressed: () async {
-                  newDate = model.myShowDatePicker(context);
-                  newDate.whenComplete(() => model.changeShowDate());
+                  await model.myShowDatePicker(context);
                 },
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
@@ -96,8 +97,8 @@ class _AddWidgetBody extends StatelessWidget {
                   style: TextStyle(fontSize: 15.sp),
                 ),
               ),
-              model.isShowDate
-                  ? Text(newDate.toString())
+              model.currentDate != null
+                  ? Text(format.format(model.currentDate!).toString())
                   : const Text("Дата не выбрана"),
               SizedBox(height: 50.h),
               _CommentFieldWidget(textController: textController),
@@ -109,14 +110,14 @@ class _AddWidgetBody extends StatelessWidget {
                           comment: textController.text,
                           category: model.selectedCategoryName,
                           price: double.parse(priceController.text),
-                          date: newDate ?? DateTime(0),
+                          date: model.currentDate ?? DateTime(0),
                           context: context,
                         )
                       : await model.createIncome(
                           comment: textController.text,
                           category: model.selectedCategoryName,
                           price: double.parse(priceController.text),
-                          date: newDate ?? DateTime(0),
+                          date: model.currentDate ?? DateTime(0),
                           context: context,
                         );
                 },

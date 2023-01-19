@@ -16,19 +16,14 @@ class AddWidgetModel extends ChangeNotifier {
   var selectedIndex = -1;
   String selectedCategoryName = "";
 
-  bool isShowDate = false;
+  DateTime? currentDate;
 
   List<Category> listOfCategories = List.empty(growable: true);
   final iconsMap = DefaultCategoriesData.iconsMap;
 
   AddWidgetModel(this.expenseModel, this.incomeModel);
 
-  void changeShowDate() {
-    isShowDate = !isShowDate;
-    notifyListeners();
-  }
-
-  Future<void>? createExpense({
+  Future<void> createExpense({
     required String comment,
     required String category,
     required DateTime date,
@@ -114,7 +109,7 @@ class AddWidgetModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<DateTime?> myShowDatePicker(BuildContext context) async {
+  Future<void> myShowDatePicker(BuildContext context) async {
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
     final newDate = await showDatePicker(
@@ -123,7 +118,7 @@ class AddWidgetModel extends ChangeNotifier {
       firstDate: DateTime(1900),
       lastDate: date,
     );
-
-    return newDate;
+    currentDate = newDate as DateTime;
+    notifyListeners();
   }
 }
