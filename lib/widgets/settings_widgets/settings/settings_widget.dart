@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../drawer_widget/drawer_widget.dart';
 
@@ -14,7 +15,7 @@ class SettingsWidget extends StatelessWidget {
         centerTitle: true,
       ),
       body: Column(
-        children: const [
+        children: [
           SizedBox(height: 10),
           ListTile(
             leading: Icon(Icons.lock),
@@ -23,6 +24,9 @@ class SettingsWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.language),
             title: Text('Выбор языка'),
+            onTap: () {
+              Navigator.of(context).pushNamed("/main_page/settings/language");
+            },
           ),
           ListTile(
             leading: Icon(Icons.language),
@@ -35,6 +39,11 @@ class SettingsWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.document_scanner),
             title: Text('Политика конфиденциоальности'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.language),
+            title: Text(AppLocalizations.of(context)!.language),
+            subtitle: Text(AppLocalizations.of(context)!.helloWorld),
           ),
         ],
       ),

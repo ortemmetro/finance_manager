@@ -1,3 +1,4 @@
+import 'package:finance_manager/l10n/l10n.dart';
 import 'package:finance_manager/session/session_id_model.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
@@ -16,11 +17,14 @@ import 'package:finance_manager/widgets/settings_widgets/charts/charts_widget.da
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widget.dart';
+import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main_page/main_page.dart';
 import '../settings_widgets/categories/add_category_widget.dart';
@@ -88,8 +92,17 @@ class App extends StatelessWidget {
                 const AllCategoriesWidget(),
             '/main_page/currency': (context) => const CurrencyWidget(),
             '/main_page/settings': (context) => const SettingsWidget(),
+            '/main_page/settings/language': (context) =>
+                const LanguagesWidget(),
           },
           initialRoute: '/',
+          supportedLocales: L10n.all,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
         ),
         designSize: const Size(393, 803),
       ),
