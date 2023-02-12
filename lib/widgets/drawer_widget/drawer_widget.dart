@@ -4,6 +4,7 @@ import 'package:finance_manager/widgets/settings_widgets/rate_the_app/rate_the_a
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../income_page_widget/incomes_page_model.dart';
 
@@ -22,65 +23,64 @@ class DrawerIconTextFunction {
 class DrawerWidget extends StatelessWidget {
   DrawerWidget({Key? key}) : super(key: key);
 
-  final drawerTileList = <DrawerIconTextFunction>[
-    DrawerIconTextFunction(
-      icon: Icon(Icons.home, size: 28.w),
-      text: 'Главная',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('/main_page'),
-    ),
-    DrawerIconTextFunction(
-      icon: Icon(Icons.attach_money, size: 28.w),
-      text: 'Счета',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('/main_page/invoices'),
-    ),
-    DrawerIconTextFunction(
-      icon: Icon(Icons.auto_graph_outlined, size: 28.w),
-      text: 'Графики',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('/main_page/charts'),
-    ),
-    DrawerIconTextFunction(
-      icon: Icon(Icons.category, size: 28.w),
-      text: 'Категории',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('/main_page/categories'),
-    ),
-    DrawerIconTextFunction(
-      icon: Icon(Icons.money, size: 28.w),
-      text: 'Валюта',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('/main_page/currency'),
-    ),
-    DrawerIconTextFunction(
-      icon: Icon(Icons.settings, size: 28.w),
-      text: 'Настройки',
-      onTap: (BuildContext context) =>
-          Navigator.of(context).pushNamed('/main_page/settings'),
-    ),
-    DrawerIconTextFunction(
-      icon: Icon(Icons.share, size: 28.w),
-      text: 'Поделиться с друзьями',
-      onTap: null,
-    ),
-    DrawerIconTextFunction(
-      icon: Icon(Icons.star, size: 28.w),
-      text: 'Оценить приложение',
-      onTap: (BuildContext context) async {
-        await showDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return const RateTheAppDialog();
-          },
-        );
-      },
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<DrawerWidgetModel>(context);
+    final drawerTileList = <DrawerIconTextFunction>[
+      DrawerIconTextFunction(
+        icon: Icon(Icons.home, size: 28.w),
+        text: AppLocalizations.of(context)!.mainPage,
+        onTap: (BuildContext context) =>
+            Navigator.of(context).pushNamed('/main_page'),
+      ),
+      DrawerIconTextFunction(
+        icon: Icon(Icons.attach_money, size: 28.w),
+        text: AppLocalizations.of(context)!.accounts,
+        onTap: (BuildContext context) =>
+            Navigator.of(context).pushNamed('/main_page/invoices'),
+      ),
+      DrawerIconTextFunction(
+        icon: Icon(Icons.auto_graph_outlined, size: 28.w),
+        text: AppLocalizations.of(context)!.graphs,
+        onTap: (BuildContext context) =>
+            Navigator.of(context).pushNamed('/main_page/charts'),
+      ),
+      DrawerIconTextFunction(
+        icon: Icon(Icons.category, size: 28.w),
+        text: AppLocalizations.of(context)!.categories,
+        onTap: (BuildContext context) =>
+            Navigator.of(context).pushNamed('/main_page/categories'),
+      ),
+      DrawerIconTextFunction(
+        icon: Icon(Icons.money, size: 28.w),
+        text: AppLocalizations.of(context)!.currency,
+        onTap: (BuildContext context) =>
+            Navigator.of(context).pushNamed('/main_page/currency'),
+      ),
+      DrawerIconTextFunction(
+        icon: Icon(Icons.settings, size: 28.w),
+        text: AppLocalizations.of(context)!.settings,
+        onTap: (BuildContext context) =>
+            Navigator.of(context).pushNamed('/main_page/settings'),
+      ),
+      DrawerIconTextFunction(
+        icon: Icon(Icons.share, size: 28.w),
+        text: AppLocalizations.of(context)!.shareWithFriends,
+        onTap: null,
+      ),
+      DrawerIconTextFunction(
+        icon: Icon(Icons.star, size: 28.w),
+        text: AppLocalizations.of(context)!.rateTheApp,
+        onTap: (BuildContext context) async {
+          await showDialog<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return const RateTheAppDialog();
+            },
+          );
+        },
+      ),
+    ];
     return Drawer(
       child: Column(
         children: [
@@ -114,7 +114,7 @@ class DrawerWidget extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.door_front_door, size: 28.w),
                   title: Text(
-                    'Выйти',
+                    AppLocalizations.of(context)!.logOut,
                     style: TextStyle(fontSize: 14.5.sp),
                   ),
                   onTap: () {
@@ -150,7 +150,7 @@ class _UserTileWidget extends StatelessWidget {
         style: TextStyle(fontSize: 17.5.sp),
       ),
       subtitle: Text(
-          'Итого: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()}₸',
+          '${AppLocalizations.of(context)!.total}: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()}₸',
           style: TextStyle(fontSize: 16.5.sp)),
       leading: CircleAvatar(
         backgroundColor: Colors.black,

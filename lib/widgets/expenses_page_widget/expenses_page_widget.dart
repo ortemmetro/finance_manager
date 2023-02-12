@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../entity/expense.dart';
 import '../../session/session_id_model.dart';
@@ -44,8 +45,12 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
       final addCategoryWidgetModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
       await addCategoryWidgetModel.downloadCategories(context);
-      Provider.of<ExpensesPageModel>(context, listen: false).setup(uUserId);
-      Provider.of<IncomesPageModel>(context, listen: false).setup(uUserId);
+      await Provider.of<ExpensesPageModel>(context, listen: false)
+          .setup(uUserId);
+      Provider.of<ExpensesPageModel>(context, listen: false)
+          .setSelectedPeriod(AppLocalizations.of(context)!.allTime);
+      await Provider.of<IncomesPageModel>(context, listen: false)
+          .setup(uUserId);
     });
   }
 
@@ -121,7 +126,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          model.selectedPeriod,
+                          model.selectedPeriod ?? "",
                           style: TextStyle(
                             color: Colors.green,
                             fontSize: 15.sp,

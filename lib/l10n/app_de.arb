@@ -1,4 +1,22 @@
 {
     "language": "Deutsch",
-    "helloWorld": "Hallo Welt!"
+    "helloWorld": "Hallo Welt!",
+    "total": "Insgesamt",
+    "expenses": "Ausgaben",
+    "incomes": "Einkommen",
+    "allTime": "In all der Zeit",
+    "day": "Tag",
+    "week": "Die Woche",
+    "month": "Monat",
+    "year": "Das Jahr",
+    "period": "Zeitraum", 
+    "mainPage": "Startseite",
+    "accounts": "Konten",
+    "graphs": "Schaubilder",
+    "categories": "Kategorien",
+    "currency": "Währung",
+    "settings": "Einstellungen",
+    "shareWithFriends": "Mit Freunden teilen",
+    "rateTheApp": "Bewerten Sie die App",
+    "logOut": "Gehe zu"
 }

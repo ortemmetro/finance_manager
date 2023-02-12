@@ -1,4 +1,22 @@
 {
     "language": "Русский",
-    "helloWorld": "Привет мир!"
+    "helloWorld": "Привет мир!",
+    "total": "Итого",
+    "expenses": "Расходы",
+    "incomes": "Доходы",
+    "allTime": "За всё время",
+    "day": "День",
+    "week": "Неделя",
+    "month": "Месяц",
+    "year": "Год",
+    "period": "Период", 
+    "mainPage": "Главная",
+    "accounts": "Счета",
+    "graphs": "Графики",
+    "categories": "Категории",
+    "currency": "Валюта",
+    "settings": "Настройки",
+    "shareWithFriends": "Поделиться с друзьями",
+    "rateTheApp": "Оценить приложение",
+    "logOut": "Выйти"
 }

@@ -3,6 +3,7 @@ import 'package:finance_manager/default_data/default_categories_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../entity/category.dart';
 import '../../entity/expense.dart';
@@ -21,9 +22,13 @@ class ExpensesPageModel extends ChangeNotifier {
   double doubleSum = 0.0;
   String? currentUserId;
 
-  String selectedPeriod = "За всё время";
+  late String? selectedPeriod;
 
   bool isPieChart = true;
+
+  void setSelectedPeriod(String newSelectedPeriod) {
+    selectedPeriod = newSelectedPeriod;
+  }
 
   Future<void> setALLExpenses(String? userId) async {
     if (listOfALLALLExpenses.isEmpty) {
@@ -201,7 +206,11 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _changePeriod(Period period, DateTime currentDate) {
+  void _changePeriod(
+    Period period,
+    DateTime currentDate,
+    BuildContext context,
+  ) {
     if (period == Period.day) {
       listOfNeededExpenses = List.from(listOfALLALLExpenses);
       listOfNeededExpenses.removeWhere((element) {
@@ -217,7 +226,7 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
-      selectedPeriod = "День";
+      selectedPeriod = AppLocalizations.of(context)!.day;
       notifyListeners();
     } else if (period == Period.week) {
       listOfNeededExpenses = List.from(listOfALLALLExpenses);
@@ -234,7 +243,7 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
-      selectedPeriod = "Неделя";
+      selectedPeriod = AppLocalizations.of(context)!.week;
       notifyListeners();
     } else if (period == Period.month) {
       listOfNeededExpenses = List.from(listOfALLALLExpenses);
@@ -251,7 +260,7 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
-      selectedPeriod = "Месяц";
+      selectedPeriod = AppLocalizations.of(context)!.month;
       notifyListeners();
     } else if (period == Period.year) {
       listOfNeededExpenses = List.from(listOfALLALLExpenses);
@@ -268,7 +277,7 @@ class ExpensesPageModel extends ChangeNotifier {
       _setDataMap();
       _setColors();
       _setSum();
-      selectedPeriod = "Год";
+      selectedPeriod = AppLocalizations.of(context)!.year;
       notifyListeners();
     }
   }
@@ -283,39 +292,39 @@ class ExpensesPageModel extends ChangeNotifier {
           children: [
             SizedBox(height: 10.h),
             ListTile(
-              leading: const Text("День"),
+              leading: Text(AppLocalizations.of(context)!.day),
               onTap: () {
-                _changePeriod(Period.day, DateTime.now());
+                _changePeriod(Period.day, DateTime.now(), context);
                 Navigator.of(context).pop();
               },
             ),
             const Divider(),
             ListTile(
-              leading: const Text("Неделя"),
+              leading: Text(AppLocalizations.of(context)!.week),
               onTap: () {
-                _changePeriod(Period.week, DateTime.now());
+                _changePeriod(Period.week, DateTime.now(), context);
                 Navigator.of(context).pop();
               },
             ),
             const Divider(),
             ListTile(
-              leading: const Text("Месяц"),
+              leading: Text(AppLocalizations.of(context)!.month),
               onTap: () {
-                _changePeriod(Period.month, DateTime.now());
+                _changePeriod(Period.month, DateTime.now(), context);
                 Navigator.of(context).pop();
               },
             ),
             const Divider(),
             ListTile(
-              leading: const Text("Год"),
+              leading: Text(AppLocalizations.of(context)!.year),
               onTap: () {
-                _changePeriod(Period.year, DateTime.now());
+                _changePeriod(Period.year, DateTime.now(), context);
                 Navigator.of(context).pop();
               },
             ),
             const Divider(),
             ListTile(
-              leading: Text("Период"),
+              leading: Text(AppLocalizations.of(context)!.period),
             ),
           ],
         );

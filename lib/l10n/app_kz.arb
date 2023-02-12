@@ -1,5 +1,23 @@
 {
     "@@locale": "kk",
     "language": "Қазақша",
-    "helloWorld": "Сәлем Әлем!"
+    "helloWorld": "Сәлем Әлем!",
+    "total": "Барлығы",
+    "expenses": "Шығыcдар",
+    "incomes": "Кірістер",
+    "allTime": "Барлық уақытта",
+    "day": "Күн",
+    "week": "Апта",
+    "month": "Ай",
+    "year": "Жыл",
+    "period": "Кезең", 
+    "mainPage": "Басты бет",
+    "accounts": "Шоттар",
+    "graphs": "Графиктер",
+    "categories": "Санаттар",
+    "currency": "Валюта",
+    "settings": "Параметрлер",
+    "shareWithFriends": "Достарыңызбен бөлісіңіз",
+    "rateTheApp": "Бағдарламаны бағалау",
+    "logOut": "Шығу"
 }

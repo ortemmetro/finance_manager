@@ -1,4 +1,22 @@
 {
     "language": "Français",
-    "helloWorld": "Bonjour le monde !"
+    "helloWorld": "Bonjour le monde !",
+    "total": "Total",
+    "expenses": "Dépenses",
+    "incomes": "Revenu",
+    "allTime": "En tout temps",
+    "day": "Jour",
+    "week": "La semaine",
+    "month": "Mois",
+    "year": "L'année",
+    "period": "Période", 
+    "mainPage": "Accueil",
+    "accounts": "Comptes",
+    "graphs": "Graphiques",
+    "categories": "Catégories",
+    "currency": "Monnaie",
+    "settings": "Paramètres",
+    "shareWithFriends": "Partager avec des amis",
+    "rateTheApp": "Évaluer l'application",
+    "logOut": "Aller à"
 }

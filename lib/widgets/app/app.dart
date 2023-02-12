@@ -18,6 +18,7 @@ import 'package:finance_manager/widgets/settings_widgets/currency/currency_widge
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget.dart';
+import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,8 @@ class App extends StatelessWidget {
                   Provider.of<ExpensesPageModel>(context, listen: false),
                   Provider.of<IncomesPageModel>(context, listen: false),
                 )),
+        ChangeNotifierProvider(
+            create: (BuildContext context) => LanguagesWidgetModel()),
       ],
       child: ScreenUtilInit(
         builder: (context, child) => MaterialApp(

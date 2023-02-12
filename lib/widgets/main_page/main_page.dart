@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../drawer_widget/drawer_widget.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 import '../expenses_page_widget/expenses_page_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -18,26 +19,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final model = ExpensesPageModel();
-  final tab = TabBar(
-    unselectedLabelColor: const Color.fromARGB(255, 232, 232, 232),
-    labelColor: Colors.black,
-    indicator: BoxDecoration(
-      color: Colors.white,
-      border: Border.all(
-        color: Colors.white,
-        width: 2.0.w,
-      ),
-      borderRadius: BorderRadius.circular(15),
-    ),
-    labelStyle: TextStyle(
-      fontSize: 15.5.sp,
-      fontWeight: FontWeight.w500,
-    ),
-    tabs: <Tab>[
-      Tab(text: 'Расходы', height: 39.h),
-      Tab(text: 'Доходы', height: 39.h),
-    ],
-  );
 
   @override
   void initState() {
@@ -54,7 +35,27 @@ class _MainPageState extends State<MainPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: _AppBarWidget(tab: tab),
+        appBar: _AppBarWidget(
+            tab: TabBar(
+          unselectedLabelColor: const Color.fromARGB(255, 232, 232, 232),
+          labelColor: Colors.black,
+          indicator: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.white,
+              width: 2.0.w,
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          labelStyle: TextStyle(
+            fontSize: 15.5.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          tabs: <Tab>[
+            Tab(text: AppLocalizations.of(context)!.expenses, height: 39.h),
+            Tab(text: AppLocalizations.of(context)!.incomes, height: 39.h),
+          ],
+        )),
         drawer: DrawerWidget(),
         body: const TabBarView(
           children: [
@@ -83,7 +84,7 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       toolbarHeight: 68.0.h,
       backgroundColor: const Color.fromARGB(255, 93, 176, 117),
       title: Text(
-        'Итого: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()}₸',
+        '${AppLocalizations.of(context)!.total}: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()}₸',
         style: TextStyle(fontSize: 20.sp),
       ),
       centerTitle: true,

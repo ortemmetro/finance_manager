@@ -6,5 +6,23 @@
     "helloWorld": "Hello World!",
     "@helloWorld": {
         "description": "The programmer's greeting"
-    }
+    },
+    "total": "Total",
+    "expenses": "Expenses",
+    "incomes": "Incomes",
+    "allTime": "In all the time",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "period": "Period", 
+    "mainPage": "Main page",
+    "accounts": "Accounts",
+    "graphs": "Graphs",
+    "categories": "Categories",
+    "currency": "Currency",
+    "settings": "Settings",
+    "shareWithFriends": "Share with friends",
+    "rateTheApp": "Rate the app",
+    "logOut": "Log out"
 }
