@@ -22,7 +22,7 @@ class ExpensesPageModel extends ChangeNotifier {
   double doubleSum = 0.0;
   String? currentUserId;
 
-  late String? selectedPeriod;
+  String? selectedPeriod;
 
   bool isPieChart = true;
 

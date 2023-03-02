@@ -4,6 +4,7 @@ import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/entity/expense.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../entity/income.dart';
@@ -41,13 +42,18 @@ class AddWidgetModel extends ChangeNotifier {
         .first
         .reference;
     final docExpenseReference = docUsersReference.collection('Expenses').doc();
-    final expense = Income(
+    //creating an expense
+    final expense = Expense(
       id: docExpenseReference.id,
       comment: comment,
       category: category,
       date: date,
       price: price,
     );
+
+    //storing data locally
+    var box = await Hive.openBox('ExpenseBox');
+    box.put(expense.id, expense);
 
     final json = expense.toJson();
 
@@ -58,7 +64,6 @@ class AddWidgetModel extends ChangeNotifier {
 
     Navigator.of(context).pop();
     selectedIndex = -1;
-    return;
   }
 
   Future<void>? createIncome({
