@@ -56,8 +56,8 @@ class SignUpWidgetModel extends ChangeNotifier {
       firstName: firstName,
       lastName: lastName,
       age: age,
-      expenses: [],
-      ownCategories: [],
+      expenses: null,
+      ownCategories: null,
     );
 
     final json = user.toJson();

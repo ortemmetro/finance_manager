@@ -1,19 +1,30 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'expense.g.dart';
 
 @JsonSerializable()
-class Expense {
+@HiveType(typeId: 2)
+class Expense extends HiveObject {
+  @HiveField(0)
   String id;
+
+  @HiveField(1)
   final String category;
+
+  @HiveField(2)
   final String? comment;
+
+  @HiveField(3)
   final DateTime date;
+
+  @HiveField(4)
   final double price;
 
   Expense({
     this.id = "",
     required this.category,
-    this.comment,
+    required this.comment,
     required this.date,
     required this.price,
   });

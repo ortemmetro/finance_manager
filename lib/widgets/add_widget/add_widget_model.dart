@@ -52,8 +52,10 @@ class AddWidgetModel extends ChangeNotifier {
     );
 
     //storing data locally
-    var box = await Hive.openBox('ExpenseBox');
-    box.put(expense.id, expense);
+    var expensesBox = await Hive.openBox<Expense>('ExpensesBox');
+    expensesBox.add(expense);
+    var usersBox = await Hive.openBox('UsersBox');
+    var expenses = HiveList(expensesBox);
 
     final json = expense.toJson();
 

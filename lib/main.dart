@@ -1,3 +1,7 @@
+import 'package:finance_manager/entity/category.dart';
+import 'package:finance_manager/entity/expense.dart';
+import 'package:finance_manager/entity/income.dart';
+import 'package:finance_manager/entity/my_user_for_hive.dart';
 import 'package:finance_manager/widgets/app/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +11,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
+  Hive.registerAdapter(CategoryAdapter());
+  Hive.registerAdapter(ExpenseAdapter());
+  Hive.registerAdapter(IncomeAdapter());
+  Hive.registerAdapter(MyUserForHiveAdapter());
 
   runApp(const App());
 }

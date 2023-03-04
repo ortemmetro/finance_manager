@@ -91,6 +91,7 @@ class ExpensesPageModel extends ChangeNotifier {
         category: currentListOfExpenses[i].category,
         date: currentListOfExpenses[i].date,
         price: currentPrice,
+        comment: null,
       ));
     }
     notifyListeners();
