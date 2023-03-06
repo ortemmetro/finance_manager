@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/default_data/default_categories_data.dart';
+import 'package:finance_manager/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/session/session_id_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';

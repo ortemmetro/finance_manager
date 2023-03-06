@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/default_data/default_categories_data.dart';
+import 'package:finance_manager/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/entity/expense.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
@@ -51,12 +51,6 @@ class AddWidgetModel extends ChangeNotifier {
       price: price,
     );
 
-    //storing data locally
-    var expensesBox = await Hive.openBox<Expense>('ExpensesBox');
-    expensesBox.add(expense);
-    var usersBox = await Hive.openBox('UsersBox');
-    var expenses = HiveList(expensesBox);
-
     final json = expense.toJson();
 
     await docExpenseReference.set(json);
@@ -104,6 +98,14 @@ class AddWidgetModel extends ChangeNotifier {
     Navigator.of(context).pop();
     selectedIndex = -1;
     return;
+  }
+
+  void _saveDataLocally(dynamic expenseOrIncome) {
+    // //storing data locally
+    // var expensesBox = await Hive.openBox<Expense>('ExpensesBox');
+    // expensesBox.add(expense);
+    // var usersBox = await Hive.openBox('UsersBox');
+    // var expenses = HiveList(expensesBox);
   }
 
   void isSelectedIndex(int index) {

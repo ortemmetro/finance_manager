@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../default_data/default_categories_data.dart';
+import '../../data_provider/default_data/default_categories_data.dart';
 
 class BarChartWidget extends StatelessWidget {
   const BarChartWidget({

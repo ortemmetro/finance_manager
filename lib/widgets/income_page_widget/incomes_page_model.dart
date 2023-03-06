@@ -3,7 +3,7 @@ import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/entity/income.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../default_data/default_categories_data.dart';
+import '../../data_provider/default_data/default_categories_data.dart';
 
 class IncomesPageModel extends ChangeNotifier {
   List<Income> listOfALLALLIncomes = [];
