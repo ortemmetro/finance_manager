@@ -9,5 +9,4 @@ Welcome to my first massive project, which is also my diploma work. In future th
 ### Current Stack
 
 • Provider
-
 • Firebase
