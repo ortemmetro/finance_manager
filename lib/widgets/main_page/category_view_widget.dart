@@ -10,7 +10,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../session/session_id_model.dart';
+import '../../session/session_id_manager.dart';
 import '../expenses_page_widget/expenses_page_widget.dart';
 import '../income_page_widget/income_page_widget.dart';
 
@@ -22,8 +22,9 @@ class CategoryViewWidget extends StatelessWidget {
     final addModel = Provider.of<AddWidgetModel>(context, listen: true);
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
-    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
-    final userId = sessionIdModel.readUserId("uid");
+    final sessionIdModel =
+        Provider.of<SessionIdManager>(context, listen: false);
+    final userId = sessionIdModel.readUserId();
     var arguments = ModalRoute.of(context)!.settings.arguments;
     if (arguments.runtimeType == ExpenseInfo) {
       arguments = arguments as ExpenseInfo;

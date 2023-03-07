@@ -8,7 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../entity/income.dart';
-import '../../session/session_id_model.dart';
+import '../../session/session_id_manager.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidgetModel extends ChangeNotifier {
@@ -31,8 +31,9 @@ class AddWidgetModel extends ChangeNotifier {
     required double price,
     required BuildContext context,
   }) async {
-    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
-    final userId = await sessionIdModel.readUserId("uid");
+    final sessionIdModel =
+        Provider.of<SessionIdManager>(context, listen: false);
+    final userId = await sessionIdModel.readUserId();
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
@@ -69,8 +70,9 @@ class AddWidgetModel extends ChangeNotifier {
     required double price,
     required BuildContext context,
   }) async {
-    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
-    final userId = await sessionIdModel.readUserId("uid");
+    final sessionIdModel =
+        Provider.of<SessionIdManager>(context, listen: false);
+    final userId = await sessionIdModel.readUserId();
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')

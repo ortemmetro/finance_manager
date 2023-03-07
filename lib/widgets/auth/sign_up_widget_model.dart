@@ -1,10 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_manager/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/entity/my_user.dart';
-import 'package:finance_manager/session/session_id_model.dart';
+import 'package:finance_manager/entity/my_user_for_hive.dart';
+import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SignUpWidgetModel extends ChangeNotifier {
   String notValidPasswordString = "";
@@ -29,9 +29,23 @@ class SignUpWidgetModel extends ChangeNotifier {
         password: password.trim(),
       );
       _addUserDetails(firstName, lastName, email, age);
-      final sessionIdModel =
-          Provider.of<SessionIdModel>(context, listen: false);
-      await sessionIdModel.writeUserId(FirebaseAuth.instance.currentUser!.uid);
+
+      final userForHive = MyUserForHive(
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+      );
+      final userBox = await BoxManager.instance.openUserBox();
+
+      if (!userBox.values.contains(userForHive)) {
+        final userKey = await userBox.add(userForHive);
+        await SessionIdManager.instance.writeUserKey(userKey);
+      }
+
+      await BoxManager.instance.closeBox(userBox);
+
+      await SessionIdManager.instance
+          .writeUserId(FirebaseAuth.instance.currentUser!.uid);
       Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       print(e);

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 import '../../entity/my_user.dart';
-import '../../session/session_id_model.dart';
+import '../../session/session_id_manager.dart';
 
 class DrawerWidgetModel extends ChangeNotifier {
   String userName = "";
@@ -13,8 +13,8 @@ class DrawerWidgetModel extends ChangeNotifier {
   Future<void> getUserInfo(BuildContext context) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) return;
-    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
-    final userId = await sessionIdModel.readUserId("uid");
+
+    final userId = await SessionIdManager.instance.readUserId();
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
             .where("id", isEqualTo: userId)

@@ -1,3 +1,6 @@
+import 'package:finance_manager/entity/category.dart';
+import 'package:finance_manager/entity/expense.dart';
+import 'package:finance_manager/entity/income.dart';
 import 'package:finance_manager/entity/my_user_for_hive.dart';
 import 'package:hive/hive.dart';
 
@@ -5,7 +8,26 @@ class BoxManager {
   static final BoxManager instance = BoxManager._();
   BoxManager._();
 
-  Future<Box<MyUserForHive>> openUserBox() {}
+  Future<Box<MyUserForHive>> openUserBox() async {
+    return _openBox<MyUserForHive>("user_box", 4, MyUserForHiveAdapter());
+  }
+
+  Future<Box<Expense>> openExpenseBox(int userBoxId) async {
+    return _openBox<Expense>("expense_box_$userBoxId", 2, ExpenseAdapter());
+  }
+
+  Future<Box<Income>> openIncomeBox(int userBoxId) async {
+    return _openBox<Income>("income_box_$userBoxId", 3, IncomeAdapter());
+  }
+
+  Future<Box<Category>> openCategoryBox(int userBoxId) async {
+    return _openBox<Category>("category_box_$userBoxId", 1, CategoryAdapter());
+  }
+
+  Future<void> closeBox<T>(Box<T> box) async {
+    await box.compact();
+    await box.close();
+  }
 
   Future<Box<T>> _openBox<T>(
     String boxName,

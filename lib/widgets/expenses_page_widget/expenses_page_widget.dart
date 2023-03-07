@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../entity/expense.dart';
-import '../../session/session_id_model.dart';
+import '../../session/session_id_manager.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';
 import '../income_page_widget/incomes_page_model.dart';
@@ -38,9 +38,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      final sessionIdModel =
-          Provider.of<SessionIdModel>(context, listen: false);
-      final userId = sessionIdModel.readUserId("uid");
+      final userId = SessionIdManager.instance.readUserId();
       uUserId = await userId;
       final addCategoryWidgetModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);

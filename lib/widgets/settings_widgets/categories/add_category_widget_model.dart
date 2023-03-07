@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/category.dart';
-import 'package:finance_manager/session/session_id_model.dart';
+import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -86,7 +86,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
   }
 
   Future<void> addCategory(String categoryName, BuildContext context) async {
-    final userId = await SessionIdModel().readUserId("uid");
+    final userId = await SessionIdManager.instance.readUserId();
     final userReference = (await FirebaseFirestore.instance
             .collection('Users')
             .where("id", isEqualTo: userId)
@@ -133,9 +133,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
 
   Future<void> downloadCategories(BuildContext context) async {
     List<Category> tempList = [];
-    final sessionIdModel = Provider.of<SessionIdModel>(context, listen: false);
-    await sessionIdModel.writeUserId(FirebaseAuth.instance.currentUser!.uid);
-    final userId = await SessionIdModel().readUserId("uid");
+    final userId = await SessionIdManager.instance.readUserId();
     final userReference = (await FirebaseFirestore.instance
             .collection('Users')
             .where("id", isEqualTo: userId)

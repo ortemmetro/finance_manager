@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../entity/income.dart';
-import '../../session/session_id_model.dart';
+import '../../session/session_id_manager.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
@@ -37,9 +37,7 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      final sessionIdModel =
-          Provider.of<SessionIdModel>(context, listen: false);
-      final userId = sessionIdModel.readUserId("uid");
+      final userId = SessionIdManager.instance.readUserId();
       uUserId = await userId;
       final addCategoryWidgetModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);

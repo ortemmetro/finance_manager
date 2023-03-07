@@ -21,15 +21,13 @@ class MyUserForHiveAdapter extends TypeAdapter<MyUserForHive> {
       firstName: fields[1] as String,
       lastName: fields[2] as String,
       age: fields[3] as int,
-      expenses: (fields[4] as HiveList?)?.castHiveList(),
-      ownCategories: (fields[5] as HiveList?)?.castHiveList(),
     );
   }
 
   @override
   void write(BinaryWriter writer, MyUserForHive obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -37,11 +35,7 @@ class MyUserForHiveAdapter extends TypeAdapter<MyUserForHive> {
       ..writeByte(2)
       ..write(obj.lastName)
       ..writeByte(3)
-      ..write(obj.age)
-      ..writeByte(4)
-      ..write(obj.expenses)
-      ..writeByte(5)
-      ..write(obj.ownCategories);
+      ..write(obj.age);
   }
 
   @override
