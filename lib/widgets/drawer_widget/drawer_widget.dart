@@ -21,7 +21,7 @@ class DrawerIconTextFunction {
 }
 
 class DrawerWidget extends StatelessWidget {
-  DrawerWidget({Key? key}) : super(key: key);
+  const DrawerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,50 +82,52 @@ class DrawerWidget extends StatelessWidget {
       ),
     ];
     return Drawer(
-      child: Column(
-        children: [
-          SizedBox(height: 20.h),
-          const _UserTileWidget(),
-          Divider(thickness: 2.0.w),
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.only(top: 1.h),
-              itemCount: drawerTileList.length,
-              itemBuilder: (context, index) {
-                final function = drawerTileList[index].onTap;
-                return ListTile(
-                  dense: true,
-                  minVerticalPadding: 17.h,
-                  leading: drawerTileList[index].icon,
-                  title: Text(
-                    drawerTileList[index].text,
-                    style: TextStyle(fontSize: 14.5.sp),
-                  ),
-                  onTap: () => function!(context),
-                );
-              },
+      child: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 20.h),
+            const _UserTileWidget(),
+            Divider(thickness: 2.0.w),
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.only(top: 1.h),
+                itemCount: drawerTileList.length,
+                itemBuilder: (context, index) {
+                  final function = drawerTileList[index].onTap;
+                  return ListTile(
+                    dense: true,
+                    minVerticalPadding: 17.h,
+                    leading: drawerTileList[index].icon,
+                    title: Text(
+                      drawerTileList[index].text,
+                      style: TextStyle(fontSize: 14.5.sp),
+                    ),
+                    onTap: () => function!(context),
+                  );
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height: 100.h,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ListTile(
-                  leading: Icon(Icons.door_front_door, size: 28.w),
-                  title: Text(
-                    AppLocalizations.of(context)!.logOut,
-                    style: TextStyle(fontSize: 14.5.sp),
+            SizedBox(
+              height: 100.h,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.door_front_door, size: 28.w),
+                    title: Text(
+                      AppLocalizations.of(context)!.logOut,
+                      style: TextStyle(fontSize: 14.5.sp),
+                    ),
+                    onTap: () {
+                      model.signOut();
+                      Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                    },
                   ),
-                  onTap: () {
-                    model.signOut();
-                    Navigator.of(context).popUntil(ModalRoute.withName('/'));
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -157,7 +159,7 @@ class _UserTileWidget extends StatelessWidget {
         radius: 25.w,
         child: CircleAvatar(
           radius: 22.75.w,
-          backgroundImage: const AssetImage('images/user_image.jpg'),
+          backgroundImage: const AssetImage('assets/images/user_image.jpg'),
         ),
       ),
     );

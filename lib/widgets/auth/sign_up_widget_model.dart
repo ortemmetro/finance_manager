@@ -28,13 +28,15 @@ class SignUpWidgetModel extends ChangeNotifier {
         email: email.trim(),
         password: password.trim(),
       );
-      _addUserDetails(firstName, lastName, email, age);
+
+      await _addUserDetails(firstName, lastName, email, age);
 
       final userForHive = MyUserForHive(
         firstName: firstName,
         lastName: lastName,
         age: age,
       );
+
       final userBox = await BoxManager.instance.openUserBox();
 
       if (!userBox.values.contains(userForHive)) {
@@ -57,7 +59,7 @@ class SignUpWidgetModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future _addUserDetails(
+  Future<void> _addUserDetails(
     String firstName,
     String lastName,
     String email,

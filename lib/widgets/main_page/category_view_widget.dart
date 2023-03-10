@@ -22,9 +22,7 @@ class CategoryViewWidget extends StatelessWidget {
     final addModel = Provider.of<AddWidgetModel>(context, listen: true);
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
-    final sessionIdModel =
-        Provider.of<SessionIdManager>(context, listen: false);
-    final userId = sessionIdModel.readUserId();
+    final userId = SessionIdManager.instance.readUserId();
     var arguments = ModalRoute.of(context)!.settings.arguments;
     if (arguments.runtimeType == ExpenseInfo) {
       arguments = arguments as ExpenseInfo;
@@ -169,7 +167,7 @@ class _ListTileInfoWidget extends StatelessWidget {
           SlidableAction(
             flex: 1,
             onPressed: (context) async {
-              await expenseModel.deleteExpense(
+              await expenseModel.deleteExpenseFromFirebase(
                 expenseOrIncome.id,
                 context,
                 await userId,
@@ -205,7 +203,7 @@ class _ListTileInfoWidget extends StatelessWidget {
         ),
         title: Text(
           expenseOrIncome.comment!,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color.fromARGB(255, 83, 83, 83),
             fontSize: 18,
           ),

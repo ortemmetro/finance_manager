@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_manager/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/entity/category.dart';
 import 'package:finance_manager/entity/expense.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
 
 import '../../entity/income.dart';
 import '../../session/session_id_manager.dart';
@@ -31,9 +30,7 @@ class AddWidgetModel extends ChangeNotifier {
     required double price,
     required BuildContext context,
   }) async {
-    final sessionIdModel =
-        Provider.of<SessionIdManager>(context, listen: false);
-    final userId = await sessionIdModel.readUserId();
+    final userId = await SessionIdManager.instance.readUserId();
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
@@ -43,7 +40,8 @@ class AddWidgetModel extends ChangeNotifier {
         .first
         .reference;
     final docExpenseReference = docUsersReference.collection('Expenses').doc();
-    //creating an expense
+
+    //Сreating an expense
     final expense = Expense(
       id: docExpenseReference.id,
       comment: comment,
@@ -52,6 +50,9 @@ class AddWidgetModel extends ChangeNotifier {
       price: price,
     );
 
+    await _saveDataLocallyInHive(expense);
+    Navigator.of(context).pop();
+
     final json = expense.toJson();
 
     await docExpenseReference.set(json);
@@ -59,20 +60,17 @@ class AddWidgetModel extends ChangeNotifier {
     expenseModel.listOfALLALLExpenses.clear();
     expenseModel.setALLExpenses(userId);
 
-    Navigator.of(context).pop();
     selectedIndex = -1;
   }
 
-  Future<void>? createIncome({
+  Future<void> createIncome({
     required String comment,
     required String category,
     required DateTime date,
     required double price,
     required BuildContext context,
   }) async {
-    final sessionIdModel =
-        Provider.of<SessionIdManager>(context, listen: false);
-    final userId = await sessionIdModel.readUserId();
+    final userId = await SessionIdManager.instance.readUserId();
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
@@ -90,6 +88,9 @@ class AddWidgetModel extends ChangeNotifier {
       price: price,
     );
 
+    await _saveDataLocallyInHive(income);
+    Navigator.of(context).pop();
+
     final json = income.toJson();
 
     await docIncomeReference.set(json);
@@ -97,17 +98,26 @@ class AddWidgetModel extends ChangeNotifier {
     incomeModel.listOfALLALLIncomes.clear();
     incomeModel.setALLIncomes(userId);
 
-    Navigator.of(context).pop();
     selectedIndex = -1;
-    return;
   }
 
-  void _saveDataLocally(dynamic expenseOrIncome) {
-    // //storing data locally
-    // var expensesBox = await Hive.openBox<Expense>('ExpensesBox');
-    // expensesBox.add(expense);
-    // var usersBox = await Hive.openBox('UsersBox');
-    // var expenses = HiveList(expensesBox);
+  Future<void> _saveDataLocallyInHive(dynamic expenseOrIncome) async {
+    if (expenseOrIncome is Expense) {
+      final userKey = await SessionIdManager.instance.readUserKey();
+      final expenseBox = await BoxManager.instance.openExpenseBox(userKey!);
+
+      await expenseBox.add(expenseOrIncome);
+
+      await BoxManager.instance.closeBox(expenseBox);
+    }
+    if (expenseOrIncome is Income) {
+      final userKey = await SessionIdManager.instance.readUserKey();
+      final incomeBox = await BoxManager.instance.openIncomeBox(userKey!);
+
+      await incomeBox.add(expenseOrIncome);
+
+      await BoxManager.instance.closeBox(incomeBox);
+    }
   }
 
   void isSelectedIndex(int index) {

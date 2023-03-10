@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_manager/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/data_provider/default_data/default_categories_data.dart';
+import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -32,18 +34,18 @@ class ExpensesPageModel extends ChangeNotifier {
 
   Future<void> setALLExpenses(String? userId) async {
     if (listOfALLALLExpenses.isEmpty) {
-      listOfALLALLExpenses = await readExpenses(userId) ?? [];
+      listOfALLALLExpenses = await readExpensesFromHive();
       currentUserId = userId;
       return;
     } else if (listOfALLALLExpenses.isNotEmpty && currentUserId != userId) {
       listOfALLALLExpenses.clear();
-      listOfALLALLExpenses = await readExpenses(userId) ?? [];
+      listOfALLALLExpenses = await readExpensesFromHive();
       currentUserId = userId;
     }
   }
 
   Future<void> setup(String? userId) async {
-    final list = await readExpenses(userId) ?? [];
+    final list = await readExpensesFromHive();
     setALLExpenses(userId);
     _setExpenses(list);
     _sortExpensesByPrice();
@@ -53,7 +55,7 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Expense>>? readExpenses(String? userId) async {
+  Future<List<Expense>>? readExpensesFromFirebase(String? userId) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
             .where("id", isEqualTo: (userId))
@@ -70,6 +72,12 @@ class ExpensesPageModel extends ChangeNotifier {
           .first;
     }
     return [];
+  }
+
+  Future<List<Expense>> readExpensesFromHive() async {
+    final userKey = await SessionIdManager.instance.readUserKey();
+    final expenseBox = await BoxManager.instance.openExpenseBox(userKey!);
+    return expenseBox.values.toList();
   }
 
   void _setExpenses(List<Expense> currentListOfExpenses) {
@@ -97,7 +105,7 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteExpense(
+  Future<void> deleteExpenseFromFirebase(
     String id,
     BuildContext context,
     String? userId,
@@ -121,6 +129,14 @@ class ExpensesPageModel extends ChangeNotifier {
     listOfALLALLExpenses.clear();
     await setALLExpenses(userId);
     return;
+  }
+
+  Future<void> deleteExpenseFromHive(Expense expense) async {
+    final userKey = await SessionIdManager.instance.readUserKey();
+    final expenseBox = await BoxManager.instance.openExpenseBox(userKey!);
+    if (expenseBox.values.contains(expense)) {
+      await expenseBox.delete(expense.key);
+    }
   }
 
   Category findCategory(String categoryName) {

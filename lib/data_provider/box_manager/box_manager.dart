@@ -12,16 +12,16 @@ class BoxManager {
     return _openBox<MyUserForHive>("user_box", 4, MyUserForHiveAdapter());
   }
 
-  Future<Box<Expense>> openExpenseBox(int userBoxId) async {
-    return _openBox<Expense>("expense_box_$userBoxId", 2, ExpenseAdapter());
+  Future<Box<Expense>> openExpenseBox(int userKey) async {
+    return _openBox<Expense>("expense_box_$userKey", 2, ExpenseAdapter());
   }
 
-  Future<Box<Income>> openIncomeBox(int userBoxId) async {
-    return _openBox<Income>("income_box_$userBoxId", 3, IncomeAdapter());
+  Future<Box<Income>> openIncomeBox(int userKey) async {
+    return _openBox<Income>("income_box_$userKey", 3, IncomeAdapter());
   }
 
-  Future<Box<Category>> openCategoryBox(int userBoxId) async {
-    return _openBox<Category>("category_box_$userBoxId", 1, CategoryAdapter());
+  Future<Box<Category>> openCategoryBox(int userKey) async {
+    return _openBox<Category>("category_box_$userKey", 1, CategoryAdapter());
   }
 
   Future<void> closeBox<T>(Box<T> box) async {
