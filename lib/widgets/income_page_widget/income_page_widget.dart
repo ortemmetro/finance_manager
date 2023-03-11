@@ -1,10 +1,10 @@
+import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../entity/income.dart';
 import '../../session/session_id_manager.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';

@@ -1,8 +1,7 @@
+import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../entity/category.dart';
 
 class IncomesCategoriesPage extends StatelessWidget {
   const IncomesCategoriesPage({

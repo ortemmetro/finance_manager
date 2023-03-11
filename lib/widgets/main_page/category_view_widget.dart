@@ -1,6 +1,6 @@
-import 'package:finance_manager/entity/category.dart';
-import 'package:finance_manager/entity/expense.dart';
-import 'package:finance_manager/entity/income.dart';
+import 'package:finance_manager/domain/entity/category.dart';
+import 'package:finance_manager/domain/entity/expense.dart';
+import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
@@ -62,6 +62,7 @@ class CategoryViewWidget extends StatelessWidget {
                       listOfExpensesOrIncomesOfCurrentCategory:
                           listOfExpensesOfCurrentCategory,
                       navigatorContext: context,
+                      incomeModel: incomeModel,
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
@@ -114,6 +115,7 @@ class CategoryViewWidget extends StatelessWidget {
                       listOfExpensesOrIncomesOfCurrentCategory:
                           listOfIncomesOfCurrentCategory,
                       navigatorContext: context,
+                      incomeModel: incomeModel,
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
@@ -145,12 +147,14 @@ class _ListTileInfoWidget extends StatelessWidget {
     required this.userId,
     required this.listOfExpensesOrIncomesOfCurrentCategory,
     required this.navigatorContext,
+    required this.incomeModel,
   }) : super(key: key);
   final dynamic expenseOrIncome;
   final Map<String, IconData> iconsMap;
   final List<Category> listOfCategories;
   final Category? category;
   final ExpensesPageModel expenseModel;
+  final IncomesPageModel incomeModel;
   final Future<String?> userId;
   final List<dynamic> listOfExpensesOrIncomesOfCurrentCategory;
   final BuildContext navigatorContext;
@@ -167,13 +171,26 @@ class _ListTileInfoWidget extends StatelessWidget {
           SlidableAction(
             flex: 1,
             onPressed: (context) async {
-              await expenseModel.deleteExpenseFromFirebase(
-                expenseOrIncome.id,
-                context,
-                await userId,
-              );
-              if (listOfExpensesOrIncomesOfCurrentCategory.length == 1) {
-                Navigator.of(navigatorContext).pop();
+              if (expenseOrIncome is Expense) {
+                await expenseModel.deleteExpenseFromHive(expenseOrIncome);
+                if (listOfExpensesOrIncomesOfCurrentCategory.length == 1) {
+                  Navigator.of(navigatorContext).pop();
+                }
+                await expenseModel.deleteExpenseFromFirebase(
+                  expenseOrIncome.id,
+                  context,
+                  await userId,
+                );
+              } else if (expenseOrIncome is Income) {
+                await incomeModel;
+                if (listOfExpensesOrIncomesOfCurrentCategory.length == 1) {
+                  Navigator.of(navigatorContext).pop();
+                }
+                await expenseModel.deleteExpenseFromFirebase(
+                  expenseOrIncome.id,
+                  context,
+                  await userId,
+                );
               }
             },
             backgroundColor: const Color(0xFFFE4A49),

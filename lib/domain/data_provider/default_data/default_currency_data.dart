@@ -1,4 +1,4 @@
-import 'package:finance_manager/entity/currency.dart';
+import 'package:finance_manager/domain/entity/currency.dart';
 
 class DefaultCurrencyData {
   static List<Currency> listOfCurrencies = const [

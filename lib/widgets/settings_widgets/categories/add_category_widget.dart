@@ -1,4 +1,4 @@
-import 'package:finance_manager/entity/category.dart';
+import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

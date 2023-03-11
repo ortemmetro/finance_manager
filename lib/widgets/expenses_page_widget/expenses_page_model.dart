@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/data_provider/box_manager/box_manager.dart';
-import 'package:finance_manager/data_provider/default_data/default_categories_data.dart';
+import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
+import 'package:finance_manager/domain/data_provider/default_data/default_categories_data.dart';
+import 'package:finance_manager/domain/entity/category.dart';
+import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../entity/category.dart';
-import '../../entity/expense.dart';
 
 enum Period { day, week, month, year, customPeriod }
 
@@ -27,6 +28,9 @@ class ExpensesPageModel extends ChangeNotifier {
   String? selectedPeriod;
 
   bool isPieChart = true;
+
+  Future<Box<Expense>>? _expenseBox;
+  ValueListenable<Object>? _listenableBox;
 
   void setSelectedPeriod(String newSelectedPeriod) {
     selectedPeriod = newSelectedPeriod;
@@ -52,7 +56,20 @@ class ExpensesPageModel extends ChangeNotifier {
     _setDataMap();
     _setColors();
     _setSum();
+
+    final userKey = await SessionIdManager.instance.readUserKey();
+    _expenseBox ??= BoxManager.instance.openExpenseBox(userKey!);
+    _listenableBox = (await _expenseBox)?.listenable();
+    _listenableBox?.addListener(readExpensesFromHive);
+
     notifyListeners();
+  }
+
+  @override
+  Future<void> dispose() async {
+    _listenableBox?.removeListener(readExpensesFromHive);
+    await BoxManager.instance.closeBox((await _expenseBox)!);
+    super.dispose();
   }
 
   Future<List<Expense>>? readExpensesFromFirebase(String? userId) async {
@@ -137,6 +154,7 @@ class ExpensesPageModel extends ChangeNotifier {
     if (expenseBox.values.contains(expense)) {
       await expenseBox.delete(expense.key);
     }
+    await BoxManager.instance.closeBox(expenseBox);
   }
 
   Category findCategory(String categoryName) {

@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/entity/category.dart';
-import 'package:finance_manager/entity/income.dart';
+import 'package:finance_manager/domain/entity/category.dart';
+import 'package:finance_manager/domain/entity/income.dart';
+
 import 'package:flutter/cupertino.dart';
 
-import '../../data_provider/default_data/default_categories_data.dart';
+import '../../domain/data_provider/default_data/default_categories_data.dart';
 
 class IncomesPageModel extends ChangeNotifier {
   List<Income> listOfALLALLIncomes = [];

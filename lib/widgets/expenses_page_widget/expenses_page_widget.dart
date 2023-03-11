@@ -1,13 +1,15 @@
+import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
+import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../entity/expense.dart';
 import '../../session/session_id_manager.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';
@@ -56,6 +58,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
   Widget build(BuildContext context) {
     final model = Provider.of<ExpensesPageModel>(context, listen: true);
     final user = FirebaseAuth.instance.currentUser!;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Column(

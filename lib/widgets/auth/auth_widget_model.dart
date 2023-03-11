@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/data_provider/box_manager/box_manager.dart';
-import 'package:finance_manager/entity/my_user.dart';
-import 'package:finance_manager/entity/my_user_for_hive.dart';
+import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
+import 'package:finance_manager/domain/entity/my_user.dart';
+import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
+
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';

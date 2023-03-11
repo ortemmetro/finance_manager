@@ -1,9 +1,9 @@
-import 'package:finance_manager/entity/category.dart';
+import 'package:finance_manager/domain/entity/category.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../data_provider/default_data/default_categories_data.dart';
+import '../../domain/data_provider/default_data/default_categories_data.dart';
 
 class BarChartWidget extends StatelessWidget {
   const BarChartWidget({

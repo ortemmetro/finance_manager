@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_manager/domain/entity/my_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
-import '../../entity/my_user.dart';
 import '../../session/session_id_manager.dart';
 
 class DrawerWidgetModel extends ChangeNotifier {

@@ -1,6 +1,6 @@
-import 'package:finance_manager/entity/category.dart';
+import 'package:finance_manager/domain/entity/category.dart';
+import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:finance_manager/entity/expense.dart';
 
 part 'my_user.g.dart';
 

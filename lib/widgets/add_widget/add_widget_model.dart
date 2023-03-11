@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/data_provider/box_manager/box_manager.dart';
-import 'package:finance_manager/data_provider/default_data/default_categories_data.dart';
-import 'package:finance_manager/entity/category.dart';
-import 'package:finance_manager/entity/expense.dart';
+import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
+import 'package:finance_manager/domain/data_provider/default_data/default_categories_data.dart';
+import 'package:finance_manager/domain/entity/category.dart';
+import 'package:finance_manager/domain/entity/expense.dart';
+import 'package:finance_manager/domain/entity/income.dart';
+
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../entity/income.dart';
 import '../../session/session_id_manager.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 

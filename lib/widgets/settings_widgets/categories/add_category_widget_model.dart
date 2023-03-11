@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/data_provider/default_data/default_categories_data.dart';
-import 'package:finance_manager/entity/category.dart';
+import 'package:finance_manager/domain/data_provider/default_data/default_categories_data.dart';
+import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:provider/provider.dart';
 
 enum CategoryClass { expense, income }
 

@@ -1,7 +1,8 @@
-import 'package:finance_manager/entity/category.dart';
-import 'package:finance_manager/entity/expense.dart';
-import 'package:finance_manager/entity/income.dart';
-import 'package:finance_manager/entity/my_user_for_hive.dart';
+import 'package:finance_manager/domain/entity/category.dart';
+import 'package:finance_manager/domain/entity/expense.dart';
+import 'package:finance_manager/domain/entity/income.dart';
+import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
 
 class BoxManager {
