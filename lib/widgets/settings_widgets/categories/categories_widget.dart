@@ -63,7 +63,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
         backgroundColor: Colors.green,
         child: Icon(Icons.add, size: 29.w),
       ),
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       appBar: AppBar(
         toolbarHeight: 70.0.h,
         title: Text('Категории', style: TextStyle(fontSize: 20.sp)),

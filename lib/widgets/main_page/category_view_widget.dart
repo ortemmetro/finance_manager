@@ -22,7 +22,6 @@ class CategoryViewWidget extends StatelessWidget {
     final addModel = Provider.of<AddWidgetModel>(context, listen: true);
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
-    final userId = SessionIdManager.instance.readUserId();
     var arguments = ModalRoute.of(context)!.settings.arguments;
     if (arguments.runtimeType == ExpenseInfo) {
       arguments = arguments as ExpenseInfo;
@@ -58,7 +57,6 @@ class CategoryViewWidget extends StatelessWidget {
                       listOfCategories: addModel.listOfCategories,
                       category: category,
                       expenseModel: expenseModel,
-                      userId: userId,
                       listOfExpensesOrIncomesOfCurrentCategory:
                           listOfExpensesOfCurrentCategory,
                       navigatorContext: context,
@@ -111,7 +109,6 @@ class CategoryViewWidget extends StatelessWidget {
                       listOfCategories: addModel.listOfCategories,
                       category: category,
                       expenseModel: expenseModel,
-                      userId: userId,
                       listOfExpensesOrIncomesOfCurrentCategory:
                           listOfIncomesOfCurrentCategory,
                       navigatorContext: context,
@@ -144,7 +141,6 @@ class _ListTileInfoWidget extends StatelessWidget {
     required this.listOfCategories,
     required this.category,
     required this.expenseModel,
-    required this.userId,
     required this.listOfExpensesOrIncomesOfCurrentCategory,
     required this.navigatorContext,
     required this.incomeModel,
@@ -155,7 +151,6 @@ class _ListTileInfoWidget extends StatelessWidget {
   final Category? category;
   final ExpensesPageModel expenseModel;
   final IncomesPageModel incomeModel;
-  final Future<String?> userId;
   final List<dynamic> listOfExpensesOrIncomesOfCurrentCategory;
   final BuildContext navigatorContext;
 
@@ -163,6 +158,7 @@ class _ListTileInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final format = DateFormat.MMMMEEEEd("ru");
     final dateString = format.format(expenseOrIncome.date);
+    final userId = SessionIdManager.instance.readUserId();
     return Slidable(
       endActionPane: ActionPane(
         extentRatio: 0.25,
@@ -174,23 +170,20 @@ class _ListTileInfoWidget extends StatelessWidget {
               if (expenseOrIncome is Expense) {
                 await expenseModel.deleteExpenseFromHive(expenseOrIncome);
                 if (listOfExpensesOrIncomesOfCurrentCategory.length == 1) {
+                  await expenseModel.setup(await userId);
+                  expenseModel.listOfALLALLExpenses.clear();
+                  expenseModel.setALLExpenses(await userId);
                   Navigator.of(navigatorContext).pop();
                 }
-                await expenseModel.deleteExpenseFromFirebase(
-                  expenseOrIncome.id,
-                  context,
-                  await userId,
-                );
               } else if (expenseOrIncome is Income) {
                 await incomeModel;
                 if (listOfExpensesOrIncomesOfCurrentCategory.length == 1) {
                   Navigator.of(navigatorContext).pop();
                 }
-                await expenseModel.deleteExpenseFromFirebase(
-                  expenseOrIncome.id,
-                  context,
-                  await userId,
-                );
+                // await expenseModel.deleteExpenseFromFirebase(
+                //   expenseOrIncome.id,
+                //   context,
+                // );
               }
             },
             backgroundColor: const Color(0xFFFE4A49),

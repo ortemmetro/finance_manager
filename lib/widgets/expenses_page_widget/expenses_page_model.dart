@@ -29,9 +29,6 @@ class ExpensesPageModel extends ChangeNotifier {
 
   bool isPieChart = true;
 
-  Future<Box<Expense>>? _expenseBox;
-  ValueListenable<Object>? _listenableBox;
-
   void setSelectedPeriod(String newSelectedPeriod) {
     selectedPeriod = newSelectedPeriod;
   }
@@ -57,19 +54,7 @@ class ExpensesPageModel extends ChangeNotifier {
     _setColors();
     _setSum();
 
-    final userKey = await SessionIdManager.instance.readUserKey();
-    _expenseBox ??= BoxManager.instance.openExpenseBox(userKey!);
-    _listenableBox = (await _expenseBox)?.listenable();
-    _listenableBox?.addListener(readExpensesFromHive);
-
     notifyListeners();
-  }
-
-  @override
-  Future<void> dispose() async {
-    _listenableBox?.removeListener(readExpensesFromHive);
-    await BoxManager.instance.closeBox((await _expenseBox)!);
-    super.dispose();
   }
 
   Future<List<Expense>>? readExpensesFromFirebase(String? userId) async {
@@ -145,16 +130,19 @@ class ExpensesPageModel extends ChangeNotifier {
     await setup(userId);
     listOfALLALLExpenses.clear();
     await setALLExpenses(userId);
-    return;
   }
 
   Future<void> deleteExpenseFromHive(Expense expense) async {
     final userKey = await SessionIdManager.instance.readUserKey();
+    final userId = await SessionIdManager.instance.readUserId();
     final expenseBox = await BoxManager.instance.openExpenseBox(userKey!);
     if (expenseBox.values.contains(expense)) {
       await expenseBox.delete(expense.key);
     }
     await BoxManager.instance.closeBox(expenseBox);
+    await setup(userId);
+    listOfALLALLExpenses.clear();
+    await setALLExpenses(userId);
   }
 
   Category findCategory(String categoryName) {

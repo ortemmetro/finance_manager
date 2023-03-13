@@ -79,7 +79,7 @@ class AuthWidgetModel {
 
       final addCategoryModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      await addCategoryModel.downloadCategories(context);
+      await addCategoryModel.downloadCategoriesFromFirebase(context);
     } on FirebaseAuthException catch (e) {
       print(e);
     }

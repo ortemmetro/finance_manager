@@ -28,7 +28,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     DefaultCategoriesData.listOfTempExpenseCategories.clear();
     DefaultCategoriesData.listOfTempIncomeCategories.clear();
 
-    await downloadCategories(context);
+    await downloadCategoriesFromFirebase(context);
 
     listOfExpenseCategories.addAll(
         DefaultCategoriesData.listOfExpenseCategories +
@@ -129,7 +129,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     Navigator.of(context).pop();
   }
 
-  Future<void> downloadCategories(BuildContext context) async {
+  Future<void> downloadCategoriesFromFirebase(BuildContext context) async {
     List<Category> tempList = [];
     final userId = await SessionIdManager.instance.readUserId();
     final userReference = (await FirebaseFirestore.instance

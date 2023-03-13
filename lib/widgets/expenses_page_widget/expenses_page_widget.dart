@@ -44,7 +44,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
       uUserId = await userId;
       final addCategoryWidgetModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      await addCategoryWidgetModel.downloadCategories(context);
+      await addCategoryWidgetModel.downloadCategoriesFromFirebase(context);
       await Provider.of<ExpensesPageModel>(context, listen: false)
           .setup(uUserId);
       Provider.of<ExpensesPageModel>(context, listen: false)
