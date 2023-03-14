@@ -30,7 +30,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
 
     Future.delayed(Duration.zero, () async {
       final model = Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      await model.setCategories(context);
+      await model.setCategories();
       final userId = SessionIdManager.instance.readUserId();
       model.userId = await userId;
     });
@@ -50,9 +50,9 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
     final iconsMap = model.iconsMap;
     _tabController?.addListener(() {
       if (myTabs[_tabController!.index].text == "Расходы") {
-        model.categoryClass = CategoryClass.expense;
+        model.categoryClassIndex = CategoryClass.expense.index;
       } else {
-        model.categoryClass = CategoryClass.income;
+        model.categoryClassIndex = CategoryClass.income.index;
       }
     });
     return Scaffold(
@@ -80,9 +80,9 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
             child: TabBar(
               onTap: (index) {
                 if (myTabs[index].text == "Расходы") {
-                  model.categoryClass = CategoryClass.expense;
+                  model.categoryClassIndex = CategoryClass.expense.index;
                 } else {
-                  model.categoryClass = CategoryClass.income;
+                  model.categoryClassIndex = CategoryClass.income.index;
                 }
               },
               controller: _tabController,

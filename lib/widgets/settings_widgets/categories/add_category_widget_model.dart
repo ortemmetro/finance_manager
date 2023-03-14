@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/domain/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -13,7 +15,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
 
   final iconsMap = DefaultCategoriesData.iconsMap;
 
-  CategoryClass categoryClass = CategoryClass.expense;
+  int categoryClassIndex = CategoryClass.expense.index;
 
   var selectedIndex = -1;
   String selectedCategoryIcon = "";
@@ -22,13 +24,13 @@ class AddCategoryWidgetModel extends ChangeNotifier {
 
   String? userId = "";
 
-  Future<void> setCategories(BuildContext context) async {
+  Future<void> setCategories() async {
     listOfExpenseCategories.clear();
     listOfIncomeCategories.clear();
     DefaultCategoriesData.listOfTempExpenseCategories.clear();
     DefaultCategoriesData.listOfTempIncomeCategories.clear();
 
-    await downloadCategoriesFromFirebase(context);
+    await downloadCategoriesFromHive();
 
     listOfExpenseCategories.addAll(
         DefaultCategoriesData.listOfExpenseCategories +
@@ -97,20 +99,27 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     stringColorList.insert(1, "x");
     final stringColor = stringColorList.join();
 
-    if (categoryClass == CategoryClass.income) {
+    if (categoryClassIndex == CategoryClass.income.index) {
       final categoryReference = userReference.collection("Categories").doc();
       final category = Category(
         id: categoryReference.id,
         name: categoryName,
         color: stringColor,
         icon: selectedCategoryIcon,
-        categoryClass: categoryClass,
+        categoryClassIndex: categoryClassIndex,
       );
-      final json = category.toJson();
-      await categoryReference.set(json);
-      await setCategories(context);
-      notifyListeners();
+      final userKey = await SessionIdManager.instance.readUserKey();
+      final categoryBox = await BoxManager.instance.openCategoryBox(userKey!);
+
+      await categoryBox.add(category);
+      await BoxManager.instance.closeBox(categoryBox);
+
       Navigator.of(context).pop();
+
+      // final json = category.toJson();
+      // await categoryReference.set(json);
+      await setCategories();
+      notifyListeners();
       return;
     }
 
@@ -120,13 +129,21 @@ class AddCategoryWidgetModel extends ChangeNotifier {
       name: categoryName,
       color: stringColor,
       icon: selectedCategoryIcon,
-      categoryClass: categoryClass,
+      categoryClassIndex: categoryClassIndex,
     );
-    final json = category.toJson();
-    await categoryReference.set(json);
-    await setCategories(context);
-    notifyListeners();
+
+    final userKey = await SessionIdManager.instance.readUserKey();
+    final categoryBox = await BoxManager.instance.openCategoryBox(userKey!);
+
+    await categoryBox.add(category);
+    await BoxManager.instance.closeBox(categoryBox);
+
     Navigator.of(context).pop();
+
+    // final json = category.toJson();
+    // await categoryReference.set(json);
+    await setCategories();
+    notifyListeners();
   }
 
   Future<void> downloadCategoriesFromFirebase(BuildContext context) async {
@@ -148,7 +165,7 @@ class AddCategoryWidgetModel extends ChangeNotifier {
               .toList())
           .first;
       for (var i = 0; i < tempList.length; i++) {
-        if (tempList[i].categoryClass == CategoryClass.expense) {
+        if (tempList[i].categoryClassIndex == CategoryClass.expense.index) {
           DefaultCategoriesData.listOfTempExpenseCategories.add(tempList[i]);
         } else {
           DefaultCategoriesData.listOfTempIncomeCategories.add(tempList[i]);
@@ -157,7 +174,29 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteCategory(
+  Future<void> downloadCategoriesFromHive() async {
+    final userKey = await SessionIdManager.instance.readUserKey();
+    final categoryBox = await BoxManager.instance.openCategoryBox(userKey!);
+
+    if (categoryBox.values.isEmpty) {
+      return;
+    }
+
+    final tempListOfCategories = categoryBox.values.toList();
+
+    for (var i = 0; i < tempListOfCategories.length; i++) {
+      if (tempListOfCategories[i].categoryClassIndex ==
+          CategoryClass.expense.index) {
+        DefaultCategoriesData.listOfTempExpenseCategories
+            .add(tempListOfCategories[i]);
+      } else {
+        DefaultCategoriesData.listOfTempIncomeCategories
+            .add(tempListOfCategories[i]);
+      }
+    }
+  }
+
+  Future<void> deleteCategoryFromFirebase(
     String id,
     BuildContext context,
     String? userId,
@@ -172,10 +211,36 @@ class AddCategoryWidgetModel extends ChangeNotifier {
     final docCategoryReference = docUsersReference.collection('Categories');
     if (docCategoryReference.doc(id).path.isNotEmpty) {
       await docCategoryReference.doc(id).delete();
-      await setCategories(context);
+      await setCategories();
       return;
     }
-    await setCategories(context);
-    return;
+  }
+
+  Future<void> deleteCategoryFromHive(
+    Category category,
+    ExpensesPageModel expenseModel,
+  ) async {
+    final userKey = await SessionIdManager.instance.readUserKey();
+    final categoryBox = await BoxManager.instance.openCategoryBox(userKey!);
+
+    await categoryBox.deleteAt(category.key);
+    await BoxManager.instance.closeBox(categoryBox);
+
+    final expenseBox = await BoxManager.instance.openExpenseBox(userKey);
+    final expenseList = expenseBox.values.toList();
+    final neededKeys = expenseList
+        .where((element) => element.category == category.name)
+        .map((e) => e.key);
+
+    await expenseBox.deleteAll(neededKeys);
+    await BoxManager.instance.closeBox(expenseBox);
+
+    final userId = await SessionIdManager.instance.readUserId();
+
+    await expenseModel.setup(userId);
+    expenseModel.listOfALLALLExpenses.clear();
+    await expenseModel.setALLExpenses(userId);
+
+    await setCategories();
   }
 }

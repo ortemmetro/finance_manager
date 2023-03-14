@@ -45,12 +45,12 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                           'Расходы',
                           style: TextStyle(fontSize: 16.5.sp),
                         ),
-                        leading: Radio<CategoryClass>(
-                          value: CategoryClass.expense,
-                          groupValue: model.categoryClass,
-                          onChanged: (CategoryClass? value) {
+                        leading: Radio<int>(
+                          value: CategoryClass.expense.index,
+                          groupValue: model.categoryClassIndex,
+                          onChanged: (int? value) {
                             setState(() {
-                              model.categoryClass = value!;
+                              model.categoryClassIndex = value!;
                             });
                           },
                         ),
@@ -64,12 +64,12 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                           'Доходы',
                           style: TextStyle(fontSize: 16.5.sp),
                         ),
-                        leading: Radio<CategoryClass>(
-                          value: CategoryClass.income,
-                          groupValue: model.categoryClass,
-                          onChanged: (CategoryClass? value) {
+                        leading: Radio<int>(
+                          value: CategoryClass.income.index,
+                          groupValue: model.categoryClassIndex,
+                          onChanged: (int? value) {
                             setState(() {
-                              model.categoryClass = value!;
+                              model.categoryClassIndex = value!;
                             });
                           },
                         ),

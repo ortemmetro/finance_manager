@@ -25,7 +25,7 @@ class _AddWidgetState extends State<AddWidget> {
     Future.delayed(Duration.zero, () async {
       final categoryModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      await categoryModel.setCategories(context);
+      await categoryModel.setCategories();
       Provider.of<AddWidgetModel>(context, listen: false).currentDate = null;
     });
   }

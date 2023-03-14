@@ -21,7 +21,7 @@ class CategoryAdapter extends TypeAdapter<Category> {
       name: fields[1] as String,
       color: fields[2] as String,
       icon: fields[3] as String,
-      categoryClass: fields[4] as CategoryClass,
+      categoryClassIndex: fields[4] as int,
     );
   }
 
@@ -38,7 +38,7 @@ class CategoryAdapter extends TypeAdapter<Category> {
       ..writeByte(3)
       ..write(obj.icon)
       ..writeByte(4)
-      ..write(obj.categoryClass);
+      ..write(obj.categoryClassIndex);
   }
 
   @override
@@ -61,7 +61,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       name: json['name'] as String,
       color: json['color'] as String,
       icon: json['icon'] as String,
-      categoryClass: $enumDecode(_$CategoryClassEnumMap, json['categoryClass']),
+      categoryClassIndex: json['categoryClassIndex'] as int,
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
@@ -69,10 +69,5 @@ Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'name': instance.name,
       'color': instance.color,
       'icon': instance.icon,
-      'categoryClass': _$CategoryClassEnumMap[instance.categoryClass]!,
+      'categoryClassIndex': instance.categoryClassIndex,
     };
-
-const _$CategoryClassEnumMap = {
-  CategoryClass.expense: 'expense',
-  CategoryClass.income: 'income',
-};

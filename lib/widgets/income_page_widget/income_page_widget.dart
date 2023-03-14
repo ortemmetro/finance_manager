@@ -41,7 +41,7 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
       uUserId = await userId;
       final addCategoryWidgetModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      await addCategoryWidgetModel.downloadCategoriesFromFirebase(context);
+      await addCategoryWidgetModel.downloadCategoriesFromHive();
       await Provider.of<ExpensesPageModel>(context, listen: false)
           .setup(uUserId);
       await Provider.of<IncomesPageModel>(context, listen: false)

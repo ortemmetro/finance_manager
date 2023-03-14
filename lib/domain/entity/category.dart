@@ -20,14 +20,14 @@ class Category extends HiveObject {
   final String icon;
 
   @HiveField(4)
-  final CategoryClass categoryClass;
+  final int categoryClassIndex;
 
   Category({
     this.id = "",
     required this.name,
     required this.color,
     required this.icon,
-    required this.categoryClass,
+    required this.categoryClassIndex,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) =>

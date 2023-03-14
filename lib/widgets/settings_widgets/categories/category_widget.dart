@@ -1,3 +1,4 @@
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
@@ -10,8 +11,11 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<AddCategoryWidgetModel>(context, listen: false);
-    final iconsMap = model.iconsMap;
+    final addModel =
+        Provider.of<AddCategoryWidgetModel>(context, listen: false);
+    final expenseModel = Provider.of<ExpensesPageModel>(context, listen: false);
+
+    final iconsMap = addModel.iconsMap;
     final arguments =
         ModalRoute.of(context)!.settings.arguments as CategoryInfo;
     return Scaffold(
@@ -68,7 +72,7 @@ class CategoryWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  arguments.category.categoryClass == CategoryClass.expense
+                  arguments.category.categoryClassIndex == 0
                       ? "Расходы"
                       : "Доходы",
                   style: TextStyle(fontSize: 14.sp),
@@ -105,9 +109,9 @@ class CategoryWidget extends StatelessWidget {
                       children: [
                         AddCategoryCircleIconWidget(
                           index: index,
-                          listOfCategories: model.listOfExpenseCategories,
-                          iconsMap: model.iconsMap,
-                          model: model,
+                          listOfCategories: addModel.listOfExpenseCategories,
+                          iconsMap: addModel.iconsMap,
+                          model: addModel,
                         ),
                       ],
                     ),
@@ -134,32 +138,58 @@ class CategoryWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 170.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Сохранить",
-                    style: TextStyle(fontSize: 15.sp),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      print(arguments.category.categoryClassIndex);
+                    },
+                    child: Text(
+                      "Сохранить",
+                      style: TextStyle(fontSize: 15.sp),
+                    ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await model.deleteCategory(
-                      arguments.category.id,
-                      context,
-                      arguments.userId,
-                    );
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    "Удалить категорию",
-                    style: TextStyle(fontSize: 15.sp),
+                  ElevatedButton(
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Удаление"),
+                            content: Text(
+                                "Вы уверены, что хотите удалить категорию?\n\nВсе связанные с этой категорией записи  будут удалены."),
+                            actions: [
+                              ElevatedButton(
+                                child: Text("Отмена"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              ElevatedButton(
+                                child: Text("Удалить"),
+                                onPressed: () async {
+                                  await addModel.deleteCategoryFromHive(
+                                    arguments.category,
+                                    expenseModel,
+                                  );
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Text(
+                      "Удалить категорию",
+                      style: TextStyle(fontSize: 15.sp),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
