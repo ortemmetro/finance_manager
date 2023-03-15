@@ -24,7 +24,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
             padding: EdgeInsets.symmetric(horizontal: 15.0.w),
             child: Column(
               children: [
-                SizedBox(height: 20.h),
+                SizedBox(height: 16.h),
                 Row(
                   children: [
                     Text(
@@ -34,7 +34,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                   ],
                 ),
                 TextField(controller: nameOfCategoryController),
-                SizedBox(height: 30.h),
+                SizedBox(height: 16.h),
                 Row(
                   children: [
                     SizedBox(
@@ -77,7 +77,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30.h),
+                SizedBox(height: 16.h),
                 Row(
                   children: [
                     Text(

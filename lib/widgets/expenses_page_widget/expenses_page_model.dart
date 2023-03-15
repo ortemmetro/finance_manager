@@ -4,10 +4,8 @@ import 'package:finance_manager/domain/data_provider/default_data/default_catego
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
-import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -79,7 +77,9 @@ class ExpensesPageModel extends ChangeNotifier {
   Future<List<Expense>> readExpensesFromHive() async {
     final userKey = await SessionIdManager.instance.readUserKey();
     final expenseBox = await BoxManager.instance.openExpenseBox(userKey!);
-    return expenseBox.values.toList();
+    final expenseList = expenseBox.values.toList();
+    await BoxManager.instance.closeBox(expenseBox);
+    return expenseList;
   }
 
   void _setExpenses(List<Expense> currentListOfExpenses) {

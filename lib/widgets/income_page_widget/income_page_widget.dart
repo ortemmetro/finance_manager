@@ -52,12 +52,10 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<IncomesPageModel>(context, listen: true);
-    final user = FirebaseAuth.instance.currentUser!;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Column(
         children: [
-          Text('Logged in as ${user.email!}'),
           SizedBox(
             width: 392.7.w,
             height: model.isPieChart ? 220.h : 310.h,

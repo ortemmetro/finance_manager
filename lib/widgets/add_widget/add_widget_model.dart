@@ -17,6 +17,8 @@ class AddWidgetModel extends ChangeNotifier {
   var selectedIndex = -1;
   String selectedCategoryName = "";
 
+  bool isButtonEnabled = true;
+
   DateTime? currentDate;
 
   List<Category> listOfCategories = List.empty(growable: true);
@@ -31,6 +33,8 @@ class AddWidgetModel extends ChangeNotifier {
     required double price,
     required BuildContext context,
   }) async {
+    isButtonEnabled = !isButtonEnabled;
+    notifyListeners();
     final userId = await SessionIdManager.instance.readUserId();
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance
@@ -71,6 +75,8 @@ class AddWidgetModel extends ChangeNotifier {
     required double price,
     required BuildContext context,
   }) async {
+    isButtonEnabled = !isButtonEnabled;
+    notifyListeners();
     final userId = await SessionIdManager.instance.readUserId();
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance

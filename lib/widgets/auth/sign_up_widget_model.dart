@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 class SignUpWidgetModel extends ChangeNotifier {
   String notValidPasswordString = "";
 
-  Future signUp({
+  bool isButtonEnabled = true;
+
+  Future<void> signUp({
     required String email,
     required String password,
     required String confirmPassword,
@@ -19,6 +21,8 @@ class SignUpWidgetModel extends ChangeNotifier {
     required int age,
     required BuildContext context,
   }) async {
+    isButtonEnabled = !isButtonEnabled;
+    notifyListeners();
     if (password != confirmPassword) {
       notValidPasswordString = "Пароли не идентичны! Попробуйте ещё раз";
       notifyListeners();
@@ -49,7 +53,6 @@ class SignUpWidgetModel extends ChangeNotifier {
 
       await SessionIdManager.instance
           .writeUserId(FirebaseAuth.instance.currentUser!.uid);
-      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
       print(e);
     }

@@ -18,6 +18,15 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   final _ageController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      Provider.of<SignUpWidgetModel>(context, listen: false).isButtonEnabled =
+          true;
+    });
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -92,15 +101,20 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
-                  onPressed: () => model.signUp(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    confirmPassword: _confirmPasswordController.text,
-                    firstName: _firstNameController.text,
-                    lastName: _lastNameController.text,
-                    age: int.parse(_ageController.text),
-                    context: context,
-                  ),
+                  onPressed: model.isButtonEnabled
+                      ? () async {
+                          await model.signUp(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            confirmPassword: _confirmPasswordController.text,
+                            firstName: _firstNameController.text,
+                            lastName: _lastNameController.text,
+                            age: int.parse(_ageController.text),
+                            context: context,
+                          );
+                          Navigator.of(context).pushNamed('/main_page');
+                        }
+                      : null,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                       const Color.fromARGB(255, 93, 176, 117),

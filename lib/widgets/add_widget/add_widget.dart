@@ -1,4 +1,3 @@
-import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
@@ -26,7 +25,9 @@ class _AddWidgetState extends State<AddWidget> {
       final categoryModel =
           Provider.of<AddCategoryWidgetModel>(context, listen: false);
       await categoryModel.setCategories();
-      Provider.of<AddWidgetModel>(context, listen: false).currentDate = null;
+      Provider.of<AddWidgetModel>(context, listen: false)
+        ..currentDate = null
+        ..isButtonEnabled = true;
     });
   }
 
@@ -106,21 +107,23 @@ class _AddWidgetBody extends StatelessWidget {
               SizedBox(height: 50.h),
               ElevatedButton(
                 onPressed: () async {
-                  arguments.runtimeType == ExpenseInfo
-                      ? await model.createExpense(
-                          comment: textController.text,
-                          category: model.selectedCategoryName,
-                          price: double.parse(priceController.text),
-                          date: model.currentDate ?? DateTime(0),
-                          context: context,
-                        )
-                      : await model.createIncome(
-                          comment: textController.text,
-                          category: model.selectedCategoryName,
-                          price: double.parse(priceController.text),
-                          date: model.currentDate ?? DateTime(0),
-                          context: context,
-                        );
+                  model.isButtonEnabled
+                      ? (arguments.runtimeType == ExpenseInfo
+                          ? await model.createExpense(
+                              comment: textController.text,
+                              category: model.selectedCategoryName,
+                              price: double.parse(priceController.text),
+                              date: model.currentDate ?? DateTime(0),
+                              context: context,
+                            )
+                          : await model.createIncome(
+                              comment: textController.text,
+                              category: model.selectedCategoryName,
+                              price: double.parse(priceController.text),
+                              date: model.currentDate ?? DateTime(0),
+                              context: context,
+                            ))
+                      : null;
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(

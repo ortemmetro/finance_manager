@@ -20,7 +20,6 @@ import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widge
 import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,8 +30,23 @@ import '../main_page/main_page.dart';
 import '../settings_widgets/categories/add_category_widget.dart';
 import '../settings_widgets/categories/add_category_widget_model.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  String? userId;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      userId = await SessionIdManager.instance.readUserId();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +57,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
         ChangeNotifierProvider(create: (context) => IncomesPageModel()),
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
-        Provider(create: (context) => AuthWidgetModel()),
+        ChangeNotifierProvider(create: (context) => AuthWidgetModel()),
         ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),
         Provider(create: (context) => CurrencyWidgetModel()),
         ChangeNotifierProvider(create: (context) => AddCategoryWidgetModel()),
@@ -66,20 +80,8 @@ class App extends StatelessWidget {
             ),
           ),
           routes: {
-            '/': (context) => StreamBuilder<User?>(
-                  stream: FirebaseAuth.instance.authStateChanges(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return const Center(child: Text('Что-то пошло не так!'));
-                    } else if (snapshot.hasData) {
-                      return const MainPage();
-                    } else {
-                      return const AuthWidget();
-                    }
-                  },
-                ),
+            '/': (context) =>
+                userId == null ? const AuthWidget() : const MainPage(),
             '/sign_up': (context) => const SignUpWidget(),
             '/main_page': (context) => const MainPage(),
             '/main_page/category_view': (context) => const CategoryViewWidget(),
@@ -99,7 +101,7 @@ class App extends StatelessWidget {
           },
           initialRoute: '/',
           supportedLocales: L10n.all,
-          localizationsDelegates: [
+          localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,

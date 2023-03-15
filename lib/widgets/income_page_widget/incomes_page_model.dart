@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/income.dart';
+import 'package:finance_manager/session/session_id_manager.dart';
 
 import 'package:flutter/cupertino.dart';
 
@@ -24,18 +26,18 @@ class IncomesPageModel extends ChangeNotifier {
 
   Future<void> setALLIncomes(String? userId) async {
     if (listOfALLALLIncomes.isEmpty) {
-      listOfALLALLIncomes = await readIncomes(userId) ?? [];
+      listOfALLALLIncomes = await readIncomesFromHive();
       currentUserId = userId;
       return;
     } else if (listOfALLALLIncomes.isNotEmpty && currentUserId != userId) {
       listOfALLALLIncomes.clear();
-      listOfALLALLIncomes = await readIncomes(userId) ?? [];
+      listOfALLALLIncomes = await readIncomesFromHive();
       currentUserId = userId;
     }
   }
 
   Future<void> setup(String? userId) async {
-    final list = await readIncomes(userId) ?? [];
+    final list = await readIncomesFromHive();
     setALLIncomes(userId);
     _setIncomes(list);
     _sortIncomesByPrice();
@@ -45,7 +47,7 @@ class IncomesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Income>>? readIncomes(String? userId) async {
+  Future<List<Income>> readIncomesFromFirebase(String? userId) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
             .where("id", isEqualTo: (userId))
@@ -62,6 +64,14 @@ class IncomesPageModel extends ChangeNotifier {
           .first;
     }
     return [];
+  }
+
+  Future<List<Income>> readIncomesFromHive() async {
+    final userKey = await SessionIdManager.instance.readUserKey();
+    final incomeBox = await BoxManager.instance.openIncomeBox(userKey!);
+    final incomeList = incomeBox.values.toList();
+    await BoxManager.instance.closeBox(incomeBox);
+    return incomeList;
   }
 
   void _setIncomes(List<Income> currentListOfIncomes) {

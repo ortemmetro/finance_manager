@@ -23,7 +23,7 @@ class _AuthWidgetState extends State<AuthWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<AuthWidgetModel>(context);
+    final model = Provider.of<AuthWidgetModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Вход'),
@@ -50,11 +50,16 @@ class _AuthWidgetState extends State<AuthWidget> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: () => model.signIn(
-                emailController.text.trim(),
-                passwordController.text.trim(),
-                context,
-              ),
+              onPressed: model.isButtonEnabled
+                  ? () async {
+                      await model.signIn(
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                        context,
+                      );
+                      Navigator.of(context).pushNamed("/main_page");
+                    }
+                  : null,
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
                   const Color.fromARGB(255, 93, 176, 117),
