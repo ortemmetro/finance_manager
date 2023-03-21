@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 class AuthWidgetModel extends ChangeNotifier {
   bool isButtonEnabled = true;
+
   Future<void> signIn(
     String email,
     String password,
@@ -41,14 +42,16 @@ class AuthWidgetModel extends ChangeNotifier {
       final userInfoMap = userInfoObject.data();
       final userInfo = MyUser.fromJson(userInfoMap!);
       final userForHive = MyUserForHive(
+        id: userInfo.id,
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
         age: userInfo.age,
       );
 
       final userBox = await BoxManager.instance.openUserBox();
+      final usersList = userBox.values.toList();
 
-      if (!userBox.values.contains(userForHive)) {
+      if (usersList.where((element) => element.id == userForHive.id).isEmpty) {
         final userKey = await userBox.add(userForHive);
         await SessionIdManager.instance.writeUserKey(userKey);
       }

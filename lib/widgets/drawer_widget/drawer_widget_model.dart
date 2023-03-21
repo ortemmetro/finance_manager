@@ -29,9 +29,11 @@ class DrawerWidgetModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     userName = "";
     userSurname = "";
     FirebaseAuth.instance.signOut();
+    SessionIdManager.instance.deleteUserId();
+    notifyListeners();
   }
 }

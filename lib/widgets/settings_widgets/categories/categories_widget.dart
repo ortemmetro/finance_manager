@@ -5,6 +5,7 @@ import 'package:finance_manager/widgets/settings_widgets/categories/incomes_cate
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../drawer_widget/drawer_widget.dart';
 
@@ -66,7 +67,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
       drawer: const DrawerWidget(),
       appBar: AppBar(
         toolbarHeight: 70.0.h,
-        title: Text('Категории', style: TextStyle(fontSize: 20.sp)),
+        title: Text(
+          AppLocalizations.of(context)!.categories,
+          style: TextStyle(fontSize: 20.sp),
+        ),
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(40.0.h),
@@ -97,7 +101,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
                 fontSize: 15.5.sp,
                 fontWeight: FontWeight.w500,
               ),
-              tabs: myTabs,
+              tabs: <Tab>[
+                Tab(text: AppLocalizations.of(context)!.expenses, height: 39.h),
+                Tab(text: AppLocalizations.of(context)!.incomes, height: 39.h),
+              ],
             ),
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:finance_manager/widgets/settings_widgets/categories/add_category
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddCategoryWidget extends StatefulWidget {
   const AddCategoryWidget({super.key});
@@ -28,7 +29,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                 Row(
                   children: [
                     Text(
-                      "Название категории",
+                      AppLocalizations.of(context)!.categoryName,
                       style: TextStyle(fontSize: 18.sp),
                     ),
                   ],
@@ -42,7 +43,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(0),
                         title: Text(
-                          'Расходы',
+                          AppLocalizations.of(context)!.expenses,
                           style: TextStyle(fontSize: 16.5.sp),
                         ),
                         leading: Radio<int>(
@@ -61,7 +62,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(0),
                         title: Text(
-                          'Доходы',
+                          AppLocalizations.of(context)!.incomes,
                           style: TextStyle(fontSize: 16.5.sp),
                         ),
                         leading: Radio<int>(
@@ -81,7 +82,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                 Row(
                   children: [
                     Text(
-                      "Иконки",
+                      AppLocalizations.of(context)!.icons,
                       style: TextStyle(fontSize: 18.sp),
                     ),
                   ],
@@ -119,7 +120,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Выберите цвет",
+                      AppLocalizations.of(context)!.chooseColorHeader,
                       style: TextStyle(fontSize: 16.5.sp),
                     ),
                     TextButton(
@@ -130,7 +131,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                             MaterialStateProperty.all(const EdgeInsets.all(0)),
                       ),
                       child: Text(
-                        "Все иконки",
+                        AppLocalizations.of(context)!.allIcons,
                         style: TextStyle(fontSize: 14.sp),
                       ),
                     )
@@ -154,7 +155,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                           backgroundColor:
                               MaterialStateProperty.all(Colors.green)),
                       child: Text(
-                        "Выбрать цвет",
+                        AppLocalizations.of(context)!.chooseColorButton,
                         style: TextStyle(fontSize: 15.sp),
                       ),
                     ),
@@ -174,7 +175,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                     backgroundColor: MaterialStateProperty.all(Colors.green),
                   ),
                   child: Text(
-                    "Добавить",
+                    AppLocalizations.of(context)!.add,
                     style: TextStyle(fontSize: 25.sp),
                   ),
                 ),

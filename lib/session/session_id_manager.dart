@@ -36,4 +36,8 @@ class SessionIdManager {
         await _secureStorage.read(key: "uid", aOptions: _getAndroidOptions());
     return readData;
   }
+
+  Future<void> deleteUserId() async {
+    await _secureStorage.delete(key: 'uid', aOptions: _getAndroidOptions());
+  }
 }

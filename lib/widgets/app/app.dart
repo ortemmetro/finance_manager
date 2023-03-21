@@ -1,3 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
 import 'package:finance_manager/l10n/l10n.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
@@ -20,34 +27,23 @@ import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widge
 import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main_page/main_page.dart';
 import '../settings_widgets/categories/add_category_widget.dart';
 import '../settings_widgets/categories/add_category_widget_model.dart';
 
 class App extends StatefulWidget {
-  const App({super.key});
+  const App({
+    Key? key,
+    required this.userId,
+  }) : super(key: key);
+  final String? userId;
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  String? userId;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      userId = await SessionIdManager.instance.readUserId();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     //width of design is 393,
@@ -81,7 +77,7 @@ class _AppState extends State<App> {
           ),
           routes: {
             '/': (context) =>
-                userId == null ? const AuthWidget() : const MainPage(),
+                widget.userId == null ? const AuthWidget() : const MainPage(),
             '/sign_up': (context) => const SignUpWidget(),
             '/main_page': (context) => const MainPage(),
             '/main_page/category_view': (context) => const CategoryViewWidget(),
