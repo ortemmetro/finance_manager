@@ -3,8 +3,12 @@ import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dar
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../domain/data_provider/default_data/default_categories_data.dart';
 
@@ -20,7 +24,7 @@ class IncomesPageModel extends ChangeNotifier {
   double doubleSum = 0.0;
   String? currentUserId;
 
-  String selectedPeriod = "За всё время";
+  String? selectedPeriod;
 
   bool isPieChart = true;
 
@@ -38,7 +42,7 @@ class IncomesPageModel extends ChangeNotifier {
 
   Future<void> setup(String? userId) async {
     final list = await readIncomesFromHive();
-    setALLIncomes(userId);
+    await setALLIncomes(userId);
     _setIncomes(list);
     _sortIncomesByPrice();
     _setDataMap();
@@ -74,6 +78,10 @@ class IncomesPageModel extends ChangeNotifier {
     return incomeList;
   }
 
+  void setSelectedPeriod(String newSelectedPeriod) {
+    selectedPeriod = newSelectedPeriod;
+  }
+
   void _setIncomes(List<Income> currentListOfIncomes) {
     listOfShortenIncomes.clear();
     listOfAllIncomes.clear();
@@ -96,6 +104,20 @@ class IncomesPageModel extends ChangeNotifier {
       ));
     }
     notifyListeners();
+  }
+
+  Future<void> deleteIncomeFromHive(Income income) async {
+    final userKey = await SessionIdManager.instance.readUserKey();
+    final userId = await SessionIdManager.instance.readUserId();
+    final incomeBox = await BoxManager.instance.openIncomeBox(userKey!);
+    final incomeList = incomeBox.values.toList();
+    if (incomeList.where((element) => element.key == income.key).isNotEmpty) {
+      await incomeBox.delete(income.key);
+    }
+    await BoxManager.instance.closeBox(incomeBox);
+    await setup(userId);
+    listOfALLALLIncomes.clear();
+    await setALLIncomes(userId);
   }
 
   void _sortIncomesByPrice() {
@@ -131,11 +153,12 @@ class IncomesPageModel extends ChangeNotifier {
     sum = "";
     doubleSum = 0.0;
     double currentSum = 0;
+
+    // changing local sum
     for (var i = 0; i < listOfShortenIncomes.length; i++) {
       currentSum += listOfShortenIncomes[i].price;
     }
     var sumString = currentSum.floor().toString().split('');
-    doubleSum = double.parse(sumString.join());
 
     for (var i = sumString.length; i > 0; i--) {
       if ((sumString.length - i) % 4 == 0) {
@@ -143,6 +166,16 @@ class IncomesPageModel extends ChangeNotifier {
       }
     }
     sum = sumString.join();
+
+    // changing total sum
+    currentSum = 0;
+
+    for (var i = 0; i < listOfALLALLIncomes.length; i++) {
+      currentSum += listOfALLALLIncomes[i].price;
+    }
+    sumString = currentSum.floor().toString().split('');
+
+    doubleSum = double.parse(sumString.join());
 
     notifyListeners();
   }
@@ -166,5 +199,131 @@ class IncomesPageModel extends ChangeNotifier {
   void changePieToBar() {
     isPieChart = !isPieChart;
     notifyListeners();
+  }
+
+  void _changePeriod(
+    Period period,
+    DateTime currentDate,
+    BuildContext context,
+  ) {
+    if (period == Period.day) {
+      listOfNeededIncomes = List.from(listOfALLALLIncomes);
+      listOfNeededIncomes.removeWhere((element) {
+        final a = currentDate.subtract(const Duration(days: 1));
+        var b = true;
+        if (element.date.isAfter(a) && element.date.isBefore(currentDate)) {
+          b = false;
+        }
+        return b;
+      });
+      _setIncomes(listOfNeededIncomes);
+      _sortIncomesByPrice();
+      _setDataMap();
+      _setColors();
+      _setSum();
+      selectedPeriod = AppLocalizations.of(context)!.day;
+      notifyListeners();
+    } else if (period == Period.week) {
+      listOfNeededIncomes = List.from(listOfALLALLIncomes);
+      listOfNeededIncomes.removeWhere((element) {
+        final a = currentDate.subtract(const Duration(days: 7));
+        var b = true;
+        if (element.date.isAfter(a) && element.date.isBefore(currentDate)) {
+          b = false;
+        }
+        return b;
+      });
+      _setIncomes(listOfNeededIncomes);
+      _sortIncomesByPrice();
+      _setDataMap();
+      _setColors();
+      _setSum();
+      selectedPeriod = AppLocalizations.of(context)!.week;
+      notifyListeners();
+    } else if (period == Period.month) {
+      listOfNeededIncomes = List.from(listOfALLALLIncomes);
+      listOfNeededIncomes.removeWhere((element) {
+        final a = currentDate.subtract(const Duration(days: 30));
+        var b = true;
+        if (element.date.isAfter(a) && element.date.isBefore(currentDate)) {
+          b = false;
+        }
+        return b;
+      });
+      _setIncomes(listOfNeededIncomes);
+      _sortIncomesByPrice();
+      _setDataMap();
+      _setColors();
+      _setSum();
+      selectedPeriod = AppLocalizations.of(context)!.month;
+      notifyListeners();
+    } else if (period == Period.year) {
+      listOfNeededIncomes = List.from(listOfALLALLIncomes);
+      listOfNeededIncomes.removeWhere((element) {
+        final a = currentDate.subtract(const Duration(days: 365));
+        var b = true;
+        if (element.date.isAfter(a) && element.date.isBefore(currentDate)) {
+          b = false;
+        }
+        return b;
+      });
+      _setIncomes(listOfNeededIncomes);
+      _sortIncomesByPrice();
+      _setDataMap();
+      _setColors();
+      _setSum();
+      selectedPeriod = AppLocalizations.of(context)!.year;
+      notifyListeners();
+    }
+  }
+
+  void showDateChangeDialog(BuildContext context) {
+    showMaterialModalBottomSheet(
+      context: context,
+      expand: false,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 10.h),
+            ListTile(
+              leading: Text(AppLocalizations.of(context)!.day),
+              onTap: () {
+                _changePeriod(Period.day, DateTime.now(), context);
+                Navigator.of(context).pop();
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: Text(AppLocalizations.of(context)!.week),
+              onTap: () {
+                _changePeriod(Period.week, DateTime.now(), context);
+                Navigator.of(context).pop();
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: Text(AppLocalizations.of(context)!.month),
+              onTap: () {
+                _changePeriod(Period.month, DateTime.now(), context);
+                Navigator.of(context).pop();
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: Text(AppLocalizations.of(context)!.year),
+              onTap: () {
+                _changePeriod(Period.year, DateTime.now(), context);
+                Navigator.of(context).pop();
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: Text(AppLocalizations.of(context)!.period),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

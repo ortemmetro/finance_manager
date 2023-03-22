@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../expenses_page_widget/expenses_page_model.dart';
 
@@ -77,7 +78,7 @@ class _AddWidgetBody extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      'Категории',
+                      AppLocalizations.of(context)!.categories,
                       style: TextStyle(fontSize: 18.sp),
                     ),
                   ],
@@ -95,13 +96,13 @@ class _AddWidgetBody extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Выбрать дату',
+                  AppLocalizations.of(context)!.chooseDate,
                   style: TextStyle(fontSize: 15.sp),
                 ),
               ),
               model.currentDate != null
                   ? Text(format.format(model.currentDate!).toString())
-                  : const Text("Дата не выбрана"),
+                  : Text(AppLocalizations.of(context)!.noDateSelected),
               SizedBox(height: 50.h),
               _CommentFieldWidget(textController: textController),
               SizedBox(height: 50.h),
@@ -134,7 +135,7 @@ class _AddWidgetBody extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                       horizontal: 20.0.w, vertical: 20.0.h),
                   child: Text(
-                    'Добавить',
+                    AppLocalizations.of(context)!.add,
                     style: TextStyle(fontSize: 19.sp),
                   ),
                 ),
@@ -303,7 +304,7 @@ class _CommentFieldWidget extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Комментарий',
+                AppLocalizations.of(context)!.comment,
                 style: TextStyle(fontSize: 18.sp),
               ),
             ],

@@ -1,6 +1,8 @@
+import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/income_page_widget.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -27,6 +29,19 @@ class _MainPageState extends State<MainPage> {
       await initializeDateFormatting('ru', null);
       await Provider.of<DrawerWidgetModel>(context, listen: false)
           .getUserInfo(context);
+
+      // setting  all info for expenses/incomes
+      final userId = await SessionIdManager.instance.readUserId();
+      final expenseModel =
+          Provider.of<ExpensesPageModel>(context, listen: false);
+      final incomeModel = Provider.of<IncomesPageModel>(context, listen: false);
+
+      await Provider.of<AddCategoryWidgetModel>(context, listen: false)
+          .downloadCategoriesFromHive();
+      await expenseModel.setup(userId);
+      expenseModel.setSelectedPeriod(AppLocalizations.of(context)!.allTime);
+      await incomeModel.setup(userId);
+      incomeModel.setSelectedPeriod(AppLocalizations.of(context)!.allTime);
     });
   }
 

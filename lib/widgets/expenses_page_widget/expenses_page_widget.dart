@@ -31,26 +31,6 @@ class ExpensesPageWidget extends StatefulWidget {
 
 class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
     with AutomaticKeepAliveClientMixin<ExpensesPageWidget> {
-  String? uUserId;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      final userId = SessionIdManager.instance.readUserId();
-      uUserId = await userId;
-      final addCategoryWidgetModel =
-          Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      await addCategoryWidgetModel.downloadCategoriesFromHive();
-      await Provider.of<ExpensesPageModel>(context, listen: false)
-          .setup(uUserId);
-      Provider.of<ExpensesPageModel>(context, listen: false)
-          .setSelectedPeriod(AppLocalizations.of(context)!.allTime);
-      await Provider.of<IncomesPageModel>(context, listen: false)
-          .setup(uUserId);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<ExpensesPageModel>(context, listen: true);
@@ -148,7 +128,6 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
             child: Scrollbar(
               child: _ExpensesListViewWidget(
                 expenses: model.listOfShortenExpenses,
-                userId: uUserId,
               ),
             ),
           ),
@@ -163,11 +142,9 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
 
 class _ExpensesListViewWidget extends StatelessWidget {
   final List<Expense> expenses;
-  final String? userId;
   const _ExpensesListViewWidget({
     Key? key,
     required this.expenses,
-    required this.userId,
   }) : super(key: key);
 
   @override
@@ -178,7 +155,6 @@ class _ExpensesListViewWidget extends StatelessWidget {
         return _ExpensesListTileWidget(
           expenses: expenses,
           index: index,
-          userId: userId,
         );
       },
       separatorBuilder: (BuildContext context, int index) {
@@ -196,11 +172,9 @@ class _ExpensesListViewWidget extends StatelessWidget {
 class _ExpensesListTileWidget extends StatelessWidget {
   final List<Expense> expenses;
   final int index;
-  final String? userId;
   const _ExpensesListTileWidget({
     required this.expenses,
     required this.index,
-    required this.userId,
   });
 
   @override

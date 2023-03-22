@@ -5,6 +5,7 @@ import 'package:finance_manager/widgets/settings_widgets/categories/expenses_cat
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({super.key});
@@ -20,7 +21,8 @@ class CategoryWidget extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as CategoryInfo;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Изменение категории", style: TextStyle(fontSize: 20.sp)),
+        title: Text(AppLocalizations.of(context)!.changeCategory,
+            style: TextStyle(fontSize: 20.sp)),
         centerTitle: true,
       ),
       body: Padding(
@@ -60,7 +62,7 @@ class CategoryWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Тип",
+                  AppLocalizations.of(context)!.type,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18.sp,
@@ -73,8 +75,8 @@ class CategoryWidget extends StatelessWidget {
               children: [
                 Text(
                   arguments.category.categoryClassIndex == 0
-                      ? "Расходы"
-                      : "Доходы",
+                      ? AppLocalizations.of(context)!.expenses
+                      : AppLocalizations.of(context)!.incomes,
                   style: TextStyle(fontSize: 14.sp),
                 ),
               ],
@@ -83,7 +85,7 @@ class CategoryWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Иконки",
+                  AppLocalizations.of(context)!.icons,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18.sp,
@@ -129,7 +131,7 @@ class CategoryWidget extends StatelessWidget {
                     padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
                   ),
                   child: Text(
-                    "Все иконки",
+                    AppLocalizations.of(context)!.allIcons,
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
@@ -147,7 +149,7 @@ class CategoryWidget extends StatelessWidget {
                       print(arguments.category.categoryClassIndex);
                     },
                     child: Text(
-                      "Сохранить",
+                      AppLocalizations.of(context)!.save,
                       style: TextStyle(fontSize: 15.sp),
                     ),
                   ),
@@ -157,18 +159,24 @@ class CategoryWidget extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Удаление"),
-                            content: Text(
-                                "Вы уверены, что хотите удалить категорию?\n\nВсе связанные с этой категорией записи  будут удалены."),
+                            title: Text(
+                              AppLocalizations.of(context)!.deleteCategory,
+                            ),
+                            content: Text(AppLocalizations.of(context)!
+                                .deleteCategoryWarningText),
                             actions: [
                               ElevatedButton(
-                                child: Text("Отмена"),
+                                child: Text(
+                                  AppLocalizations.of(context)!.cancel,
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ElevatedButton(
-                                child: Text("Удалить"),
+                                child: Text(
+                                  AppLocalizations.of(context)!.delete,
+                                ),
                                 onPressed: () async {
                                   await addModel.deleteCategoryFromHive(
                                     arguments.category,
@@ -184,7 +192,7 @@ class CategoryWidget extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      "Удалить категорию",
+                      AppLocalizations.of(context)!.deleteCategory,
                       style: TextStyle(fontSize: 15.sp),
                     ),
                   ),

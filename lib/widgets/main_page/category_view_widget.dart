@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../session/session_id_manager.dart';
 import '../expenses_page_widget/expenses_page_widget.dart';
@@ -170,26 +171,33 @@ class _ListTileInfoWidget extends StatelessWidget {
               if (expenseOrIncome is Expense) {
                 await expenseModel.deleteExpenseFromHive(expenseOrIncome);
                 if (listOfExpensesOrIncomesOfCurrentCategory.length == 1) {
-                  await expenseModel.setup(await userId);
                   expenseModel.listOfALLALLExpenses.clear();
                   expenseModel.setALLExpenses(await userId);
+                  await expenseModel.setup(await userId);
                   Navigator.of(navigatorContext).pop();
+                  return;
                 }
+                expenseModel.listOfALLALLExpenses.clear();
+                expenseModel.setALLExpenses(await userId);
+                await expenseModel.setup(await userId);
               } else if (expenseOrIncome is Income) {
-                await incomeModel;
+                await incomeModel.deleteIncomeFromHive(expenseOrIncome);
                 if (listOfExpensesOrIncomesOfCurrentCategory.length == 1) {
+                  incomeModel.listOfALLALLIncomes.clear();
+                  incomeModel.setALLIncomes(await userId);
+                  await incomeModel.setup(await userId);
                   Navigator.of(navigatorContext).pop();
+                  return;
                 }
-                // await expenseModel.deleteExpenseFromFirebase(
-                //   expenseOrIncome.id,
-                //   context,
-                // );
+                incomeModel.listOfALLALLIncomes.clear();
+                incomeModel.setALLIncomes(await userId);
+                await incomeModel.setup(await userId);
               }
             },
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,
-            label: 'Удалить',
+            label: AppLocalizations.of(context)!.delete,
           ),
         ],
       ),

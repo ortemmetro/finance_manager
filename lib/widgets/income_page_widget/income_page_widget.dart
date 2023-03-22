@@ -1,9 +1,9 @@
 import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../session/session_id_manager.dart';
 import '../charts/bar_chart_widget.dart';
@@ -31,24 +31,6 @@ class IncomesPageWidget extends StatefulWidget {
 
 class _IncomesPageWidgetState extends State<IncomesPageWidget>
     with AutomaticKeepAliveClientMixin<IncomesPageWidget> {
-  String? uUserId;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      final userId = SessionIdManager.instance.readUserId();
-      uUserId = await userId;
-      final addCategoryWidgetModel =
-          Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      await addCategoryWidgetModel.downloadCategoriesFromHive();
-      await Provider.of<ExpensesPageModel>(context, listen: false)
-          .setup(uUserId);
-      await Provider.of<IncomesPageModel>(context, listen: false)
-          .setup(uUserId);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<IncomesPageModel>(context, listen: true);
@@ -109,7 +91,7 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
                   right: 0,
                   top: 0,
                   child: TextButton(
-                    onPressed: () {}, //model.showDateChangeDialog(context),
+                    onPressed: () => model.showDateChangeDialog(context),
                     style: ButtonStyle(
                         padding:
                             MaterialStateProperty.all(const EdgeInsets.all(0))),
@@ -117,7 +99,7 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          model.selectedPeriod,
+                          model.selectedPeriod ?? '',
                           style: TextStyle(
                             color: Colors.green,
                             fontSize: 15.sp,
@@ -140,7 +122,6 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
             child: Scrollbar(
               child: _IncomesListViewWidget(
                 incomes: model.listOfShortenIncomes,
-                userId: uUserId,
               ),
             ),
           ),
@@ -155,11 +136,9 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
 
 class _IncomesListViewWidget extends StatelessWidget {
   final List<Income> incomes;
-  final String? userId;
   const _IncomesListViewWidget({
     Key? key,
     required this.incomes,
-    required this.userId,
   }) : super(key: key);
 
   @override
@@ -170,7 +149,6 @@ class _IncomesListViewWidget extends StatelessWidget {
         return _IncomesListTileWidget(
           incomes: incomes,
           index: index,
-          userId: userId,
         );
       },
       separatorBuilder: (BuildContext context, int index) {
@@ -188,11 +166,9 @@ class _IncomesListViewWidget extends StatelessWidget {
 class _IncomesListTileWidget extends StatelessWidget {
   final List<Income> incomes;
   final int index;
-  final String? userId;
   const _IncomesListTileWidget({
     required this.incomes,
     required this.index,
-    required this.userId,
   });
 
   @override

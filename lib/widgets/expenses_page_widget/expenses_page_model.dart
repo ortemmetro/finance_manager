@@ -45,7 +45,7 @@ class ExpensesPageModel extends ChangeNotifier {
 
   Future<void> setup(String? userId) async {
     final list = await readExpensesFromHive();
-    setALLExpenses(userId);
+    await setALLExpenses(userId);
     _setExpenses(list);
     _sortExpensesByPrice();
     _setDataMap();
@@ -136,7 +136,8 @@ class ExpensesPageModel extends ChangeNotifier {
     final userKey = await SessionIdManager.instance.readUserKey();
     final userId = await SessionIdManager.instance.readUserId();
     final expenseBox = await BoxManager.instance.openExpenseBox(userKey!);
-    if (expenseBox.values.contains(expense)) {
+    final expenseList = expenseBox.values.toList();
+    if (expenseList.where((element) => element.key == expense.key).isNotEmpty) {
       await expenseBox.delete(expense.key);
     }
     await BoxManager.instance.closeBox(expenseBox);
@@ -213,11 +214,12 @@ class ExpensesPageModel extends ChangeNotifier {
     sum = "";
     doubleSum = 0.0;
     double currentSum = 0;
+
+    // changing local sum
     for (var i = 0; i < listOfShortenExpenses.length; i++) {
       currentSum += listOfShortenExpenses[i].price;
     }
     var sumString = currentSum.floor().toString().split('');
-    doubleSum = double.parse(sumString.join());
 
     for (var i = sumString.length; i > 0; i--) {
       if ((sumString.length - i) % 4 == 0) {
@@ -225,6 +227,16 @@ class ExpensesPageModel extends ChangeNotifier {
       }
     }
     sum = sumString.join();
+
+    // changing total sum
+    currentSum = 0;
+
+    for (var i = 0; i < listOfALLALLExpenses.length; i++) {
+      currentSum += listOfALLALLExpenses[i].price;
+    }
+    sumString = currentSum.floor().toString().split('');
+
+    doubleSum = double.parse(sumString.join());
 
     notifyListeners();
   }

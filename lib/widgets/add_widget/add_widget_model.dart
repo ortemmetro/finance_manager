@@ -61,9 +61,9 @@ class AddWidgetModel extends ChangeNotifier {
     final json = expense.toJson();
 
     // await docExpenseReference.set(json);
-    await expenseModel.setup(userId);
     expenseModel.listOfALLALLExpenses.clear();
     expenseModel.setALLExpenses(userId);
+    await expenseModel.setup(userId);
 
     selectedIndex = -1;
   }
@@ -100,10 +100,10 @@ class AddWidgetModel extends ChangeNotifier {
 
     final json = income.toJson();
 
-    await docIncomeReference.set(json);
-    await incomeModel.setup(userId);
+    // await docIncomeReference.set(json);
     incomeModel.listOfALLALLIncomes.clear();
     incomeModel.setALLIncomes(userId);
+    await incomeModel.setup(userId);
 
     selectedIndex = -1;
   }

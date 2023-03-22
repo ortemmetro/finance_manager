@@ -120,7 +120,8 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     onTap: () {
                       model.signOut(context);
-                      Navigator.of(context).pushReplacementNamed('/');
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', (_) => false);
                     },
                   ),
                 ],
