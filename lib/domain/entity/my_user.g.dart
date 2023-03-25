@@ -11,6 +11,7 @@ MyUser _$MyUserFromJson(Map<String, dynamic> json) => MyUser(
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       age: json['age'] as int,
+      currency: json['currency'] as String,
       expenses: (json['expenses'] as List<dynamic>?)
           ?.map((e) => Expense.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -24,6 +25,7 @@ Map<String, dynamic> _$MyUserToJson(MyUser instance) => <String, dynamic>{
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'age': instance.age,
+      'currency': instance.currency,
       'expenses': instance.expenses,
       'ownCategories': instance.ownCategories,
     };

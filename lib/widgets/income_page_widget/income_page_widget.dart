@@ -1,5 +1,6 @@
 import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
+import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -174,6 +175,8 @@ class _IncomesListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<IncomesPageModel>(context);
+    final currenycModel =
+        Provider.of<CurrencyWidgetModel>(context, listen: true);
     return ListTile(
       onTap: () {
         final arguments = IncomeInfo(
@@ -212,7 +215,7 @@ class _IncomesListTileWidget extends StatelessWidget {
       trailing: Padding(
         padding: EdgeInsets.only(right: 12.w),
         child: Text(
-          "${incomes[index].price.toInt().toString()} ₸",
+          "${incomes[index].price.toInt().toString()} ${currenycModel.currentCurrency}",
           style: TextStyle(
             fontSize: 15.sp,
           ),

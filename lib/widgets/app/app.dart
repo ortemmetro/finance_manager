@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -6,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'package:finance_manager/l10n/l10n.dart';
-import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/auth/auth_widget.dart';
@@ -50,12 +48,12 @@ class _AppState extends State<App> {
     //height is 803
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => CurrencyWidgetModel()),
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
         ChangeNotifierProvider(create: (context) => IncomesPageModel()),
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
         ChangeNotifierProvider(create: (context) => AuthWidgetModel()),
         ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),
-        Provider(create: (context) => CurrencyWidgetModel()),
         ChangeNotifierProvider(create: (context) => AddCategoryWidgetModel()),
         ChangeNotifierProvider(
             create: (context) => AddWidgetModel(

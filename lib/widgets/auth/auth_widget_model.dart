@@ -46,6 +46,7 @@ class AuthWidgetModel extends ChangeNotifier {
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
         age: userInfo.age,
+        currency: userInfo.currency,
       );
 
       final userBox = await BoxManager.instance.openUserBox();

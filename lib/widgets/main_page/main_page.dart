@@ -3,6 +3,7 @@ import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/income_page_widget.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -95,11 +96,13 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
+    final currenycModel =
+        Provider.of<CurrencyWidgetModel>(context, listen: true);
     return AppBar(
       toolbarHeight: 68.0.h,
       backgroundColor: const Color.fromARGB(255, 93, 176, 117),
       title: Text(
-        '${AppLocalizations.of(context)!.total}: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()}₸',
+        '${AppLocalizations.of(context)!.total}: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()} ${currenycModel.currentCurrency}',
         style: TextStyle(fontSize: 20.sp),
       ),
       centerTitle: true,

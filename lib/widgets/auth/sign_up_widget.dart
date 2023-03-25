@@ -17,6 +17,39 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
 
+  String _selectedCurrencyValue = "₸";
+
+  final List<DropdownMenuItem<String>> _menuCurrencyItems = const [
+    DropdownMenuItem(
+      value: "₸",
+      child: Text("₸ - Kazakhstan Tenge"),
+    ),
+    DropdownMenuItem(
+      value: "₽",
+      child: Text("₽ - Russian Ruble"),
+    ),
+    DropdownMenuItem(
+      value: "\$",
+      child: Text("\$ - American Dollar"),
+    ),
+    DropdownMenuItem(
+      value: "¥",
+      child: Text("¥ - Chinese Yuan"),
+    ),
+    DropdownMenuItem(
+      value: "€",
+      child: Text("€ - Europe Euro"),
+    ),
+    DropdownMenuItem(
+      value: "₺",
+      child: Text("₺ - Turkish Lira"),
+    ),
+    DropdownMenuItem(
+      value: "£",
+      child: Text("£ - England Pound"),
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -100,6 +133,22 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   onEditingComplete: () => model.resetErrorText(),
                 ),
                 const SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Выберите подходящую вам валюту:'),
+                    DropdownButton(
+                      items: _menuCurrencyItems,
+                      value: _selectedCurrencyValue,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCurrencyValue = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: model.isButtonEnabled
                       ? () async {
@@ -110,6 +159,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             firstName: _firstNameController.text,
                             lastName: _lastNameController.text,
                             age: int.parse(_ageController.text),
+                            currency: _selectedCurrencyValue,
                             context: context,
                           );
                           Navigator.of(context).pushNamed('/main_page');

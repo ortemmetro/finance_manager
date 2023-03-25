@@ -21,13 +21,14 @@ class MyUserForHiveAdapter extends TypeAdapter<MyUserForHive> {
       firstName: fields[1] as String,
       lastName: fields[2] as String,
       age: fields[3] as int,
+      currency: fields[6] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, MyUserForHive obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class MyUserForHiveAdapter extends TypeAdapter<MyUserForHive> {
       ..writeByte(2)
       ..write(obj.lastName)
       ..writeByte(3)
-      ..write(obj.age);
+      ..write(obj.age)
+      ..writeByte(6)
+      ..write(obj.currency);
   }
 
   @override

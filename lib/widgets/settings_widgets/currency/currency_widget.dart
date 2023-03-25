@@ -31,6 +31,12 @@ class CurrencyWidget extends StatelessWidget {
         itemCount: model.listOfCurrencies.length,
         itemBuilder: (context, index) {
           return ListTile(
+            onTap: () async {
+              await model.setCurrencyFromSettings(
+                model.listOfCurrencies[index].currencySign,
+              );
+              await model.showSuccessDialog(context);
+            },
             leading: Text(
               model.listOfCurrencies[index].currencyName,
               style: const TextStyle(fontSize: 16),

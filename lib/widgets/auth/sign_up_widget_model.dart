@@ -19,6 +19,7 @@ class SignUpWidgetModel extends ChangeNotifier {
     required String firstName,
     required String lastName,
     required int age,
+    required String currency,
     required BuildContext context,
   }) async {
     isButtonEnabled = !isButtonEnabled;
@@ -34,12 +35,13 @@ class SignUpWidgetModel extends ChangeNotifier {
         password: password.trim(),
       );
 
-      await _addUserDetails(firstName, lastName, email, age);
+      await _addUserDetails(firstName, lastName, email, age, currency);
 
       final userForHive = MyUserForHive(
         firstName: firstName,
         lastName: lastName,
         age: age,
+        currency: currency,
       );
 
       final userBox = await BoxManager.instance.openUserBox();
@@ -68,6 +70,7 @@ class SignUpWidgetModel extends ChangeNotifier {
     String lastName,
     String email,
     int age,
+    String currency,
   ) async {
     final usersDocReference =
         FirebaseFirestore.instance.collection("Users").doc();
@@ -76,6 +79,7 @@ class SignUpWidgetModel extends ChangeNotifier {
       firstName: firstName,
       lastName: lastName,
       age: age,
+      currency: currency,
       expenses: null,
       ownCategories: null,
     );

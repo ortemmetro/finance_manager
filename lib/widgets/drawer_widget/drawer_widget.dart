@@ -1,5 +1,6 @@
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/rate_the_app/rate_the_app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -144,6 +145,8 @@ class _UserTileWidget extends StatelessWidget {
     final model = Provider.of<DrawerWidgetModel>(context);
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
+    final currencyModel =
+        Provider.of<CurrencyWidgetModel>(context, listen: true);
     if (model.userName == "" || model.userSurname == "") {
       model.getUserInfo(context);
     }
@@ -153,7 +156,7 @@ class _UserTileWidget extends StatelessWidget {
         style: TextStyle(fontSize: 17.5.sp),
       ),
       subtitle: Text(
-          '${AppLocalizations.of(context)!.total}: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()}₸',
+          '${AppLocalizations.of(context)!.total}: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()} ${currencyModel.currentCurrency}',
           style: TextStyle(fontSize: 16.5.sp)),
       leading: CircleAvatar(
         backgroundColor: Colors.black,
