@@ -145,8 +145,7 @@ class _UserTileWidget extends StatelessWidget {
     final model = Provider.of<DrawerWidgetModel>(context);
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
-    final currencyModel =
-        Provider.of<CurrencyWidgetModel>(context, listen: true);
+    final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
     if (model.userName == "" || model.userSurname == "") {
       model.getUserInfo(context);
     }

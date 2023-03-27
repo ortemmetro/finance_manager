@@ -5,19 +5,19 @@ import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CurrencyWidgetModel extends ChangeNotifier {
+class CurrencyModel extends ChangeNotifier {
   final listOfCurrencies = DefaultCurrencyData.listOfCurrencies;
-  late String currentCurrency;
+  String? currentCurrency;
 
   Future<void> setCurrency() async {
     final userBox = await BoxManager.instance.openUserBox();
     final userId = await SessionIdManager.instance.readUserId();
     final usersList = userBox.values.toList();
 
-    currentCurrency =
-        usersList.where((element) => element.id == userId).first.currency;
+    final user = usersList.where((element) => element.id == userId).toList();
+
+    currentCurrency = user.length == 1 ? user.first.currency : null;
     await BoxManager.instance.closeBox(userBox);
-    notifyListeners();
   }
 
   Future<void> setCurrencyFromSettings(String currency) async {
@@ -34,6 +34,7 @@ class CurrencyWidgetModel extends ChangeNotifier {
       firstName: user.firstName,
       lastName: user.lastName,
     );
+    currentCurrency = currency;
 
     await userBox.putAt(userKey, newUserWithNewCurrency);
 

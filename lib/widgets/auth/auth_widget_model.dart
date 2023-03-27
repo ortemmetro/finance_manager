@@ -5,6 +5,7 @@ import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
 
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class AuthWidgetModel extends ChangeNotifier {
     String email,
     String password,
     BuildContext context,
+    CurrencyModel model,
   ) async {
     isButtonEnabled = !isButtonEnabled;
     notifyListeners();
@@ -56,6 +58,8 @@ class AuthWidgetModel extends ChangeNotifier {
         final userKey = await userBox.add(userForHive);
         await SessionIdManager.instance.writeUserKey(userKey);
       }
+
+      await model.setCurrency();
 
       await BoxManager.instance.closeBox(userBox);
 

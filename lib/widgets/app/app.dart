@@ -1,3 +1,4 @@
+import 'package:finance_manager/widgets/startup_page/startup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -48,7 +49,7 @@ class _AppState extends State<App> {
     //height is 803
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CurrencyWidgetModel()),
+        ChangeNotifierProvider(create: (context) => CurrencyModel()),
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
         ChangeNotifierProvider(create: (context) => IncomesPageModel()),
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
@@ -74,6 +75,7 @@ class _AppState extends State<App> {
             ),
           ),
           routes: {
+            '/start': (context) => const StartupPage(),
             '/': (context) =>
                 widget.userId == null ? const AuthWidget() : const MainPage(),
             '/sign_up': (context) => const SignUpWidget(),
@@ -93,7 +95,7 @@ class _AppState extends State<App> {
             '/main_page/settings/language': (context) =>
                 const LanguagesWidget(),
           },
-          initialRoute: '/',
+          initialRoute: '/start',
           supportedLocales: L10n.all,
           localizationsDelegates: const [
             AppLocalizations.delegate,

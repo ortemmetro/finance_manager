@@ -1,4 +1,5 @@
 import 'package:finance_manager/widgets/auth/auth_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class _AuthWidgetState extends State<AuthWidget> {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AuthWidgetModel>(context, listen: true);
+    final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Вход'),
@@ -56,6 +58,7 @@ class _AuthWidgetState extends State<AuthWidget> {
                         emailController.text.trim(),
                         passwordController.text.trim(),
                         context,
+                        currencyModel,
                       );
                       Navigator.of(context).pushNamed("/main_page");
                     }

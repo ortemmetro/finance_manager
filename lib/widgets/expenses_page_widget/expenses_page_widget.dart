@@ -181,8 +181,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<ExpensesPageModel>(context);
-    final currenycModel =
-        Provider.of<CurrencyWidgetModel>(context, listen: true);
+    final currenycModel = Provider.of<CurrencyModel>(context, listen: true);
     return ListTile(
       onTap: () {
         final arguments = ExpenseInfo(

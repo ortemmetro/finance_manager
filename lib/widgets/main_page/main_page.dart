@@ -27,22 +27,25 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      await initializeDateFormatting('ru', null);
-      await Provider.of<DrawerWidgetModel>(context, listen: false)
-          .getUserInfo(context);
-
-      // setting  all info for expenses/incomes
-      final userId = await SessionIdManager.instance.readUserId();
       final expenseModel =
           Provider.of<ExpensesPageModel>(context, listen: false);
       final incomeModel = Provider.of<IncomesPageModel>(context, listen: false);
+      final drawerModel =
+          Provider.of<DrawerWidgetModel>(context, listen: false);
+      final addCategoryModel =
+          Provider.of<AddCategoryWidgetModel>(context, listen: false);
+      final String allTime = AppLocalizations.of(context)!.allTime;
 
-      await Provider.of<AddCategoryWidgetModel>(context, listen: false)
-          .downloadCategoriesFromHive();
+      await initializeDateFormatting('ru', null);
+      await drawerModel.getUserInfo(context);
+
+      // setting  all info for expenses/incomes
+      final userId = await SessionIdManager.instance.readUserId();
+      await addCategoryModel.downloadCategoriesFromHive();
       await expenseModel.setup(userId);
-      expenseModel.setSelectedPeriod(AppLocalizations.of(context)!.allTime);
+      expenseModel.setSelectedPeriod(allTime);
       await incomeModel.setup(userId);
-      incomeModel.setSelectedPeriod(AppLocalizations.of(context)!.allTime);
+      incomeModel.setSelectedPeriod(allTime);
     });
   }
 
@@ -72,7 +75,7 @@ class _MainPageState extends State<MainPage> {
             Tab(text: AppLocalizations.of(context)!.incomes, height: 39.h),
           ],
         )),
-        drawer: DrawerWidget(),
+        drawer: const DrawerWidget(),
         body: const TabBarView(
           children: [
             ExpensesPageWidget(),
@@ -96,8 +99,7 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
-    final currenycModel =
-        Provider.of<CurrencyWidgetModel>(context, listen: true);
+    final currenycModel = Provider.of<CurrencyModel>(context, listen: true);
     return AppBar(
       toolbarHeight: 68.0.h,
       backgroundColor: const Color.fromARGB(255, 93, 176, 117),

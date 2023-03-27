@@ -9,7 +9,7 @@ class CurrencyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<CurrencyWidgetModel>(context);
+    final model = Provider.of<CurrencyModel>(context);
     return Scaffold(
       drawer: DrawerWidget(),
       appBar: AppBar(

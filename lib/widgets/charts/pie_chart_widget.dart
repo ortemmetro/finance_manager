@@ -18,8 +18,7 @@ class PieChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currenycModel =
-        Provider.of<CurrencyWidgetModel>(context, listen: true);
+    final currenycModel = Provider.of<CurrencyModel>(context, listen: true);
     return Center(
       child: SizedBox(
         height: 200.h,
