@@ -1,6 +1,6 @@
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +24,7 @@ class _AddWidgetState extends State<AddWidget> {
     super.initState();
     Future.delayed(Duration.zero, () async {
       final categoryModel =
-          Provider.of<AddCategoryWidgetModel>(context, listen: false);
+          Provider.of<AddCategoryModel>(context, listen: false);
       await categoryModel.setCategories();
       Provider.of<AddWidgetModel>(context, listen: false)
         ..currentDate = null
@@ -59,7 +59,7 @@ class _AddWidgetBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<AddWidgetModel>(context);
-    final addCategoryWidgetModel = Provider.of<AddCategoryWidgetModel>(context);
+    final addCategoryWidgetModel = Provider.of<AddCategoryModel>(context);
     model.listOfCategories = arguments.runtimeType == ExpenseInfo
         ? addCategoryWidgetModel.listOfExpenseCategories
         : addCategoryWidgetModel.listOfIncomeCategories;

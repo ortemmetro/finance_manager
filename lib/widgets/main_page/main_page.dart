@@ -2,7 +2,7 @@ import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/income_page_widget.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,32 +22,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final model = ExpensesPageModel();
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      final expenseModel =
-          Provider.of<ExpensesPageModel>(context, listen: false);
-      final incomeModel = Provider.of<IncomesPageModel>(context, listen: false);
-      final drawerModel =
-          Provider.of<DrawerWidgetModel>(context, listen: false);
-      final addCategoryModel =
-          Provider.of<AddCategoryWidgetModel>(context, listen: false);
-      final String allTime = AppLocalizations.of(context)!.allTime;
-
-      await initializeDateFormatting('ru', null);
-      await drawerModel.getUserInfo(context);
-
-      // setting  all info for expenses/incomes
-      final userId = await SessionIdManager.instance.readUserId();
-      await addCategoryModel.downloadCategoriesFromHive();
-      await expenseModel.setup(userId);
-      expenseModel.setSelectedPeriod(allTime);
-      await incomeModel.setup(userId);
-      incomeModel.setSelectedPeriod(allTime);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:finance_manager/domain/entity/my_user.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
 
 import 'package:finance_manager/session/session_id_manager.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -61,10 +61,12 @@ class AuthWidgetModel extends ChangeNotifier {
 
       await model.setCurrency();
 
-      await BoxManager.instance.closeBox(userBox);
+      if (userBox.isOpen) {
+        await BoxManager.instance.closeBox(userBox);
+      }
 
       final addCategoryModel =
-          Provider.of<AddCategoryWidgetModel>(context, listen: false);
+          Provider.of<AddCategoryModel>(context, listen: false);
       await addCategoryModel.downloadCategoriesFromHive();
     } on FirebaseAuthException catch (e) {
       print(e);

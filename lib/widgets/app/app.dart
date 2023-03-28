@@ -29,7 +29,7 @@ import 'package:finance_manager/widgets/settings_widgets/settings/settings_widge
 
 import '../main_page/main_page.dart';
 import '../settings_widgets/categories/add_category_widget.dart';
-import '../settings_widgets/categories/add_category_widget_model.dart';
+import '../settings_widgets/categories/add_category_model.dart';
 
 class App extends StatefulWidget {
   const App({
@@ -55,7 +55,7 @@ class _AppState extends State<App> {
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
         ChangeNotifierProvider(create: (context) => AuthWidgetModel()),
         ChangeNotifierProvider(create: (context) => SignUpWidgetModel()),
-        ChangeNotifierProvider(create: (context) => AddCategoryWidgetModel()),
+        ChangeNotifierProvider(create: (context) => AddCategoryModel()),
         ChangeNotifierProvider(
             create: (context) => AddWidgetModel(
                   Provider.of<ExpensesPageModel>(context, listen: false),

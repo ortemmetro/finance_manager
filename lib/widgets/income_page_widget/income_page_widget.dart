@@ -10,7 +10,7 @@ import '../../session/session_id_manager.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
-import '../settings_widgets/categories/add_category_widget_model.dart';
+import '../settings_widgets/categories/add_category_model.dart';
 import 'incomes_page_model.dart';
 
 class IncomeInfo {

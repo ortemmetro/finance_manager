@@ -1,4 +1,4 @@
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +8,7 @@ class AllCategoriesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
+    final model = Provider.of<AddCategoryModel>(context, listen: true);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -59,7 +59,7 @@ class AddAllCategoryCircleIconWidget extends StatelessWidget {
     required this.index,
     required this.iconsMap,
   });
-  final AddCategoryWidgetModel model;
+  final AddCategoryModel model;
   final int index;
   final Map<String, IconData> iconsMap;
 

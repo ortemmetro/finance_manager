@@ -1,5 +1,5 @@
 import 'package:finance_manager/domain/entity/category.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
   final nameOfCategoryController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<AddCategoryWidgetModel>(context, listen: true);
+    final model = Provider.of<AddCategoryModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -199,7 +199,7 @@ class AddCategoryCircleIconWidget extends StatelessWidget {
   final List<Category> listOfCategories;
   final Map<String, IconData> iconsMap;
   final int index;
-  final AddCategoryWidgetModel model;
+  final AddCategoryModel model;
 
   @override
   Widget build(BuildContext context) {

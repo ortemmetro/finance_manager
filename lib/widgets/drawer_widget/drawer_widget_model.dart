@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/domain/entity/my_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../session/session_id_manager.dart';
 
@@ -28,6 +29,16 @@ class DrawerWidgetModel extends ChangeNotifier {
     userSurname = userInfo.lastName;
     notifyListeners();
   }
+
+  // Future<void> showLoadingDialog(BuildContext context) async {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return const AlertDialog(
+  //           content: CircularProgressIndicator(),
+  //         );
+  //       });
+  // }
 
   Future<void> signOut(BuildContext context) async {
     userName = "";

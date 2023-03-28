@@ -120,9 +120,9 @@ class DrawerWidget extends StatelessWidget {
                       style: TextStyle(fontSize: 14.5.sp),
                     ),
                     onTap: () {
-                      model.signOut(context);
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/', (_) => false);
+                      model.signOut(context).whenComplete(() =>
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/', (_) => false));
                     },
                   ),
                 ],

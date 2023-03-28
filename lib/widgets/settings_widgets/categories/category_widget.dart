@@ -1,6 +1,6 @@
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +12,7 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addModel =
-        Provider.of<AddCategoryWidgetModel>(context, listen: false);
+    final addModel = Provider.of<AddCategoryModel>(context, listen: false);
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: false);
 
     final iconsMap = addModel.iconsMap;
