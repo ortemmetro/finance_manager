@@ -1,13 +1,13 @@
+import 'package:finance_manager/domain/data_provider/default_data/default_currency_data.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../expenses_page_widget/expenses_page_model.dart';
 
 class AddWidget extends StatefulWidget {
   const AddWidget({super.key});
@@ -34,7 +34,6 @@ class _AddWidgetState extends State<AddWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final expenseModel = context.read<ExpensesPageModel>();
     final arguments = ModalRoute.of(context)!.settings.arguments;
     return _AddWidgetBody(
       priceController: priceController,
@@ -63,7 +62,8 @@ class _AddWidgetBody extends StatelessWidget {
     model.listOfCategories = arguments.runtimeType == ExpenseInfo
         ? addCategoryWidgetModel.listOfExpenseCategories
         : addCategoryWidgetModel.listOfIncomeCategories;
-    final format = DateFormat.MMMMEEEEd("ru");
+    final format =
+        DateFormat.MMMMEEEEd(Localizations.localeOf(context).toString());
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -263,6 +263,9 @@ class _InputFieldWithCurrencyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
+    final currency = DefaultCurrencyData.listOfCurrencies.firstWhere(
+        (element) => element.currencySign == currencyModel.currentCurrency);
     return Center(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -280,7 +283,7 @@ class _InputFieldWithCurrencyWidget extends StatelessWidget {
           ),
           SizedBox(width: 5.w),
           Text(
-            'KZT',
+            currency.currencyCode,
             style: TextStyle(fontSize: 15.sp),
           ),
         ],

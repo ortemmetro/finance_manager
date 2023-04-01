@@ -76,8 +76,7 @@ class _AppState extends State<App> {
           ),
           routes: {
             '/start': (context) => const StartupPage(),
-            '/': (context) =>
-                widget.userId == null ? const AuthWidget() : const MainPage(),
+            '/': (context) => const AuthWidget(),
             '/sign_up': (context) => const SignUpWidget(),
             '/main_page': (context) => const MainPage(),
             '/main_page/category_view': (context) => const CategoryViewWidget(),

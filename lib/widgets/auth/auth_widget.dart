@@ -2,6 +2,7 @@ import 'package:finance_manager/widgets/auth/auth_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthWidget extends StatefulWidget {
   const AuthWidget({super.key});
@@ -15,10 +16,16 @@ class _AuthWidgetState extends State<AuthWidget> {
   final passwordController = TextEditingController();
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final model = Provider.of<AuthWidgetModel>(context, listen: true);
+    model.isButtonEnabled = true;
+  }
+
+  @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
 
@@ -28,7 +35,8 @@ class _AuthWidgetState extends State<AuthWidget> {
     final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Вход'),
+        automaticallyImplyLeading: false,
+        title: Text(AppLocalizations.of(context)!.signIn),
         centerTitle: true,
       ),
       body: Padding(
@@ -37,12 +45,12 @@ class _AuthWidgetState extends State<AuthWidget> {
           children: [
             const SizedBox(height: 30),
             Row(
-              children: const [Text("Электронная почта")],
+              children: [Text(AppLocalizations.of(context)!.email)],
             ),
             TextField(controller: emailController),
             const SizedBox(height: 30),
             Row(
-              children: const [Text('Пароль')],
+              children: [Text(AppLocalizations.of(context)!.password)],
             ),
             TextField(
               controller: passwordController,
@@ -54,13 +62,15 @@ class _AuthWidgetState extends State<AuthWidget> {
             ElevatedButton(
               onPressed: model.isButtonEnabled
                   ? () async {
-                      await model.signIn(
-                        emailController.text.trim(),
-                        passwordController.text.trim(),
-                        context,
-                        currencyModel,
-                      );
-                      Navigator.of(context).pushNamed("/main_page");
+                      await model
+                          .signIn(
+                            emailController.text.trim(),
+                            passwordController.text.trim(),
+                            context,
+                            currencyModel,
+                          )
+                          .whenComplete(
+                              () => Navigator.of(context).pushNamed("/start"));
                     }
                   : null,
               style: ButtonStyle(
@@ -71,16 +81,16 @@ class _AuthWidgetState extends State<AuthWidget> {
                   const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 ),
               ),
-              child: const Text(
-                'Войти',
-                style: TextStyle(fontSize: 17.5),
+              child: Text(
+                AppLocalizations.of(context)!.enter,
+                style: const TextStyle(fontSize: 17.5),
               ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/sign_up');
               },
-              child: const Text('Нет аккаунта? Нажмите сюда.'),
+              child: Text(AppLocalizations.of(context)!.noAccountText),
             ),
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CurrencyModel extends ChangeNotifier {
   final listOfCurrencies = DefaultCurrencyData.listOfCurrencies;
@@ -47,7 +48,7 @@ class CurrencyModel extends ChangeNotifier {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Currency succesfully changed!'),
+          title: Text(AppLocalizations.of(context)!.currencyChangedText),
           actionsPadding: EdgeInsets.all(15.0.r),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(18.0))),
@@ -64,7 +65,7 @@ class CurrencyModel extends ChangeNotifier {
                 backgroundColor: MaterialStateProperty.all(Colors.green),
               ),
               child: Text(
-                "Okay",
+                AppLocalizations.of(context)!.okay,
                 style: TextStyle(fontSize: 18.sp),
               ),
             ),

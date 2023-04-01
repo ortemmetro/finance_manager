@@ -59,8 +59,6 @@ class AuthWidgetModel extends ChangeNotifier {
         await SessionIdManager.instance.writeUserKey(userKey);
       }
 
-      await model.setCurrency();
-
       if (userBox.isOpen) {
         await BoxManager.instance.closeBox(userBox);
       }
