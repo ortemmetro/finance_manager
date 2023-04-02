@@ -38,6 +38,7 @@ class SignUpWidgetModel extends ChangeNotifier {
       await _addUserDetails(firstName, lastName, email, age, currency);
 
       final userForHive = MyUserForHive(
+        id: FirebaseAuth.instance.currentUser!.uid,
         firstName: firstName,
         lastName: lastName,
         age: age,

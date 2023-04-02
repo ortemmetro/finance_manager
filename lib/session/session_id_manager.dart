@@ -23,6 +23,10 @@ class SessionIdManager {
     return int.parse(readData!);
   }
 
+  Future<void> deleteUserKey() async {
+    await _secureStorage.delete(key: 'ukey', aOptions: _getAndroidOptions());
+  }
+
   Future<void> writeUserId(String currentUserId) async {
     await _secureStorage.write(
       key: "uid",

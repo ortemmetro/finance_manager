@@ -45,6 +45,7 @@ class DrawerWidgetModel extends ChangeNotifier {
     userSurname = "";
     await FirebaseAuth.instance.signOut();
     await SessionIdManager.instance.deleteUserId();
+    await SessionIdManager.instance.deleteUserKey();
     notifyListeners();
   }
 }

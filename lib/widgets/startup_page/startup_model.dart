@@ -18,7 +18,8 @@ class StartupModel extends ChangeNotifier {
     required BuildContext context,
   }) async {
     final String allTime = AppLocalizations.of(context)!.allTime;
-    await initializeDateFormatting('ru', null);
+    await initializeDateFormatting(
+        Localizations.localeOf(context).toString(), null);
     await drawerModel.getUserInfo(context);
 
     // setting  all info for expenses/incomes

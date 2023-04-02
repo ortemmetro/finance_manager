@@ -162,7 +162,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             currency: _selectedCurrencyValue,
                             context: context,
                           );
-                          Navigator.of(context).pushNamed('/main_page');
+                          Navigator.of(context).pushNamed('/start');
                         }
                       : null,
                   style: ButtonStyle(
