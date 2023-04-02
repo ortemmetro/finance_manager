@@ -55,7 +55,7 @@ class AuthWidgetModel extends ChangeNotifier {
       final usersList = userBox.values.toList();
 
       if (usersList.where((element) => element.id == userForHive.id).isEmpty) {
-        final userKey = await userBox.add(userForHive);
+        await userBox.add(userForHive);
       } else {
         await SessionIdManager.instance.writeUserKey(usersList
             .firstWhere((element) => element.id == userForHive.id)
