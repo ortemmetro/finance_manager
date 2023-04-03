@@ -11,6 +11,7 @@ class MyUser {
   final String lastName;
   final int age;
   final String currency;
+  final String locale;
   final List<Expense>? expenses;
   final List<Category>? ownCategories;
 
@@ -20,6 +21,7 @@ class MyUser {
     required this.lastName,
     required this.age,
     required this.currency,
+    required this.locale,
     required this.expenses,
     required this.ownCategories,
   });

@@ -21,7 +21,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final model = ExpensesPageModel();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final expenseModel = Provider.of<ExpensesPageModel>(context);
+    final incomeModel = Provider.of<IncomesPageModel>(context);
+    final String allTime = AppLocalizations.of(context)!.allTime;
+    expenseModel.setSelectedPeriod(allTime);
+    incomeModel.setSelectedPeriod(allTime);
+  }
 
   @override
   Widget build(BuildContext context) {

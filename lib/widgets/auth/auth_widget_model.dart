@@ -17,7 +17,7 @@ class AuthWidgetModel extends ChangeNotifier {
     String email,
     String password,
     BuildContext context,
-    CurrencyModel model,
+    CurrencyModel currencyModel,
   ) async {
     isButtonEnabled = !isButtonEnabled;
     notifyListeners();
@@ -49,13 +49,15 @@ class AuthWidgetModel extends ChangeNotifier {
         lastName: userInfo.lastName,
         age: userInfo.age,
         currency: userInfo.currency,
+        locale: userInfo.locale,
       );
 
       final userBox = await BoxManager.instance.openUserBox();
       final usersList = userBox.values.toList();
 
       if (usersList.where((element) => element.id == userForHive.id).isEmpty) {
-        await userBox.add(userForHive);
+        final userKey = await userBox.add(userForHive);
+        await SessionIdManager.instance.writeUserKey(userKey);
       } else {
         await SessionIdManager.instance.writeUserKey(usersList
             .firstWhere((element) => element.id == userForHive.id)

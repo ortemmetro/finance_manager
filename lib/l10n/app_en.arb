@@ -40,6 +40,8 @@
     "noAccountText": "No account? Click here to register",
     "currencyChangedText": "Currency successfully changed!",
     "okay": "Okay",
+    "languageChangedText": "The application language has been successfully changed!",
+    "selectLanguage": "Select language",
     "chooseDate": "Choose date",
     "noDateSelected": "No date selected",
     "comment": "Comment",

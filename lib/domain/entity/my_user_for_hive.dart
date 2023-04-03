@@ -20,11 +20,15 @@ class MyUserForHive extends HiveObject {
   @HiveField(6)
   final String currency;
 
+  @HiveField(7)
+  final String locale;
+
   MyUserForHive({
     this.id = '',
     required this.firstName,
     required this.lastName,
     required this.age,
     required this.currency,
+    required this.locale,
   });
 }

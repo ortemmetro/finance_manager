@@ -35,6 +35,8 @@
     "noAccountText": "Тіркелгі жоқ па? Тіркелу үшін мында басыңыз",
     "currencyChangedText": "Валюта сәтті өзгертілді!",
     "okay": "Жарайды",
+    "languageChangedText": "Қолданба тілі сәтті өзгертілді!",
+    "selectLanguage": "Тілді таңдау",
     "chooseDate": "Күнді таңдаңыз",
     "noDateSelected": "Күні таңдалмаған",
     "comment": "Пікір",

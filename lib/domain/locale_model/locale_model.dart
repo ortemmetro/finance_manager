@@ -1,46 +1,60 @@
 import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
-import 'package:finance_manager/domain/data_provider/default_data/default_currency_data.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
+import 'package:finance_manager/l10n/l10n.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CurrencyModel extends ChangeNotifier {
-  final listOfCurrencies = DefaultCurrencyData.listOfCurrencies;
-  String? currentCurrency;
+class LocaleModel extends ChangeNotifier {
+  Locale? _locale;
 
-  Future<void> setCurrency() async {
+  Locale? get locale => _locale;
+
+  void setLocale(Locale locale) {
+    if (!L10n.all.contains(locale)) {
+      return;
+    }
+    _locale = locale;
+    notifyListeners();
+  }
+
+  Future<void> setLocaleFromHive() async {
     final userBox = await BoxManager.instance.openUserBox();
     final userId = await SessionIdManager.instance.readUserId();
     final usersList = userBox.values.toList();
 
     final user = usersList.where((element) => element.id == userId).toList();
 
-    currentCurrency = user.length == 1 ? user.first.currency : null;
     await BoxManager.instance.closeBox(userBox);
+    setLocale(Locale(user.first.locale));
   }
 
-  Future<void> setCurrencyFromSettings(String currency) async {
+  Future<void> setLocaleFromSettings(Locale locale) async {
     final userBox = await BoxManager.instance.openUserBox();
     final userId = await SessionIdManager.instance.readUserId();
     final usersList = userBox.values.toList();
     final user = usersList.where((element) => element.id == userId).first;
 
     final userKey = user.key;
-    final newUserWithNewCurrency = MyUserForHive(
+    final newUserWithNewLocale = MyUserForHive(
       id: user.id,
       age: user.age,
-      currency: currency,
-      locale: user.locale,
+      currency: user.currency,
+      locale: locale.languageCode,
       firstName: user.firstName,
       lastName: user.lastName,
     );
-    currentCurrency = currency;
 
-    await userBox.putAt(userKey, newUserWithNewCurrency);
+    await userBox.putAt(userKey, newUserWithNewLocale);
 
     await BoxManager.instance.closeBox(userBox);
+
+    setLocale(locale);
+  }
+
+  void clearLocale() {
+    _locale = null;
     notifyListeners();
   }
 
@@ -49,7 +63,7 @@ class CurrencyModel extends ChangeNotifier {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.currencyChangedText),
+          title: Text(AppLocalizations.of(context)!.languageChangedText),
           actionsPadding: EdgeInsets.all(15.0.r),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(18.0))),

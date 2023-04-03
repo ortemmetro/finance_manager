@@ -1,3 +1,4 @@
+import 'package:finance_manager/domain/locale_model/locale_model.dart';
 import 'package:finance_manager/widgets/startup_page/startup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,7 +25,6 @@ import 'package:finance_manager/widgets/settings_widgets/currency/currency_widge
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget.dart';
-import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
 
 import '../main_page/main_page.dart';
@@ -49,6 +49,7 @@ class _AppState extends State<App> {
     //height is 803
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => LocaleModel()),
         ChangeNotifierProvider(create: (context) => CurrencyModel()),
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
         ChangeNotifierProvider(create: (context) => IncomesPageModel()),
@@ -61,8 +62,6 @@ class _AppState extends State<App> {
                   Provider.of<ExpensesPageModel>(context, listen: false),
                   Provider.of<IncomesPageModel>(context, listen: false),
                 )),
-        ChangeNotifierProvider(
-            create: (BuildContext context) => LanguagesWidgetModel()),
       ],
       child: ScreenUtilInit(
         builder: (context, child) => MaterialApp(
@@ -95,6 +94,7 @@ class _AppState extends State<App> {
                 const LanguagesWidget(),
           },
           initialRoute: '/start',
+          locale: Provider.of<LocaleModel>(context).locale,
           supportedLocales: L10n.all,
           localizationsDelegates: const [
             AppLocalizations.delegate,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/domain/entity/my_user.dart';
@@ -43,6 +45,7 @@ class SignUpWidgetModel extends ChangeNotifier {
         lastName: lastName,
         age: age,
         currency: currency,
+        locale: Platform.localeName.substring(0, 2),
       );
 
       final userBox = await BoxManager.instance.openUserBox();
@@ -81,6 +84,7 @@ class SignUpWidgetModel extends ChangeNotifier {
       lastName: lastName,
       age: age,
       currency: currency,
+      locale: Platform.localeName.substring(0, 2),
       expenses: null,
       ownCategories: null,
     );

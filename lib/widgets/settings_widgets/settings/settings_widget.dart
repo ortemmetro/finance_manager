@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../drawer_widget/drawer_widget.dart';
 
@@ -9,42 +10,33 @@ class SettingsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       appBar: AppBar(
-        title: const Text('Настройки'),
+        title: Text(AppLocalizations.of(context)!.settings),
         centerTitle: true,
       ),
       body: Column(
         children: [
-          SizedBox(height: 10),
+          SizedBox(height: 10.h),
+          // ListTile(
+          //   leading: Icon(Icons.lock),
+          //   title: Text('Код-пароль'),
+          // ),
           ListTile(
-            leading: Icon(Icons.lock),
-            title: Text('Код-пароль'),
-          ),
-          ListTile(
-            leading: Icon(Icons.language),
-            title: Text('Выбор языка'),
+            leading: const Icon(Icons.language),
+            title: Text(AppLocalizations.of(context)!.selectLanguage),
             onTap: () {
               Navigator.of(context).pushNamed("/main_page/settings/language");
             },
           ),
-          ListTile(
-            leading: Icon(Icons.language),
-            title: Text('Округлять'),
-          ),
-          ListTile(
-            leading: Icon(Icons.dark_mode),
-            title: Text('Темная тема'),
-          ),
-          ListTile(
-            leading: Icon(Icons.document_scanner),
-            title: Text('Политика конфиденциоальности'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: Text(AppLocalizations.of(context)!.language),
-            subtitle: Text(AppLocalizations.of(context)!.helloWorld),
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.dark_mode),
+          //   title: Text('Темная тема'),
+          // ),
+          // ListTile(
+          //   leading: Icon(Icons.document_scanner),
+          //   title: Text('Политика конфиденциоальности'),
+          // ),
         ],
       ),
     );

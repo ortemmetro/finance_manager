@@ -34,6 +34,8 @@
     "noAccountText": "Kein Konto? Klicken Sie hier um sich zu registrieren",
     "currencyChangedText": "Die Währung wurde erfolgreich geändert!",
     "okay": "Gut",
+    "languageChangedText": "Die Sprache der Anwendung wurde erfolgreich geändert!",
+    "selectLanguage": "Auswahl der Sprache",
     "chooseDate": "Datum auswählen",
     "noDateSelected": "Kein Datum ausgewählt",
     "comment": "Ein Kommentar",

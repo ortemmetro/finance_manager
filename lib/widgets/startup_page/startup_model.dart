@@ -1,3 +1,4 @@
+import 'package:finance_manager/domain/locale_model/locale_model.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
@@ -15,9 +16,9 @@ class StartupModel extends ChangeNotifier {
     required IncomesPageModel incomeModel,
     required AddCategoryModel addCategoryModel,
     required DrawerWidgetModel drawerModel,
+    required LocaleModel localeModel,
     required BuildContext context,
   }) async {
-    final String allTime = AppLocalizations.of(context)!.allTime;
     await initializeDateFormatting(
         Localizations.localeOf(context).toString(), null);
     await drawerModel.getUserInfo(context);
@@ -26,9 +27,14 @@ class StartupModel extends ChangeNotifier {
     final userId = await SessionIdManager.instance.readUserId();
     await addCategoryModel.downloadCategoriesFromHive();
     await expenseModel.setup(userId);
-    expenseModel.setSelectedPeriod(allTime);
+
     await incomeModel.setup(userId);
-    incomeModel.setSelectedPeriod(allTime);
+    await localeModel.setLocaleFromHive();
     await currencyModel.setCurrency();
+    final String allTime = AppLocalizations.of(context)!.allTime;
+    expenseModel.setSelectedPeriod(allTime);
+    incomeModel.setSelectedPeriod(allTime);
+
+    notifyListeners();
   }
 }

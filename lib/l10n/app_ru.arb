@@ -34,6 +34,8 @@
     "noAccountText": "Нет аккаунта? Нажмите сюда для регистрации",
     "currencyChangedText": "Валюта успешно изменена!",
     "okay": "Хорошо",
+    "languageChangedText": "Язык приложения успешно изменён!",
+    "selectLanguage": "Выбор языка",
     "chooseDate": "Выбрать дату",
     "noDateSelected": "Дата не выбрана",
     "comment": "Комментарий",
