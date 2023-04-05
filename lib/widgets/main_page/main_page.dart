@@ -1,12 +1,8 @@
-import 'package:finance_manager/session/session_id_manager.dart';
-import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/income_page_widget.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import '../drawer_widget/drawer_widget.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
@@ -21,16 +17,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final expenseModel = Provider.of<ExpensesPageModel>(context);
-    final incomeModel = Provider.of<IncomesPageModel>(context);
-    final String allTime = AppLocalizations.of(context)!.allTime;
-    expenseModel.setSelectedPeriod(allTime);
-    incomeModel.setSelectedPeriod(allTime);
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -82,11 +68,14 @@ class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
     final currenycModel = Provider.of<CurrencyModel>(context, listen: true);
+    final sum = expenseModel.sumWithSpaces(
+        (incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt())
+            .toDouble());
     return AppBar(
       toolbarHeight: 68.0.h,
       backgroundColor: const Color.fromARGB(255, 93, 176, 117),
       title: Text(
-        '${AppLocalizations.of(context)!.total}: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()} ${currenycModel.currentCurrency}',
+        '${AppLocalizations.of(context)!.total}: $sum${currenycModel.currentCurrency}',
         style: TextStyle(fontSize: 20.sp),
       ),
       centerTitle: true,

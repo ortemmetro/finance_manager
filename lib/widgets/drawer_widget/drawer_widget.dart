@@ -41,12 +41,6 @@ class DrawerWidget extends StatelessWidget {
             Navigator.of(context).pushNamed('/main_page/invoices'),
       ),
       DrawerIconTextFunction(
-        icon: Icon(Icons.auto_graph_outlined, size: 28.w),
-        text: AppLocalizations.of(context)!.graphs,
-        onTap: (BuildContext context) =>
-            Navigator.of(context).pushNamed('/main_page/charts'),
-      ),
-      DrawerIconTextFunction(
         icon: Icon(Icons.category, size: 28.w),
         text: AppLocalizations.of(context)!.categories,
         onTap: (BuildContext context) =>
@@ -146,6 +140,9 @@ class _UserTileWidget extends StatelessWidget {
     final expenseModel = Provider.of<ExpensesPageModel>(context, listen: true);
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
     final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
+    final sum = expenseModel.sumWithSpaces(
+        (incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt())
+            .toDouble());
     if (model.userName == "" || model.userSurname == "") {
       model.getUserInfo(context);
     }
@@ -155,7 +152,7 @@ class _UserTileWidget extends StatelessWidget {
         style: TextStyle(fontSize: 17.5.sp),
       ),
       subtitle: Text(
-          '${AppLocalizations.of(context)!.total}: ${incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt()} ${currencyModel.currentCurrency}',
+          '${AppLocalizations.of(context)!.total}: $sum${currencyModel.currentCurrency}',
           style: TextStyle(fontSize: 16.5.sp)),
       leading: CircleAvatar(
         backgroundColor: Colors.black,

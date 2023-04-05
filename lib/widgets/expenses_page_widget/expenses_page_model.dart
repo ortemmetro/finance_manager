@@ -29,6 +29,7 @@ class ExpensesPageModel extends ChangeNotifier {
 
   void setSelectedPeriod(String newSelectedPeriod) {
     selectedPeriod = newSelectedPeriod;
+    notifyListeners();
   }
 
   Future<void> setALLExpenses(String? userId) async {
@@ -210,6 +211,17 @@ class ExpensesPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String sumWithSpaces(double sum) {
+    var sumString = sum.floor().toString().split('');
+
+    for (var i = sumString.length; i > 0; i--) {
+      if ((sumString.length - i) % 4 == 0) {
+        sumString.insert(i, ' ');
+      }
+    }
+    return sumString.join();
+  }
+
   void _setSum() {
     sum = "";
     doubleSum = 0.0;
@@ -221,12 +233,7 @@ class ExpensesPageModel extends ChangeNotifier {
     }
     var sumString = currentSum.floor().toString().split('');
 
-    for (var i = sumString.length; i > 0; i--) {
-      if ((sumString.length - i) % 4 == 0) {
-        sumString.insert(i, ' ');
-      }
-    }
-    sum = sumString.join();
+    sum = sumWithSpaces(currentSum);
 
     // changing total sum
     currentSum = 0;

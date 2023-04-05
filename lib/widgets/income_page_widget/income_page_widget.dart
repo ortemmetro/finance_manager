@@ -175,6 +175,7 @@ class _IncomesListTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<IncomesPageModel>(context);
+    final expenseModel = Provider.of<ExpensesPageModel>(context);
     final currenycModel = Provider.of<CurrencyModel>(context, listen: true);
     return ListTile(
       onTap: () {
@@ -214,7 +215,7 @@ class _IncomesListTileWidget extends StatelessWidget {
       trailing: Padding(
         padding: EdgeInsets.only(right: 12.w),
         child: Text(
-          "${incomes[index].price.toInt().toString()} ${currenycModel.currentCurrency}",
+          "${expenseModel.sumWithSpaces(incomes[index].price)}${currenycModel.currentCurrency}",
           style: TextStyle(
             fontSize: 15.sp,
           ),

@@ -14,6 +14,56 @@ class BarChartWidget extends StatelessWidget {
   final List<dynamic> listOfExpensesOrIncomesSortedByDate;
   final Category Function(String categoryName) findCategory;
 
+  String setValue(double value) {
+    switch (value.toInt().toString().length) {
+      case 6:
+        return "${value.toInt().toString().substring(0, 3)}K";
+      case 5:
+        return "${value.toInt().toString().substring(0, 2)}K";
+      case 4:
+        return "${value.toInt().toString().substring(0, 1)}K";
+      case 7:
+        return "${value.toInt().toString().substring(0, 1)}.${value.toInt().toString().substring(1, 2)}M";
+      case 8:
+        return "${value.toInt().toString().substring(0, 2)}M";
+      case 9:
+        return "${value.toInt().toString().substring(0, 3)}M";
+      default:
+        return "${value.toInt().toString()}K";
+    }
+  }
+
+  double setInterval(List<dynamic> listOfExpensesOrIncomesSortedByDate) {
+    final listOfPrices = listOfExpensesOrIncomesSortedByDate
+        .map((e) => e.price as double)
+        .toList();
+    if (listOfExpensesOrIncomesSortedByDate.isEmpty) {
+      return 10.0;
+    }
+    final maxPrice = listOfPrices.fold(listOfPrices[0],
+        (currentMax, number) => number > currentMax ? number : currentMax);
+    if (maxPrice.toInt().toString().length <= 3) {
+      return 100.0;
+    } else if (maxPrice.toInt().toString().length >= 4 &&
+        maxPrice.toInt().toString().length < 5) {
+      return 1000.0;
+    } else if (maxPrice.toInt().toString().length >= 5 &&
+        maxPrice.toInt().toString().length < 6) {
+      return 10000.0;
+    } else if (maxPrice.toInt().toString().length >= 6 &&
+        maxPrice.toInt().toString().length < 7) {
+      return 100000.0;
+    } else if (maxPrice.toInt().toString().length >= 7 &&
+        maxPrice.toInt().toString().length < 8) {
+      return 500000.0;
+    } else if (maxPrice.toInt().toString().length >= 8 &&
+        maxPrice.toInt().toString().length < 9) {
+      return 5000000.0;
+    }
+
+    return 10;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -41,16 +91,13 @@ class BarChartWidget extends StatelessWidget {
                     leftTitles: AxisTitles(
                       drawBehindEverything: true,
                       sideTitles: SideTitles(
-                        interval: 20000,
+                        interval:
+                            setInterval(listOfExpensesOrIncomesSortedByDate),
                         showTitles: true,
                         reservedSize: 30.w,
                         getTitlesWidget: (value, meta) {
                           return Text(
-                            value.toInt().toString().length > 3
-                                ? (value.toInt().toString().length >= 6
-                                    ? "${value.toInt().toString().substring(0, 3)}K"
-                                    : "${value.toInt().toString().substring(0, 2)}K")
-                                : value.toInt().toString(),
+                            setValue(value),
                             style: const TextStyle(
                               color: Color(0xFF606060),
                               fontSize: 12,

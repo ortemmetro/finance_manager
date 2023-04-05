@@ -219,7 +219,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
       trailing: Padding(
         padding: EdgeInsets.only(right: 12.w),
         child: Text(
-          "${expenses[index].price.toInt().toString()} ${currenycModel.currentCurrency}",
+          "${model.sumWithSpaces(expenses[index].price)}${currenycModel.currentCurrency}",
           style: TextStyle(
             fontSize: 15.sp,
           ),

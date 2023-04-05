@@ -20,7 +20,6 @@ import 'package:finance_manager/widgets/main_page/category_view_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/all_categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/category_widget.dart';
-import 'package:finance_manager/widgets/settings_widgets/charts/charts_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/invoices/invoices_widget.dart';
@@ -81,7 +80,6 @@ class _AppState extends State<App> {
             '/main_page/category_view': (context) => const CategoryViewWidget(),
             '/main_page/add': (context) => const AddWidget(),
             '/main_page/invoices': (context) => const InvoicesWidget(),
-            '/main_page/charts': (context) => const ChartsWidget(),
             '/main_page/categories': (context) => const CategoriesWidget(),
             '/main_page/categories/add': (context) => const AddCategoryWidget(),
             '/main_page/categories/one_category': (context) =>

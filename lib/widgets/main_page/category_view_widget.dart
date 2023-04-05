@@ -157,7 +157,8 @@ class _ListTileInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final format = DateFormat.MMMMEEEEd("ru");
+    final format =
+        DateFormat.MMMMEEEEd(Localizations.localeOf(context).toString());
     final dateString = format.format(expenseOrIncome.date);
     final userId = SessionIdManager.instance.readUserId();
     return Slidable(

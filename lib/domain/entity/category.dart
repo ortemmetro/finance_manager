@@ -1,4 +1,3 @@
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
