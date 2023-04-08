@@ -1,6 +1,7 @@
 import 'package:finance_manager/domain/data_provider/default_data/default_currency_data.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';
+import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class _AddWidgetState extends State<AddWidget> {
   }
 }
 
-class _AddWidgetBody extends StatelessWidget {
+class _AddWidgetBody extends StatefulWidget {
   const _AddWidgetBody({
     Key? key,
     required this.priceController,
@@ -56,10 +57,26 @@ class _AddWidgetBody extends StatelessWidget {
   final Object? arguments;
 
   @override
+  State<_AddWidgetBody> createState() => _AddWidgetBodyState();
+}
+
+class _AddWidgetBodyState extends State<_AddWidgetBody> {
+  @override
   Widget build(BuildContext context) {
     final model = Provider.of<AddWidgetModel>(context);
     final addCategoryWidgetModel = Provider.of<AddCategoryModel>(context);
-    model.listOfCategories = arguments.runtimeType == ExpenseInfo
+    final accountsModel = Provider.of<AccountsModel>(context);
+    final listOfAccounts = accountsModel.accounts
+        .map((e) => DropdownMenuItem<String>(
+              value: e,
+              child: Text(e),
+            ))
+        .toList();
+    var _selectedAccount = accountsModel.accounts[0];
+    // final listOfAccounts = [
+    //   DropdownMenuItem(child: Text()),
+    // ];
+    model.listOfCategories = widget.arguments.runtimeType == ExpenseInfo
         ? addCategoryWidgetModel.listOfExpenseCategories
         : addCategoryWidgetModel.listOfIncomeCategories;
     final format =
@@ -71,8 +88,33 @@ class _AddWidgetBody extends StatelessWidget {
           Column(
             children: [
               SizedBox(height: 25.h),
-              _InputFieldWithCurrencyWidget(priceController: priceController),
+              _InputFieldWithCurrencyWidget(
+                  priceController: widget.priceController),
               SizedBox(height: 45.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0.w),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Choose account:',
+                          style: TextStyle(fontSize: 18.sp),
+                        ),
+                      ],
+                    ),
+                    DropdownButton(
+                      value: _selectedAccount,
+                      items: listOfAccounts,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedAccount = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0.w),
                 child: Row(
@@ -104,25 +146,27 @@ class _AddWidgetBody extends StatelessWidget {
                   ? Text(format.format(model.currentDate!).toString())
                   : Text(AppLocalizations.of(context)!.noDateSelected),
               SizedBox(height: 50.h),
-              _CommentFieldWidget(textController: textController),
+              _CommentFieldWidget(textController: widget.textController),
               SizedBox(height: 50.h),
               ElevatedButton(
                 onPressed: () async {
                   model.isButtonEnabled
-                      ? (arguments.runtimeType == ExpenseInfo
+                      ? (widget.arguments.runtimeType == ExpenseInfo
                           ? await model.createExpense(
-                              comment: textController.text,
+                              comment: widget.textController.text,
                               category: model.selectedCategoryName,
-                              price: double.parse(priceController.text),
+                              price: double.parse(widget.priceController.text),
                               date: model.currentDate ?? DateTime(0),
                               context: context,
+                              account: _selectedAccount,
                             )
                           : await model.createIncome(
-                              comment: textController.text,
+                              comment: widget.textController.text,
                               category: model.selectedCategoryName,
-                              price: double.parse(priceController.text),
+                              price: double.parse(widget.priceController.text),
                               date: model.currentDate ?? DateTime(0),
                               context: context,
+                              account: _selectedAccount,
                             ))
                       : null;
                 },

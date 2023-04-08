@@ -36,6 +36,7 @@
     "currencyChangedText": "Валюта сәтті өзгертілді!",
     "okay": "Жарайды",
     "languageChangedText": "Қолданба тілі сәтті өзгертілді!",
+    "mainAccount": "Негізгі шот",
     "selectLanguage": "Тілді таңдау",
     "chooseDate": "Күнді таңдаңыз",
     "noDateSelected": "Күні таңдалмаған",

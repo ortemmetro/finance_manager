@@ -8,6 +8,7 @@ import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpWidgetModel extends ChangeNotifier {
   String notValidPasswordString = "";
@@ -25,6 +26,7 @@ class SignUpWidgetModel extends ChangeNotifier {
     required BuildContext context,
   }) async {
     isButtonEnabled = !isButtonEnabled;
+    final mainAccountName = AppLocalizations.of(context)!.mainAccount;
     notifyListeners();
     if (password != confirmPassword) {
       notValidPasswordString = "Пароли не идентичны! Попробуйте ещё раз";
@@ -37,7 +39,14 @@ class SignUpWidgetModel extends ChangeNotifier {
         password: password.trim(),
       );
 
-      await _addUserDetails(firstName, lastName, email, age, currency);
+      await _addUserDetails(
+        firstName,
+        lastName,
+        email,
+        age,
+        currency,
+        mainAccountName,
+      );
 
       final userForHive = MyUserForHive(
         id: FirebaseAuth.instance.currentUser!.uid,
@@ -46,6 +55,7 @@ class SignUpWidgetModel extends ChangeNotifier {
         age: age,
         currency: currency,
         locale: Platform.localeName.substring(0, 2),
+        accounts: [mainAccountName],
       );
 
       final userBox = await BoxManager.instance.openUserBox();
@@ -75,6 +85,7 @@ class SignUpWidgetModel extends ChangeNotifier {
     String email,
     int age,
     String currency,
+    String mainAccountName,
   ) async {
     final usersDocReference =
         FirebaseFirestore.instance.collection("Users").doc();
@@ -85,6 +96,7 @@ class SignUpWidgetModel extends ChangeNotifier {
       age: age,
       currency: currency,
       locale: Platform.localeName.substring(0, 2),
+      accounts: [mainAccountName],
       expenses: null,
       ownCategories: null,
     );

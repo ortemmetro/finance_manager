@@ -1,3 +1,4 @@
+import 'package:finance_manager/domain/entity/account.dart';
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/domain/entity/income.dart';
@@ -23,6 +24,10 @@ class BoxManager {
 
   Future<Box<Category>> openCategoryBox(int userKey) async {
     return _openBox<Category>("category_box_$userKey", 1, CategoryAdapter());
+  }
+
+  Future<Box<Account>> openAccountBox(int userKey) async {
+    return _openBox<Account>("account_box_$userKey", 5, AccountAdapter());
   }
 
   Future<void> closeBox<T>(Box<T> box) async {

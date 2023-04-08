@@ -35,6 +35,7 @@
     "currencyChangedText": "Die Währung wurde erfolgreich geändert!",
     "okay": "Gut",
     "languageChangedText": "Die Sprache der Anwendung wurde erfolgreich geändert!",
+    "mainAccount": "Hauptkonto",
     "selectLanguage": "Auswahl der Sprache",
     "chooseDate": "Datum auswählen",
     "noDateSelected": "Kein Datum ausgewählt",

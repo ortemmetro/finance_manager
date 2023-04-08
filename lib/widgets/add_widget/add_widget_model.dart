@@ -32,6 +32,7 @@ class AddWidgetModel extends ChangeNotifier {
     required DateTime date,
     required double price,
     required BuildContext context,
+    required String account,
   }) async {
     isButtonEnabled = !isButtonEnabled;
     notifyListeners();
@@ -53,6 +54,7 @@ class AddWidgetModel extends ChangeNotifier {
       category: category,
       date: date,
       price: price,
+      account: account,
     );
 
     await _saveDataLocallyInHive(expense);
@@ -73,6 +75,7 @@ class AddWidgetModel extends ChangeNotifier {
     required String category,
     required DateTime date,
     required double price,
+    required String account,
     required BuildContext context,
   }) async {
     isButtonEnabled = !isButtonEnabled;
@@ -93,6 +96,7 @@ class AddWidgetModel extends ChangeNotifier {
       category: category,
       date: date,
       price: price,
+      account: account,
     );
 
     await _saveDataLocallyInHive(income);

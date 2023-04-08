@@ -3,6 +3,7 @@ import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:finance_manager/widgets/startup_page/startup_model.dart';
@@ -79,6 +80,7 @@ class StartupLogicBuilder extends StatelessWidget {
         Provider.of<AddCategoryModel>(context, listen: false);
     final drawerModel = Provider.of<DrawerWidgetModel>(context, listen: false);
     final localeModel = Provider.of<LocaleModel>(context, listen: false);
+    final accountsModel = Provider.of<AccountsModel>(context, listen: false);
     return FutureBuilder(
       future: startupModel.startupSetup(
         currencyModel: currencyModel,
@@ -87,6 +89,7 @@ class StartupLogicBuilder extends StatelessWidget {
         addCategoryModel: addCategoryModel,
         drawerModel: drawerModel,
         localeModel: localeModel,
+        accountsModel: accountsModel,
         context: context,
       ),
       builder: (BuildContext context, AsyncSnapshot<Object?> snapshot) {

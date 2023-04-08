@@ -41,6 +41,7 @@
     "currencyChangedText": "Currency successfully changed!",
     "okay": "Okay",
     "languageChangedText": "The application language has been successfully changed!",
+    "mainAccount": "Main account",
     "selectLanguage": "Select language",
     "chooseDate": "Choose date",
     "noDateSelected": "No date selected",

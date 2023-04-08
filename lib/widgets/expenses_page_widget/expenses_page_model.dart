@@ -103,6 +103,7 @@ class ExpensesPageModel extends ChangeNotifier {
         date: currentListOfExpenses[i].date,
         price: currentPrice,
         comment: null,
+        account: 'yes',
       ));
     }
     notifyListeners();

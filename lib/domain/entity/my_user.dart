@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'my_user.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class MyUser {
   String id;
   final String firstName;
@@ -12,6 +12,7 @@ class MyUser {
   final int age;
   final String currency;
   final String locale;
+  final List<String> accounts;
   final List<Expense>? expenses;
   final List<Category>? ownCategories;
 
@@ -22,6 +23,7 @@ class MyUser {
     required this.age,
     required this.currency,
     required this.locale,
+    required this.accounts,
     required this.expenses,
     required this.ownCategories,
   });

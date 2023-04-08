@@ -1,44 +1,44 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category.dart';
+part of 'account.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CategoryAdapter extends TypeAdapter<Category> {
+class AccountAdapter extends TypeAdapter<Account> {
   @override
-  final int typeId = 1;
+  final int typeId = 5;
 
   @override
-  Category read(BinaryReader reader) {
+  Account read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Category(
+    return Account(
       id: fields[0] as String,
-      name: fields[1] as String,
-      color: fields[2] as String,
+      color: fields[1] as String,
+      name: fields[2] as String,
       icon: fields[3] as String,
-      categoryClassIndex: fields[4] as int,
+      currencySign: fields[4] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Category obj) {
+  void write(BinaryWriter writer, Account obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name)
-      ..writeByte(2)
       ..write(obj.color)
+      ..writeByte(2)
+      ..write(obj.name)
       ..writeByte(3)
       ..write(obj.icon)
       ..writeByte(4)
-      ..write(obj.categoryClassIndex);
+      ..write(obj.currencySign);
   }
 
   @override
@@ -47,7 +47,7 @@ class CategoryAdapter extends TypeAdapter<Category> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CategoryAdapter &&
+      other is AccountAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -56,18 +56,18 @@ class CategoryAdapter extends TypeAdapter<Category> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
-      id: json['id'] as String? ?? "",
-      name: json['name'] as String,
+Account _$AccountFromJson(Map<String, dynamic> json) => Account(
+      id: json['id'] as String? ?? '',
       color: json['color'] as String,
+      name: json['name'] as String,
       icon: json['icon'] as String,
-      categoryClassIndex: json['category_class_index'] as int,
+      currencySign: json['currency_sign'] as String,
     );
 
-Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
+Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
       'color': instance.color,
+      'name': instance.name,
       'icon': instance.icon,
-      'category_class_index': instance.categoryClassIndex,
+      'currency_sign': instance.currencySign,
     };

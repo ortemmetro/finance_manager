@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'category.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 @HiveType(typeId: 1)
 class Category extends HiveObject {
   @HiveField(0)

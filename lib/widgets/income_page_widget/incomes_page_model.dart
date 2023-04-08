@@ -101,6 +101,8 @@ class IncomesPageModel extends ChangeNotifier {
         category: currentListOfIncomes[i].category,
         date: currentListOfIncomes[i].date,
         price: currentPrice,
+        comment: '',
+        account: 'yes',
       ));
     }
     notifyListeners();

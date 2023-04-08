@@ -35,6 +35,7 @@
     "currencyChangedText": "Валюта успешно изменена!",
     "okay": "Хорошо",
     "languageChangedText": "Язык приложения успешно изменён!",
+    "mainAccount": "Основной счёт",
     "selectLanguage": "Выбор языка",
     "chooseDate": "Выбрать дату",
     "noDateSelected": "Дата не выбрана",

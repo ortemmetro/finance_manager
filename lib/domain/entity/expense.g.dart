@@ -22,13 +22,14 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       comment: fields[2] as String?,
       date: fields[3] as DateTime,
       price: fields[4] as double,
+      account: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Expense obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       ..writeByte(3)
       ..write(obj.date)
       ..writeByte(4)
-      ..write(obj.price);
+      ..write(obj.price)
+      ..writeByte(5)
+      ..write(obj.account);
   }
 
   @override
@@ -62,6 +65,7 @@ Expense _$ExpenseFromJson(Map<String, dynamic> json) => Expense(
       comment: json['comment'] as String?,
       date: DateTime.parse(json['date'] as String),
       price: (json['price'] as num).toDouble(),
+      account: json['account'] as String,
     );
 
 Map<String, dynamic> _$ExpenseToJson(Expense instance) => <String, dynamic>{
@@ -70,4 +74,5 @@ Map<String, dynamic> _$ExpenseToJson(Expense instance) => <String, dynamic>{
       'comment': instance.comment,
       'date': instance.date.toIso8601String(),
       'price': instance.price,
+      'account': instance.account,
     };
