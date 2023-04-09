@@ -371,6 +371,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  forex_conversion:
+    dependency: "direct main"
+    description:
+      name: forex_conversion
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   frontend_server_client:
     dependency: transitive
     description:
@@ -413,6 +420,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  http:
+    dependency: transitive
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.5"
   http_multi_server:
     dependency: transitive
     description:

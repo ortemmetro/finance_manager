@@ -168,7 +168,7 @@ class _AddCategoryWidgetState extends State<AddCategoryWidget> {
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(EdgeInsets.symmetric(
                       horizontal: 20.0.w,
-                      vertical: 20.0.h,
+                      vertical: 12.0.h,
                     )),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0))),

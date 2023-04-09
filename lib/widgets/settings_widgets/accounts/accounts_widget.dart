@@ -24,7 +24,10 @@ class AccountsWidget extends StatelessWidget {
     return Scaffold(
       drawer: const DrawerWidget(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        backgroundColor: Colors.green,
+        onPressed: () {
+          Navigator.of(context).pushNamed('/main_page/accounts/add');
+        },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

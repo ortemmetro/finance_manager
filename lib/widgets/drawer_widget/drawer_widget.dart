@@ -38,7 +38,7 @@ class DrawerWidget extends StatelessWidget {
         icon: Icon(Icons.attach_money, size: 28.w),
         text: AppLocalizations.of(context)!.accounts,
         onTap: (BuildContext context) =>
-            Navigator.of(context).pushNamed('/main_page/invoices'),
+            Navigator.of(context).pushNamed('/main_page/accounts'),
       ),
       DrawerIconTextFunction(
         icon: Icon(Icons.category, size: 28.w),

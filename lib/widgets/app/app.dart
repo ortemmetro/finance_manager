@@ -1,5 +1,6 @@
 import 'package:finance_manager/domain/locale_model/locale_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/accounts/add_account_page.dart';
 import 'package:finance_manager/widgets/startup_page/startup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -81,7 +82,8 @@ class _AppState extends State<App> {
             '/main_page': (context) => const MainPage(),
             '/main_page/category_view': (context) => const CategoryViewWidget(),
             '/main_page/add': (context) => const AddWidget(),
-            '/main_page/invoices': (context) => const AccountsWidget(),
+            '/main_page/accounts': (context) => const AccountsWidget(),
+            '/main_page/accounts/add': (context) => AddAccountPage(),
             '/main_page/categories': (context) => const CategoriesWidget(),
             '/main_page/categories/add': (context) => const AddCategoryWidget(),
             '/main_page/categories/one_category': (context) =>
