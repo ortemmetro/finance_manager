@@ -17,6 +17,7 @@ class StartupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
+      // provider of model
       create: (context) => StartupModel(),
       child: const StartupView(),
     );
