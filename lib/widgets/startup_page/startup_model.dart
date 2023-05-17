@@ -3,7 +3,6 @@ import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +17,6 @@ class StartupModel extends ChangeNotifier {
     required AddCategoryModel addCategoryModel,
     required DrawerWidgetModel drawerModel,
     required LocaleModel localeModel,
-    required AccountsModel accountsModel,
     required BuildContext context,
   }) async {
     await initializeDateFormatting(
@@ -33,7 +31,6 @@ class StartupModel extends ChangeNotifier {
     await incomeModel.setup(userId);
     await localeModel.setLocaleFromHive();
     await currencyModel.setCurrency();
-    await accountsModel.setAccounts();
     final String allTime = AppLocalizations.of(context)!.allTime;
     expenseModel.setSelectedPeriod(allTime);
     incomeModel.setSelectedPeriod(allTime);

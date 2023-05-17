@@ -4,11 +4,10 @@ import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../domain/data_provider/default_data/default_categories_data.dart';
 
@@ -102,7 +101,6 @@ class IncomesPageModel extends ChangeNotifier {
         date: currentListOfIncomes[i].date,
         price: currentPrice,
         comment: '',
-        account: 'yes',
       ));
     }
     notifyListeners();
@@ -279,53 +277,53 @@ class IncomesPageModel extends ChangeNotifier {
     }
   }
 
-  void showDateChangeDialog(BuildContext context) {
-    showMaterialModalBottomSheet(
-      context: context,
-      expand: false,
-      builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 10.h),
-            ListTile(
-              leading: Text(AppLocalizations.of(context)!.day),
-              onTap: () {
-                _changePeriod(Period.day, DateTime.now(), context);
-                Navigator.of(context).pop();
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: Text(AppLocalizations.of(context)!.week),
-              onTap: () {
-                _changePeriod(Period.week, DateTime.now(), context);
-                Navigator.of(context).pop();
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: Text(AppLocalizations.of(context)!.month),
-              onTap: () {
-                _changePeriod(Period.month, DateTime.now(), context);
-                Navigator.of(context).pop();
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: Text(AppLocalizations.of(context)!.year),
-              onTap: () {
-                _changePeriod(Period.year, DateTime.now(), context);
-                Navigator.of(context).pop();
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: Text(AppLocalizations.of(context)!.period),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void showDateChangeDialog(BuildContext context) {
+  //   showMaterialModalBottomSheet(
+  //     context: context,
+  //     expand: false,
+  //     builder: (context) {
+  //       return Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           SizedBox(height: 10.h),
+  //           ListTile(
+  //             leading: Text(AppLocalizations.of(context)!.day),
+  //             onTap: () {
+  //               _changePeriod(Period.day, DateTime.now(), context);
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           const Divider(),
+  //           ListTile(
+  //             leading: Text(AppLocalizations.of(context)!.week),
+  //             onTap: () {
+  //               _changePeriod(Period.week, DateTime.now(), context);
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           const Divider(),
+  //           ListTile(
+  //             leading: Text(AppLocalizations.of(context)!.month),
+  //             onTap: () {
+  //               _changePeriod(Period.month, DateTime.now(), context);
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           const Divider(),
+  //           ListTile(
+  //             leading: Text(AppLocalizations.of(context)!.year),
+  //             onTap: () {
+  //               _changePeriod(Period.year, DateTime.now(), context);
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           const Divider(),
+  //           ListTile(
+  //             leading: Text(AppLocalizations.of(context)!.period),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }

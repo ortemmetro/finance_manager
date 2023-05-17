@@ -45,7 +45,6 @@ class SignUpWidgetModel extends ChangeNotifier {
         email,
         age,
         currency,
-        mainAccountName,
       );
 
       final userForHive = MyUserForHive(
@@ -55,7 +54,6 @@ class SignUpWidgetModel extends ChangeNotifier {
         age: age,
         currency: currency,
         locale: Platform.localeName.substring(0, 2),
-        accounts: [mainAccountName],
       );
 
       final userBox = await BoxManager.instance.openUserBox();
@@ -85,7 +83,6 @@ class SignUpWidgetModel extends ChangeNotifier {
     String email,
     int age,
     String currency,
-    String mainAccountName,
   ) async {
     final usersDocReference =
         FirebaseFirestore.instance.collection("Users").doc();
@@ -96,7 +93,6 @@ class SignUpWidgetModel extends ChangeNotifier {
       age: age,
       currency: currency,
       locale: Platform.localeName.substring(0, 2),
-      accounts: [mainAccountName],
       expenses: null,
       ownCategories: null,
     );

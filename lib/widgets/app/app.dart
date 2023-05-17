@@ -1,6 +1,4 @@
 import 'package:finance_manager/domain/locale_model/locale_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/accounts/add_account_page.dart';
 import 'package:finance_manager/widgets/startup_page/startup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,7 +22,6 @@ import 'package:finance_manager/widgets/settings_widgets/categories/categories_w
 import 'package:finance_manager/widgets/settings_widgets/categories/category_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
 
@@ -52,7 +49,6 @@ class _AppState extends State<App> {
       providers: [
         ChangeNotifierProvider(create: (context) => LocaleModel()),
         ChangeNotifierProvider(create: (context) => CurrencyModel()),
-        ChangeNotifierProvider(create: (context) => AccountsModel()),
         ChangeNotifierProvider(create: (context) => ExpensesPageModel()),
         ChangeNotifierProvider(create: (context) => IncomesPageModel()),
         ChangeNotifierProvider(create: (context) => DrawerWidgetModel()),
@@ -82,8 +78,6 @@ class _AppState extends State<App> {
             '/main_page': (context) => const MainPage(),
             '/main_page/category_view': (context) => const CategoryViewWidget(),
             '/main_page/add': (context) => const AddWidget(),
-            '/main_page/accounts': (context) => const AccountsWidget(),
-            '/main_page/accounts/add': (context) => AddAccountPage(),
             '/main_page/categories': (context) => const CategoriesWidget(),
             '/main_page/categories/add': (context) => const AddCategoryWidget(),
             '/main_page/categories/one_category': (context) =>

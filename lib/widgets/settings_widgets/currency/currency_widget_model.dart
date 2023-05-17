@@ -33,7 +33,6 @@ class CurrencyModel extends ChangeNotifier {
       age: user.age,
       currency: currency,
       locale: user.locale,
-      accounts: user.accounts,
       firstName: user.firstName,
       lastName: user.lastName,
     );

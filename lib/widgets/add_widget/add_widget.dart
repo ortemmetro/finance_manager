@@ -1,7 +1,6 @@
 import 'package:finance_manager/domain/data_provider/default_data/default_currency_data.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';
-import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
@@ -65,17 +64,6 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
   Widget build(BuildContext context) {
     final model = Provider.of<AddWidgetModel>(context);
     final addCategoryWidgetModel = Provider.of<AddCategoryModel>(context);
-    final accountsModel = Provider.of<AccountsModel>(context);
-    final listOfAccounts = accountsModel.accounts
-        .map((e) => DropdownMenuItem<String>(
-              value: e,
-              child: Text(e),
-            ))
-        .toList();
-    var _selectedAccount = accountsModel.accounts[0];
-    // final listOfAccounts = [
-    //   DropdownMenuItem(child: Text()),
-    // ];
     model.listOfCategories = widget.arguments.runtimeType == ExpenseInfo
         ? addCategoryWidgetModel.listOfExpenseCategories
         : addCategoryWidgetModel.listOfIncomeCategories;
@@ -91,30 +79,6 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
               _InputFieldWithCurrencyWidget(
                   priceController: widget.priceController),
               SizedBox(height: 45.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0.w),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Choose account:',
-                          style: TextStyle(fontSize: 18.sp),
-                        ),
-                      ],
-                    ),
-                    DropdownButton(
-                      value: _selectedAccount,
-                      items: listOfAccounts,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedAccount = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0.w),
                 child: Row(
@@ -158,7 +122,6 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
                               price: double.parse(widget.priceController.text),
                               date: model.currentDate ?? DateTime(0),
                               context: context,
-                              account: _selectedAccount,
                             )
                           : await model.createIncome(
                               comment: widget.textController.text,
@@ -166,7 +129,6 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
                               price: double.parse(widget.priceController.text),
                               date: model.currentDate ?? DateTime(0),
                               context: context,
-                              account: _selectedAccount,
                             ))
                       : null;
                 },

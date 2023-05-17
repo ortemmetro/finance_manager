@@ -42,7 +42,6 @@ class LocaleModel extends ChangeNotifier {
       age: user.age,
       currency: user.currency,
       locale: locale.languageCode,
-      accounts: user.accounts,
       firstName: user.firstName,
       lastName: user.lastName,
     );

@@ -22,14 +22,13 @@ class IncomeAdapter extends TypeAdapter<Income> {
       comment: fields[2] as String?,
       date: fields[3] as DateTime,
       price: fields[4] as double,
-      account: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Income obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -39,9 +38,7 @@ class IncomeAdapter extends TypeAdapter<Income> {
       ..writeByte(3)
       ..write(obj.date)
       ..writeByte(4)
-      ..write(obj.price)
-      ..writeByte(5)
-      ..write(obj.account);
+      ..write(obj.price);
   }
 
   @override
@@ -65,7 +62,6 @@ Income _$IncomeFromJson(Map<String, dynamic> json) => Income(
       comment: json['comment'] as String?,
       date: DateTime.parse(json['date'] as String),
       price: (json['price'] as num).toDouble(),
-      account: json['account'] as String,
     );
 
 Map<String, dynamic> _$IncomeToJson(Income instance) => <String, dynamic>{
@@ -74,5 +70,4 @@ Map<String, dynamic> _$IncomeToJson(Income instance) => <String, dynamic>{
       'comment': instance.comment,
       'date': instance.date.toIso8601String(),
       'price': instance.price,
-      'account': instance.account,
     };

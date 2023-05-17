@@ -6,6 +6,7 @@ part 'expense.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 @HiveType(typeId: 2)
 class Expense extends HiveObject {
+  // used fields: 5
   @HiveField(0)
   String id;
 
@@ -21,16 +22,12 @@ class Expense extends HiveObject {
   @HiveField(4)
   final double price;
 
-  @HiveField(5)
-  final String account;
-
   Expense({
     this.id = "",
     required this.category,
     required this.comment,
     required this.date,
     required this.price,
-    required this.account,
   });
 
   factory Expense.fromJson(Map<String, dynamic> json) =>

@@ -4,7 +4,7 @@ part 'my_user_for_hive.g.dart';
 
 @HiveType(typeId: 4)
 class MyUserForHive extends HiveObject {
-  //used fields 4, 5
+  //used fields 4, 5, 8
   @HiveField(0)
   String id;
 
@@ -23,9 +23,6 @@ class MyUserForHive extends HiveObject {
   @HiveField(7)
   final String locale;
 
-  @HiveField(8)
-  final List<String> accounts;
-
   MyUserForHive({
     this.id = '',
     required this.firstName,
@@ -33,6 +30,5 @@ class MyUserForHive extends HiveObject {
     required this.age,
     required this.currency,
     required this.locale,
-    required this.accounts,
   });
 }

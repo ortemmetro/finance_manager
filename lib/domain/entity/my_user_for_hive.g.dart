@@ -23,14 +23,13 @@ class MyUserForHiveAdapter extends TypeAdapter<MyUserForHive> {
       age: fields[3] as int,
       currency: fields[6] as String,
       locale: fields[7] as String,
-      accounts: (fields[8] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, MyUserForHive obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -42,9 +41,7 @@ class MyUserForHiveAdapter extends TypeAdapter<MyUserForHive> {
       ..writeByte(6)
       ..write(obj.currency)
       ..writeByte(7)
-      ..write(obj.locale)
-      ..writeByte(8)
-      ..write(obj.accounts);
+      ..write(obj.locale);
   }
 
   @override
