@@ -30,7 +30,9 @@ class LocaleModel extends ChangeNotifier {
     setLocale(Locale(user.first.locale));
   }
 
-  Future<void> setLocaleFromSettings(Locale locale) async {
+  Future<void> setLocaleFromSettings({
+    required Locale locale,
+  }) async {
     final userBox = await BoxManager.instance.openUserBox();
     final userId = await SessionIdManager.instance.readUserId();
     final usersList = userBox.values.toList();

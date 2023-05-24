@@ -1,5 +1,7 @@
 import 'package:finance_manager/domain/locale_model/locale_model.dart';
 import 'package:finance_manager/l10n/l10n.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +13,8 @@ class LanguagesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final languageModel = Provider.of<LocaleModel>(context);
-    final locale = languageModel.locale;
+    final expenseModel = Provider.of<ExpensesPageModel>(context);
+    final incomeModel = Provider.of<IncomesPageModel>(context);
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -32,8 +35,14 @@ class LanguagesWidget extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () async {
-                    await languageModel.setLocaleFromSettings(L10n.all[index]);
+                    await languageModel.setLocaleFromSettings(
+                      locale: L10n.all[index],
+                    );
                     await languageModel.showSuccessDialog(context);
+                    expenseModel.setSelectedPeriod(
+                        AppLocalizations.of(context)!.allTime);
+                    incomeModel.setSelectedPeriod(
+                        AppLocalizations.of(context)!.allTime);
                   },
                   leading: Text(
                     L10n.getCountryName(L10n.all[index].languageCode),

@@ -89,8 +89,9 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
                   right: 0,
                   top: 0,
                   child: TextButton(
-                    onPressed: () {},
-                    //  model.showDateChangeDialog(context),
+                    onPressed: () {
+                      model.showDateChangeDialog(context);
+                    },
                     style: ButtonStyle(
                         padding:
                             MaterialStateProperty.all(const EdgeInsets.all(0))),

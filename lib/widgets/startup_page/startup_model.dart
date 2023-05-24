@@ -6,8 +6,8 @@ import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.da
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class StartupModel extends ChangeNotifier {
   Future<void> startupSetup({
