@@ -1,17 +1,14 @@
 import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../session/session_id_manager.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';
-import '../income_page_widget/incomes_page_model.dart';
 
 class ExpenseInfo {
   final List<Expense> listOfExpenses;
@@ -35,6 +32,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<ExpensesPageModel>(context, listen: true);
+    final selectedString = AppLocalizations.of(context)!.allTime;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Column(
@@ -144,9 +142,9 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
 class _ExpensesListViewWidget extends StatelessWidget {
   final List<Expense> expenses;
   const _ExpensesListViewWidget({
-    Key? key,
+    super.key,
     required this.expenses,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

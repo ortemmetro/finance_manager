@@ -2,12 +2,13 @@ import 'package:finance_manager/widgets/income_page_widget/income_page_widget.da
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
 import '../drawer_widget/drawer_widget.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
 import '../expenses_page_widget/expenses_page_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -55,11 +56,11 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-class _AppBarWidget extends StatelessWidget with PreferredSizeWidget {
+class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const _AppBarWidget({
-    Key? key,
+    super.key,
     required this.tab,
-  }) : super(key: key);
+  });
 
   final TabBar tab;
 

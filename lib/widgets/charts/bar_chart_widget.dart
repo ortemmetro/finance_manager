@@ -89,7 +89,7 @@ class BarChartWidget extends StatelessWidget {
                   titlesData: FlTitlesData(
                     show: true,
                     leftTitles: AxisTitles(
-                      drawBehindEverything: true,
+                      // drawBehindEverything: true,
                       sideTitles: SideTitles(
                         interval:
                             setInterval(listOfExpensesOrIncomesSortedByDate),
@@ -129,14 +129,14 @@ class BarChartWidget extends StatelessWidget {
                         },
                       ),
                     ),
-                    rightTitles: AxisTitles(),
-                    topTitles: AxisTitles(),
+                    rightTitles: const AxisTitles(),
+                    topTitles: const AxisTitles(),
                   ),
                   gridData: FlGridData(
                     show: true,
                     drawVerticalLine: false,
-                    getDrawingHorizontalLine: (value) => FlLine(
-                      color: const Color(0xFFececec),
+                    getDrawingHorizontalLine: (value) => const FlLine(
+                      color: Color(0xFFececec),
                       strokeWidth: 1,
                     ),
                   ),

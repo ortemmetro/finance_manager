@@ -4,13 +4,10 @@ import 'package:finance_manager/widgets/settings_widgets/currency/currency_widge
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../session/session_id_manager.dart';
 import '../charts/bar_chart_widget.dart';
 import '../charts/pie_chart_widget.dart';
 import '../expenses_page_widget/expenses_page_model.dart';
-import '../settings_widgets/categories/add_category_model.dart';
 import 'incomes_page_model.dart';
 
 class IncomeInfo {
@@ -138,9 +135,9 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
 class _IncomesListViewWidget extends StatelessWidget {
   final List<Income> incomes;
   const _IncomesListViewWidget({
-    Key? key,
+    super.key,
     required this.incomes,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

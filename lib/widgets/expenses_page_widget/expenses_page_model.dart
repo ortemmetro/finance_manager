@@ -5,9 +5,9 @@ import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 enum Period { day, week, month, year, customPeriod }
 
@@ -326,9 +326,8 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   void showDateChangeDialog(BuildContext context) {
-    showMaterialModalBottomSheet(
+    showModalBottomSheet(
       context: context,
-      expand: false,
       builder: (context) {
         return Column(
           mainAxisSize: MainAxisSize.min,
