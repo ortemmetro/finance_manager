@@ -1,11 +1,11 @@
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({super.key});
@@ -143,15 +143,15 @@ class CategoryWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      print(arguments.category.categoryClassIndex);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.save,
-                      style: TextStyle(fontSize: 15.sp),
-                    ),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     print(arguments.category.categoryClassIndex);
+                  //   },
+                  //   child: Text(
+                  //     AppLocalizations.of(context)!.save,
+                  //     style: TextStyle(fontSize: 15.sp),
+                  //   ),
+                  // ),
                   ElevatedButton(
                     onPressed: () async {
                       showDialog(
