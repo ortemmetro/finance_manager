@@ -57,12 +57,13 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                   bottom: 0.h,
                   right: 0.w,
                   child: RawMaterialButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed('/main_page/add',
-                            arguments: ExpenseInfo(
-                              listOfExpenses: [],
-                              category: "expense",
-                            )),
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      '/main_page/add',
+                      arguments: ExpenseInfo(
+                        listOfExpenses: [],
+                        category: "expense",
+                      ),
+                    ),
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
                     padding: EdgeInsets.symmetric(
