@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:finance_manager/widgets/auth/auth_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class AuthWidget extends StatefulWidget {
   const AuthWidget({super.key});

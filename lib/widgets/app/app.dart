@@ -1,13 +1,4 @@
 import 'package:finance_manager/domain/locale_model/locale_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/accounts/add_account_page.dart';
-import 'package:finance_manager/widgets/startup_page/startup_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-
 import 'package:finance_manager/l10n/l10n.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
@@ -19,24 +10,32 @@ import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:finance_manager/widgets/main_page/category_view_widget.dart';
+import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
+import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_widget.dart';
+import 'package:finance_manager/widgets/settings_widgets/accounts/add_account_page.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/all_categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/categories_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/category_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/languages_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/settings/settings_widget.dart';
+import 'package:finance_manager/widgets/startup_page/startup_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../main_page/main_page.dart';
-import '../settings_widgets/categories/add_category_widget.dart';
 import '../settings_widgets/categories/add_category_model.dart';
+import '../settings_widgets/categories/add_category_widget.dart';
 
 class App extends StatefulWidget {
   const App({
-    Key? key,
+    super.key,
     required this.userId,
-  }) : super(key: key);
+  });
   final String? userId;
 
   @override
@@ -69,6 +68,7 @@ class _AppState extends State<App> {
         builder: (context, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            useMaterial3: false,
             primaryColor: const Color.fromARGB(255, 93, 176, 117),
             disabledColor: const Color.fromARGB(255, 232, 232, 232),
             appBarTheme: const AppBarTheme(
