@@ -1,5 +1,5 @@
 import 'package:finance_manager/domain/locale_model/locale_model.dart';
-import 'package:finance_manager/src/core/l10n/l10n.dart';
+import 'package:finance_manager/l10n/l10n.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:flutter/material.dart';
