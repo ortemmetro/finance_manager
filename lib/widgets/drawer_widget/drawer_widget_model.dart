@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/domain/entity/my_user.dart';
+import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../session/session_id_manager.dart';
-
 class DrawerWidgetModel extends ChangeNotifier {
-  String userName = "";
-  String userSurname = "";
+  String userName = '';
+  String userSurname = '';
 
   Future<void> getUserInfo(BuildContext context) async {
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -17,7 +16,7 @@ class DrawerWidgetModel extends ChangeNotifier {
     final userId = await SessionIdManager.instance.readUserId();
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where('id', isEqualTo: userId)
             .get())
         .docs
         .first
@@ -41,8 +40,8 @@ class DrawerWidgetModel extends ChangeNotifier {
   // }
 
   Future<void> signOut(BuildContext context) async {
-    userName = "";
-    userSurname = "";
+    userName = '';
+    userSurname = '';
     await FirebaseAuth.instance.signOut();
     await SessionIdManager.instance.deleteUserId();
     await SessionIdManager.instance.deleteUserKey();

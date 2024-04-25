@@ -1,14 +1,13 @@
 import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
+import 'package:finance_manager/widgets/charts/bar_chart_widget.dart';
+import 'package:finance_manager/widgets/charts/pie_chart_widget.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import '../charts/bar_chart_widget.dart';
-import '../charts/pie_chart_widget.dart';
 
 class ExpenseInfo {
   final List<Expense> listOfExpenses;
@@ -61,7 +60,7 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                       '/main_page/add',
                       arguments: ExpenseInfo(
                         listOfExpenses: [],
-                        category: "expense",
+                        category: 'expense',
                       ),
                     ),
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
@@ -85,12 +84,20 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
                     padding: EdgeInsets.symmetric(
-                        horizontal: 12.0.w, vertical: 12.0.h),
+                      horizontal: 12.0.w,
+                      vertical: 12.0.h,
+                    ),
                     child: model.isPieChart
-                        ? Icon(MyIconsClass.bar_graph_1214113,
-                            size: 25.r, color: Colors.white)
-                        : Icon(Icons.pie_chart_outline,
-                            size: 25.r, color: Colors.white),
+                        ? Icon(
+                            MyIconsClass.bar_graph_1214113,
+                            size: 25.r,
+                            color: Colors.white,
+                          )
+                        : Icon(
+                            Icons.pie_chart_outline,
+                            size: 25.r,
+                            color: Colors.white,
+                          ),
                   ),
                 ),
                 Positioned(
@@ -99,13 +106,14 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
                   child: TextButton(
                     onPressed: () => model.showDateChangeDialog(context),
                     style: ButtonStyle(
-                        padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(0))),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(0)),
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          model.selectedPeriod ?? "",
+                          model.selectedPeriod ?? '',
                           style: TextStyle(
                             color: Colors.green,
                             fontSize: 15.sp,
@@ -143,7 +151,6 @@ class _ExpensesPageWidgetState extends State<ExpensesPageWidget>
 class _ExpensesListViewWidget extends StatelessWidget {
   final List<Expense> expenses;
   const _ExpensesListViewWidget({
-    super.key,
     required this.expenses,
   });
 
@@ -184,8 +191,9 @@ class _ExpensesListTileWidget extends StatelessWidget {
     return ListTile(
       onTap: () {
         final arguments = ExpenseInfo(
-            category: expenses[index].category,
-            listOfExpenses: model.listOfAllExpenses);
+          category: expenses[index].category,
+          listOfExpenses: model.listOfAllExpenses,
+        );
         Navigator.of(context).pushNamed(
           '/main_page/category_view',
           arguments: arguments,
@@ -201,8 +209,11 @@ class _ExpensesListTileWidget extends StatelessWidget {
             width: 19.w,
             height: 19.h,
             decoration: BoxDecoration(
-              color: Color(int.parse(
-                  model.findCategory(expenses[index].category).color)),
+              color: Color(
+                int.parse(
+                  model.findCategory(expenses[index].category).color,
+                ),
+              ),
               shape: BoxShape.circle,
             ),
           ),
@@ -218,7 +229,7 @@ class _ExpensesListTileWidget extends StatelessWidget {
       trailing: Padding(
         padding: EdgeInsets.only(right: 12.w),
         child: Text(
-          "${model.sumWithSpaces(expenses[index].price)}${currenycModel.currentCurrency}",
+          '${model.sumWithSpaces(expenses[index].price)}${currenycModel.currentCurrency}',
           style: TextStyle(
             fontSize: 15.sp,
           ),

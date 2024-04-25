@@ -5,10 +5,10 @@ import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddWidget extends StatefulWidget {
   const AddWidget({super.key});
@@ -46,11 +46,11 @@ class _AddWidgetState extends State<AddWidget> {
 
 class _AddWidgetBody extends StatefulWidget {
   const _AddWidgetBody({
-    Key? key,
     required this.priceController,
     required this.textController,
     required this.arguments,
-  }) : super(key: key);
+    super.key,
+  });
 
   final TextEditingController priceController;
   final TextEditingController textController;
@@ -67,12 +67,14 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
     final addCategoryWidgetModel = Provider.of<AddCategoryModel>(context);
     final accountsModel = Provider.of<AccountsModel>(context);
     final listOfAccounts = accountsModel.accounts
-        .map((e) => DropdownMenuItem<String>(
-              value: e,
-              child: Text(e),
-            ))
+        .map(
+          (e) => DropdownMenuItem<String>(
+            value: e,
+            child: Text(e),
+          ),
+        )
         .toList();
-    var _selectedAccount = accountsModel.accounts[0];
+    var selectedAccount = accountsModel.accounts[0];
     // final listOfAccounts = [
     //   DropdownMenuItem(child: Text()),
     // ];
@@ -89,7 +91,8 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
             children: [
               SizedBox(height: 25.h),
               _InputFieldWithCurrencyWidget(
-                  priceController: widget.priceController),
+                priceController: widget.priceController,
+              ),
               SizedBox(height: 45.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0.w),
@@ -104,11 +107,11 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
                       ],
                     ),
                     DropdownButton(
-                      value: _selectedAccount,
+                      value: selectedAccount,
                       items: listOfAccounts,
                       onChanged: (value) {
                         setState(() {
-                          _selectedAccount = value!;
+                          selectedAccount = value!;
                         });
                       },
                     ),
@@ -158,7 +161,7 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
                               price: double.parse(widget.priceController.text),
                               date: model.currentDate ?? DateTime(0),
                               context: context,
-                              account: _selectedAccount,
+                              account: selectedAccount,
                             )
                           : await model.createIncome(
                               comment: widget.textController.text,
@@ -166,7 +169,7 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
                               price: double.parse(widget.priceController.text),
                               date: model.currentDate ?? DateTime(0),
                               context: context,
-                              account: _selectedAccount,
+                              account: selectedAccount,
                             ))
                       : null;
                 },
@@ -177,7 +180,9 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: 20.0.w, vertical: 20.0.h),
+                    horizontal: 20.0.w,
+                    vertical: 20.0.h,
+                  ),
                   child: Text(
                     AppLocalizations.of(context)!.add,
                     style: TextStyle(fontSize: 19.sp),
@@ -194,9 +199,9 @@ class _AddWidgetBodyState extends State<_AddWidgetBody> {
 
 class _CategoriesListWidget extends StatelessWidget {
   const _CategoriesListWidget({
-    Key? key,
     required this.model,
-  }) : super(key: key);
+    super.key,
+  });
 
   final AddWidgetModel model;
 
@@ -224,7 +229,9 @@ class _CategoriesListWidget extends StatelessWidget {
                 model.listOfCategories[index].name,
                 maxLines: 1,
                 style: TextStyle(
-                    overflow: TextOverflow.ellipsis, fontSize: 14.5.sp),
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 14.5.sp,
+                ),
               ),
             ],
           );
@@ -236,10 +243,10 @@ class _CategoriesListWidget extends StatelessWidget {
 
 class _CategoryCircleIconWidget extends StatelessWidget {
   const _CategoryCircleIconWidget({
-    Key? key,
     required this.model,
     required this.index,
-  }) : super(key: key);
+    super.key,
+  });
 
   final AddWidgetModel model;
   final int index;
@@ -299,9 +306,9 @@ class _CategoryCircleIconWidget extends StatelessWidget {
 
 class _InputFieldWithCurrencyWidget extends StatelessWidget {
   const _InputFieldWithCurrencyWidget({
-    Key? key,
     required this.priceController,
-  }) : super(key: key);
+    super.key,
+  });
 
   final TextEditingController priceController;
 
@@ -309,7 +316,8 @@ class _InputFieldWithCurrencyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
     final currency = DefaultCurrencyData.listOfCurrencies.firstWhere(
-        (element) => element.currencySign == currencyModel.currentCurrency);
+      (element) => element.currencySign == currencyModel.currentCurrency,
+    );
     return Center(
       child: Row(
         mainAxisSize: MainAxisSize.min,

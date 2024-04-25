@@ -22,7 +22,9 @@ class StartupModel extends ChangeNotifier {
     required BuildContext context,
   }) async {
     await initializeDateFormatting(
-        Localizations.localeOf(context).toString(), null);
+      Localizations.localeOf(context).toString(),
+      null,
+    );
     await drawerModel.getUserInfo(context);
 
     // setting  all info for expenses/incomes

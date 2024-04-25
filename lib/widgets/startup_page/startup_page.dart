@@ -97,7 +97,10 @@ class StartupLogicBuilder extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushNamedAndRemoveUntil(
-                context, '/main_page', (_) => false);
+              context,
+              '/main_page',
+              (_) => false,
+            );
           });
           return Scaffold(
             body: Center(

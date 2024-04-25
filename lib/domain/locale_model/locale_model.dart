@@ -69,17 +69,23 @@ class LocaleModel extends ChangeNotifier {
           title: Text(AppLocalizations.of(context)!.languageChangedText),
           actionsPadding: EdgeInsets.all(15.0.r),
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(18.0))),
+            borderRadius: BorderRadius.all(Radius.circular(18.0)),
+          ),
           actions: [
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(),
               style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.symmetric(
-                  horizontal: 10.0.h,
-                  vertical: 10.0.w,
-                )),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
+                padding: MaterialStateProperty.all(
+                  EdgeInsets.symmetric(
+                    horizontal: 10.0.h,
+                    vertical: 10.0.w,
+                  ),
+                ),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
                 backgroundColor: MaterialStateProperty.all(Colors.green),
               ),
               child: Text(

@@ -1,14 +1,13 @@
 import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/my_icons_class/my_icons_class.dart';
+import 'package:finance_manager/widgets/charts/bar_chart_widget.dart';
+import 'package:finance_manager/widgets/charts/pie_chart_widget.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import '../charts/bar_chart_widget.dart';
-import '../charts/pie_chart_widget.dart';
-import '../expenses_page_widget/expenses_page_model.dart';
-import 'incomes_page_model.dart';
 
 class IncomeInfo {
   final List<Income> listOfIncomes;
@@ -61,7 +60,9 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
                     padding: EdgeInsets.symmetric(
-                        horizontal: 12.0.w, vertical: 12.0.h),
+                      horizontal: 12.0.w,
+                      vertical: 12.0.h,
+                    ),
                     child: Icon(
                       Icons.add,
                       size: 25.r,
@@ -77,12 +78,20 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
                     fillColor: const Color.fromARGB(255, 93, 176, 117),
                     shape: const CircleBorder(),
                     padding: EdgeInsets.symmetric(
-                        horizontal: 12.0.w, vertical: 12.0.h),
+                      horizontal: 12.0.w,
+                      vertical: 12.0.h,
+                    ),
                     child: model.isPieChart
-                        ? Icon(MyIconsClass.bar_graph_1214113,
-                            size: 25.r, color: Colors.white)
-                        : Icon(Icons.pie_chart_outline,
-                            size: 25.r, color: Colors.white),
+                        ? Icon(
+                            MyIconsClass.bar_graph_1214113,
+                            size: 25.r,
+                            color: Colors.white,
+                          )
+                        : Icon(
+                            Icons.pie_chart_outline,
+                            size: 25.r,
+                            color: Colors.white,
+                          ),
                   ),
                 ),
                 Positioned(
@@ -91,8 +100,9 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
                   child: TextButton(
                     onPressed: () => model.showDateChangeDialog(context),
                     style: ButtonStyle(
-                        padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(0))),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(0)),
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -135,7 +145,6 @@ class _IncomesPageWidgetState extends State<IncomesPageWidget>
 class _IncomesListViewWidget extends StatelessWidget {
   final List<Income> incomes;
   const _IncomesListViewWidget({
-    super.key,
     required this.incomes,
   });
 
@@ -196,7 +205,8 @@ class _IncomesListTileWidget extends StatelessWidget {
             height: 19.h,
             decoration: BoxDecoration(
               color: Color(
-                  int.parse(model.findCategory(incomes[index].category).color)),
+                int.parse(model.findCategory(incomes[index].category).color),
+              ),
               shape: BoxShape.circle,
             ),
           ),
@@ -212,7 +222,7 @@ class _IncomesListTileWidget extends StatelessWidget {
       trailing: Padding(
         padding: EdgeInsets.only(right: 12.w),
         child: Text(
-          "${expenseModel.sumWithSpaces(incomes[index].price)}${currenycModel.currentCurrency}",
+          '${expenseModel.sumWithSpaces(incomes[index].price)}${currenycModel.currentCurrency}',
           style: TextStyle(
             fontSize: 15.sp,
           ),

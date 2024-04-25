@@ -4,35 +4,32 @@ import 'package:finance_manager/domain/data_provider/default_data/default_catego
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/domain/entity/income.dart';
-
+import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../session/session_id_manager.dart';
-import '../expenses_page_widget/expenses_page_model.dart';
-
 class AddWidgetModel extends ChangeNotifier {
+  AddWidgetModel(this.expenseModel, this.incomeModel);
   final ExpensesPageModel expenseModel;
   final IncomesPageModel incomeModel;
-  var selectedIndex = -1;
-  String selectedCategoryName = "";
+  int selectedIndex = -1;
+  String selectedCategoryName = '';
 
   bool isButtonEnabled = true;
 
   DateTime? currentDate;
 
   List<Category> listOfCategories = List.empty(growable: true);
-  final iconsMap = DefaultCategoriesData.iconsMap;
-
-  AddWidgetModel(this.expenseModel, this.incomeModel);
+  final Map<String, IconData> iconsMap = DefaultCategoriesData.iconsMap;
 
   Future<void> createExpense({
-    required String comment,
-    required String category,
-    required DateTime date,
-    required double price,
-    required BuildContext context,
-    required String account,
+    required final String comment,
+    required final String category,
+    required final DateTime date,
+    required final double price,
+    required final BuildContext context,
+    required final String account,
   }) async {
     isButtonEnabled = !isButtonEnabled;
     notifyListeners();
@@ -40,7 +37,7 @@ class AddWidgetModel extends ChangeNotifier {
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where('id', isEqualTo: userId)
             .get())
         .docs
         .first
@@ -71,12 +68,12 @@ class AddWidgetModel extends ChangeNotifier {
   }
 
   Future<void> createIncome({
-    required String comment,
-    required String category,
-    required DateTime date,
-    required double price,
-    required String account,
-    required BuildContext context,
+    required final String comment,
+    required final String category,
+    required final DateTime date,
+    required final double price,
+    required final String account,
+    required final BuildContext context,
   }) async {
     isButtonEnabled = !isButtonEnabled;
     notifyListeners();
@@ -84,7 +81,7 @@ class AddWidgetModel extends ChangeNotifier {
     //Reference to document
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where('id', isEqualTo: userId)
             .get())
         .docs
         .first
@@ -112,7 +109,7 @@ class AddWidgetModel extends ChangeNotifier {
     selectedIndex = -1;
   }
 
-  Future<void> _saveDataLocallyInHive(dynamic expenseOrIncome) async {
+  Future<void> _saveDataLocallyInHive(final expenseOrIncome) async {
     if (expenseOrIncome is Expense) {
       final userKey = await SessionIdManager.instance.readUserKey();
       final expenseBox = await BoxManager.instance.openExpenseBox(userKey!);
@@ -131,7 +128,7 @@ class AddWidgetModel extends ChangeNotifier {
     }
   }
 
-  void isSelectedIndex(int index) {
+  void isSelectedIndex(final int index) {
     if (selectedIndex == index) {
       selectedIndex = -1;
       notifyListeners();
@@ -141,7 +138,7 @@ class AddWidgetModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> myShowDatePicker(BuildContext context) async {
+  Future<void> myShowDatePicker(final BuildContext context) async {
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
     final newDate = await showDatePicker(
@@ -150,7 +147,7 @@ class AddWidgetModel extends ChangeNotifier {
       firstDate: DateTime(1900),
       lastDate: date,
     );
-    currentDate = newDate as DateTime;
+    currentDate = newDate;
     notifyListeners();
   }
 }

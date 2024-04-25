@@ -1,15 +1,14 @@
+import 'package:finance_manager/domain/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../domain/data_provider/default_data/default_categories_data.dart';
-
 class BarChartWidget extends StatelessWidget {
   const BarChartWidget({
-    super.key,
     required this.listOfExpensesOrIncomesSortedByDate,
     required this.findCategory,
+    super.key,
   });
   final List<dynamic> listOfExpensesOrIncomesSortedByDate;
   final Category Function(String categoryName) findCategory;
@@ -17,19 +16,19 @@ class BarChartWidget extends StatelessWidget {
   String setValue(double value) {
     switch (value.toInt().toString().length) {
       case 6:
-        return "${value.toInt().toString().substring(0, 3)}K";
+        return '${value.toInt().toString().substring(0, 3)}K';
       case 5:
-        return "${value.toInt().toString().substring(0, 2)}K";
+        return '${value.toInt().toString().substring(0, 2)}K';
       case 4:
-        return "${value.toInt().toString().substring(0, 1)}K";
+        return '${value.toInt().toString().substring(0, 1)}K';
       case 7:
-        return "${value.toInt().toString().substring(0, 1)}.${value.toInt().toString().substring(1, 2)}M";
+        return '${value.toInt().toString().substring(0, 1)}.${value.toInt().toString().substring(1, 2)}M';
       case 8:
-        return "${value.toInt().toString().substring(0, 2)}M";
+        return '${value.toInt().toString().substring(0, 2)}M';
       case 9:
-        return "${value.toInt().toString().substring(0, 3)}M";
+        return '${value.toInt().toString().substring(0, 3)}M';
       default:
-        return "${value.toInt().toString()}K";
+        return '${value.toInt().toString()}K';
     }
   }
 
@@ -40,8 +39,10 @@ class BarChartWidget extends StatelessWidget {
     if (listOfExpensesOrIncomesSortedByDate.isEmpty) {
       return 10.0;
     }
-    final maxPrice = listOfPrices.fold(listOfPrices[0],
-        (currentMax, number) => number > currentMax ? number : currentMax);
+    final maxPrice = listOfPrices.fold(
+      listOfPrices[0],
+      (currentMax, number) => number > currentMax ? number : currentMax,
+    );
     if (maxPrice.toInt().toString().length <= 3) {
       return 100.0;
     } else if (maxPrice.toInt().toString().length >= 4 &&
@@ -117,13 +118,17 @@ class BarChartWidget extends StatelessWidget {
                             axisSide: meta.axisSide,
                             child: Icon(
                               DefaultCategoriesData.iconsMap[findCategory(
-                                      listOfExpensesOrIncomesSortedByDate[index]
-                                          .category)
-                                  .icon],
-                              color: Color(int.parse(findCategory(
-                                      listOfExpensesOrIncomesSortedByDate[index]
-                                          .category)
-                                  .color)),
+                                listOfExpensesOrIncomesSortedByDate[index]
+                                    .category,
+                              ).icon],
+                              color: Color(
+                                int.parse(
+                                  findCategory(
+                                    listOfExpensesOrIncomesSortedByDate[index]
+                                        .category,
+                                  ).color,
+                                ),
+                              ),
                             ),
                           );
                         },
@@ -148,7 +153,8 @@ class BarChartWidget extends StatelessWidget {
                             BarChartRodData(
                               toY: data.price,
                               color: Color(
-                                  int.parse(findCategory(data.category).color)),
+                                int.parse(findCategory(data.category).color),
+                              ),
                               borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(6),
                                 topRight: Radius.circular(6),

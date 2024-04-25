@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/domain/entity/my_user.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
-
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
@@ -35,7 +34,7 @@ class AuthWidgetModel extends ChangeNotifier {
       final userId = await SessionIdManager.instance.readUserId();
       final docUsersReference = (await FirebaseFirestore.instance
               .collection('Users')
-              .where("id", isEqualTo: userId)
+              .where('id', isEqualTo: userId)
               .get())
           .docs
           .first
@@ -60,9 +59,9 @@ class AuthWidgetModel extends ChangeNotifier {
         final userKey = await userBox.add(userForHive);
         await SessionIdManager.instance.writeUserKey(userKey);
       } else {
-        await SessionIdManager.instance.writeUserKey(usersList
-            .firstWhere((element) => element.id == userForHive.id)
-            .key);
+        await SessionIdManager.instance.writeUserKey(
+          usersList.firstWhere((element) => element.id == userForHive.id).key,
+        );
       }
 
       if (userBox.isOpen) {

@@ -19,7 +19,7 @@ class ExpensesPageModel extends ChangeNotifier {
   List<Color> listOfColors = [];
 
   Map<String, double> dataMap = {};
-  var sum = "";
+  var sum = '';
   double doubleSum = 0.0;
   String? currentUserId;
 
@@ -59,7 +59,7 @@ class ExpensesPageModel extends ChangeNotifier {
   Future<List<Expense>>? readExpensesFromFirebase(String? userId) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: (userId))
+            .where('id', isEqualTo: (userId))
             .get())
         .docs
         .first
@@ -68,8 +68,11 @@ class ExpensesPageModel extends ChangeNotifier {
     if (docExpenseReference.doc().path.isNotEmpty) {
       return docExpenseReference
           .snapshots()
-          .map((snapshot) =>
-              snapshot.docs.map((doc) => Expense.fromJson(doc.data())).toList())
+          .map(
+            (snapshot) => snapshot.docs
+                .map((doc) => Expense.fromJson(doc.data()))
+                .toList(),
+          )
           .first;
     }
     return [];
@@ -98,13 +101,15 @@ class ExpensesPageModel extends ChangeNotifier {
           j = j - 1;
         }
       }
-      listOfShortenExpenses.add(Expense(
-        category: currentListOfExpenses[i].category,
-        date: currentListOfExpenses[i].date,
-        price: currentPrice,
-        comment: null,
-        account: 'yes',
-      ));
+      listOfShortenExpenses.add(
+        Expense(
+          category: currentListOfExpenses[i].category,
+          date: currentListOfExpenses[i].date,
+          price: currentPrice,
+          comment: null,
+          account: 'yes',
+        ),
+      );
     }
     notifyListeners();
   }
@@ -116,7 +121,7 @@ class ExpensesPageModel extends ChangeNotifier {
   ) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where('id', isEqualTo: userId)
             .get())
         .docs
         .first
@@ -195,8 +200,11 @@ class ExpensesPageModel extends ChangeNotifier {
     }
     listOfColors.clear();
     for (var i = 0; i < listOfShortenExpenses.length; i++) {
-      listOfColors.add(Color(
-          int.parse(findCategory(listOfShortenExpenses[i].category).color)));
+      listOfColors.add(
+        Color(
+          int.parse(findCategory(listOfShortenExpenses[i].category).color),
+        ),
+      );
     }
     notifyListeners();
   }
@@ -224,7 +232,7 @@ class ExpensesPageModel extends ChangeNotifier {
   }
 
   void _setSum() {
-    sum = "";
+    sum = '';
     doubleSum = 0.0;
     double currentSum = 0;
 

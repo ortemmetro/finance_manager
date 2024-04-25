@@ -1,3 +1,6 @@
+import 'package:finance_manager/widgets/drawer_widget/drawer_widget.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';
 import 'package:finance_manager/widgets/income_page_widget/income_page_widget.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
@@ -5,10 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import '../drawer_widget/drawer_widget.dart';
-import '../expenses_page_widget/expenses_page_model.dart';
-import '../expenses_page_widget/expenses_page_widget.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -24,26 +23,27 @@ class _MainPageState extends State<MainPage> {
       length: 2,
       child: Scaffold(
         appBar: _AppBarWidget(
-            tab: TabBar(
-          unselectedLabelColor: const Color.fromARGB(255, 232, 232, 232),
-          labelColor: Colors.black,
-          indicator: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
+          tab: TabBar(
+            unselectedLabelColor: const Color.fromARGB(255, 232, 232, 232),
+            labelColor: Colors.black,
+            indicator: BoxDecoration(
               color: Colors.white,
-              width: 2.0.w,
+              border: Border.all(
+                color: Colors.white,
+                width: 2.0.w,
+              ),
+              borderRadius: BorderRadius.circular(15),
             ),
-            borderRadius: BorderRadius.circular(15),
+            labelStyle: TextStyle(
+              fontSize: 15.5.sp,
+              fontWeight: FontWeight.w500,
+            ),
+            tabs: <Tab>[
+              Tab(text: AppLocalizations.of(context)!.expenses, height: 39.h),
+              Tab(text: AppLocalizations.of(context)!.incomes, height: 39.h),
+            ],
           ),
-          labelStyle: TextStyle(
-            fontSize: 15.5.sp,
-            fontWeight: FontWeight.w500,
-          ),
-          tabs: <Tab>[
-            Tab(text: AppLocalizations.of(context)!.expenses, height: 39.h),
-            Tab(text: AppLocalizations.of(context)!.incomes, height: 39.h),
-          ],
-        )),
+        ),
         drawer: const DrawerWidget(),
         body: const TabBarView(
           children: [
@@ -58,8 +58,8 @@ class _MainPageState extends State<MainPage> {
 
 class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const _AppBarWidget({
-    super.key,
     required this.tab,
+    super.key,
   });
 
   final TabBar tab;
@@ -70,8 +70,9 @@ class _AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
     final currenycModel = Provider.of<CurrencyModel>(context, listen: true);
     final sum = expenseModel.sumWithSpaces(
-        (incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt())
-            .toDouble());
+      (incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt())
+          .toDouble(),
+    );
     return AppBar(
       toolbarHeight: 68.0.h,
       backgroundColor: const Color.fromARGB(255, 93, 176, 117),

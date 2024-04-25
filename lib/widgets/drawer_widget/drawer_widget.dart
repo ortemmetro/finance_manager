@@ -1,13 +1,12 @@
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
+import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/rate_the_app/rate_the_app_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../income_page_widget/incomes_page_model.dart';
 
 class DrawerIconTextFunction {
   final Icon icon;
@@ -22,7 +21,7 @@ class DrawerIconTextFunction {
 }
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({Key? key}) : super(key: key);
+  const DrawerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -114,9 +113,13 @@ class DrawerWidget extends StatelessWidget {
                       style: TextStyle(fontSize: 14.5.sp),
                     ),
                     onTap: () {
-                      model.signOut(context).whenComplete(() =>
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/', (_) => false));
+                      model.signOut(context).whenComplete(
+                            () => Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/',
+                              (_) => false,
+                            ),
+                          );
                     },
                   ),
                 ],
@@ -130,9 +133,7 @@ class DrawerWidget extends StatelessWidget {
 }
 
 class _UserTileWidget extends StatelessWidget {
-  const _UserTileWidget({
-    Key? key,
-  }) : super(key: key);
+  const _UserTileWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -141,9 +142,10 @@ class _UserTileWidget extends StatelessWidget {
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
     final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
     final sum = expenseModel.sumWithSpaces(
-        (incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt())
-            .toDouble());
-    if (model.userName == "" || model.userSurname == "") {
+      (incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt())
+          .toDouble(),
+    );
+    if (model.userName == '' || model.userSurname == '') {
       model.getUserInfo(context);
     }
     return ListTile(
@@ -152,8 +154,9 @@ class _UserTileWidget extends StatelessWidget {
         style: TextStyle(fontSize: 17.5.sp),
       ),
       subtitle: Text(
-          '${AppLocalizations.of(context)!.total}: $sum${currencyModel.currentCurrency}',
-          style: TextStyle(fontSize: 16.5.sp)),
+        '${AppLocalizations.of(context)!.total}: $sum${currencyModel.currentCurrency}',
+        style: TextStyle(fontSize: 16.5.sp),
+      ),
       leading: CircleAvatar(
         backgroundColor: Colors.black,
         radius: 25.w,

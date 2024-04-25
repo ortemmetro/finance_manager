@@ -1,13 +1,12 @@
+import 'package:finance_manager/widgets/drawer_widget/drawer_widget.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import '../../drawer_widget/drawer_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountsWidget extends StatelessWidget {
   const AccountsWidget({super.key});
@@ -19,8 +18,9 @@ class AccountsWidget extends StatelessWidget {
     final incomeModel = Provider.of<IncomesPageModel>(context, listen: true);
     final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
     final sum = expenseModel.sumWithSpaces(
-        (incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt())
-            .toDouble());
+      (incomeModel.doubleSum.toInt() - expenseModel.doubleSum.toInt())
+          .toDouble(),
+    );
     return Scaffold(
       drawer: const DrawerWidget(),
       floatingActionButton: FloatingActionButton(

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
+import 'package:finance_manager/domain/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/session/session_id_manager.dart';
@@ -7,8 +8,6 @@ import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../domain/data_provider/default_data/default_categories_data.dart';
 
 class IncomesPageModel extends ChangeNotifier {
   List<Income> listOfALLALLIncomes = [];
@@ -18,7 +17,7 @@ class IncomesPageModel extends ChangeNotifier {
   List<Color> listOfColors = [];
 
   Map<String, double> dataMap = {};
-  var sum = "";
+  var sum = '';
   double doubleSum = 0.0;
   String? currentUserId;
 
@@ -52,7 +51,7 @@ class IncomesPageModel extends ChangeNotifier {
   Future<List<Income>> readIncomesFromFirebase(String? userId) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: (userId))
+            .where('id', isEqualTo: (userId))
             .get())
         .docs
         .first
@@ -61,8 +60,11 @@ class IncomesPageModel extends ChangeNotifier {
     if (docIncomesReference.doc().path.isNotEmpty) {
       return docIncomesReference
           .snapshots()
-          .map((snapshot) =>
-              snapshot.docs.map((doc) => Income.fromJson(doc.data())).toList())
+          .map(
+            (snapshot) => snapshot.docs
+                .map((doc) => Income.fromJson(doc.data()))
+                .toList(),
+          )
           .first;
     }
     return [];
@@ -95,13 +97,15 @@ class IncomesPageModel extends ChangeNotifier {
           j = j - 1;
         }
       }
-      listOfShortenIncomes.add(Income(
-        category: currentListOfIncomes[i].category,
-        date: currentListOfIncomes[i].date,
-        price: currentPrice,
-        comment: '',
-        account: 'yes',
-      ));
+      listOfShortenIncomes.add(
+        Income(
+          category: currentListOfIncomes[i].category,
+          date: currentListOfIncomes[i].date,
+          price: currentPrice,
+          comment: '',
+          account: 'yes',
+        ),
+      );
     }
     notifyListeners();
   }
@@ -143,14 +147,17 @@ class IncomesPageModel extends ChangeNotifier {
     }
     listOfColors.clear();
     for (var i = 0; i < listOfShortenIncomes.length; i++) {
-      listOfColors.add(Color(
-          int.parse(findCategory(listOfShortenIncomes[i].category).color)));
+      listOfColors.add(
+        Color(
+          int.parse(findCategory(listOfShortenIncomes[i].category).color),
+        ),
+      );
     }
     notifyListeners();
   }
 
   void _setSum() {
-    sum = "";
+    sum = '';
     doubleSum = 0.0;
     double currentSum = 0;
 

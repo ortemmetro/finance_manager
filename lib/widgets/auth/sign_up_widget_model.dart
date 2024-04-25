@@ -4,14 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/domain/entity/my_user.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
-
 import 'package:finance_manager/session/session_id_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpWidgetModel extends ChangeNotifier {
-  String notValidPasswordString = "";
+  String notValidPasswordString = '';
 
   bool isButtonEnabled = true;
 
@@ -29,7 +28,7 @@ class SignUpWidgetModel extends ChangeNotifier {
     final mainAccountName = AppLocalizations.of(context)!.mainAccount;
     notifyListeners();
     if (password != confirmPassword) {
-      notValidPasswordString = "Пароли не идентичны! Попробуйте ещё раз";
+      notValidPasswordString = 'Пароли не идентичны! Попробуйте ещё раз';
       notifyListeners();
       return;
     }
@@ -75,7 +74,7 @@ class SignUpWidgetModel extends ChangeNotifier {
   }
 
   void resetErrorText() {
-    notValidPasswordString = "";
+    notValidPasswordString = '';
     notifyListeners();
   }
 
@@ -88,7 +87,7 @@ class SignUpWidgetModel extends ChangeNotifier {
     String mainAccountName,
   ) async {
     final usersDocReference =
-        FirebaseFirestore.instance.collection("Users").doc();
+        FirebaseFirestore.instance.collection('Users').doc();
     final user = MyUser(
       id: FirebaseAuth.instance.currentUser!.uid,
       firstName: firstName,

@@ -70,7 +70,8 @@ class _AuthWidgetState extends State<AuthWidget> {
                             currencyModel,
                           )
                           .whenComplete(
-                              () => Navigator.of(context).pushNamed("/start"));
+                            () => Navigator.of(context).pushNamed('/start'),
+                          );
                     }
                   : null,
               style: ButtonStyle(

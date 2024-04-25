@@ -1,8 +1,7 @@
+import 'package:finance_manager/widgets/drawer_widget/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../drawer_widget/drawer_widget.dart';
 
 class SettingsWidget extends StatelessWidget {
   const SettingsWidget({super.key});
@@ -26,7 +25,7 @@ class SettingsWidget extends StatelessWidget {
             leading: const Icon(Icons.language),
             title: Text(AppLocalizations.of(context)!.selectLanguage),
             onTap: () {
-              Navigator.of(context).pushNamed("/main_page/settings/language");
+              Navigator.of(context).pushNamed('/main_page/settings/language');
             },
           ),
           // ListTile(

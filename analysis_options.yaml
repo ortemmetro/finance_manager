@@ -1,29 +1,69 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
-
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
-linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at
-  # https://dart-lang.github.io/linter/lints/index.html.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
-  rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+analyzer:
+  exclude:
+    - "**/*.g.dart" # All generated files
+    - "**/*.config.dart" # Config generated files
+    - "**/*.gr.dart" # Generated routes
+    - "**/*.freezed.dart" # Generated files
+    - "**/*.mocks.dart" # Generated files
+    - "lib/l10n/generated/*.dart"
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+  errors:
+    todo: ignore
+    invalid_use_of_visible_for_testing_member: error
+    invalid_annotation_target: ignore
+    always_use_package_imports: error
+    avoid_dynamic_calls: error
+    avoid_empty_else: error
+    avoid_print: warning
+    avoid_relative_lib_imports: error
+    avoid_returning_null_for_future: error
+    avoid_slow_async_io: error
+    avoid_type_to_string: error
+    avoid_types_as_parameter_names: error
+    avoid_web_libraries_in_flutter: error
+    cancel_subscriptions: error
+    close_sinks: error
+    comment_references: error
+    control_flow_in_finally: error
+    empty_statements: error
+    hash_and_equals: error
+    invariant_booleans: error
+    iterable_contains_unrelated_type: error
+    list_remove_unrelated_type: error
+    literal_only_boolean_expressions: error
+    no_duplicate_case_values: error
+    no_logic_in_create_state: error
+    prefer_void_to_null: error
+    test_types_in_equals: error
+    throw_in_finally: error
+    unnecessary_statements: error
+    unrelated_type_equality_checks: error
+    use_key_in_widget_constructors: error
+    valid_regexps: error
+    library_private_types_in_public_api: ignore
+    require_trailing_commas: warning
+linter:
+  rules:
+    prefer_single_quotes: true
+    use_super_parameters: true
+    always_use_package_imports: true
+    always_put_required_named_parameters_first: true
+    camel_case_types: true
+    avoid_unnecessary_containers: true
+    await_only_futures: true
+    directives_ordering: true
+    implementation_imports: true
+    no_leading_underscores_for_local_identifiers: true
+    require_trailing_commas: true
+    sized_box_for_whitespace: true
+    sort_child_properties_last: true
+    sort_pub_dependencies: true
+    collection_methods_unrelated_type: true
+    combinators_ordering: true
+    implicit_call_tearoffs: true
+    use_string_in_part_of_directives: true
+    unreachable_from_main: true
+    prefer_final_fields: true
+    prefer_final_in_for_each: true

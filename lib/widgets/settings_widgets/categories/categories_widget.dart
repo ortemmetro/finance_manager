@@ -1,13 +1,12 @@
 import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/widgets/drawer_widget/drawer_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/incomes_categories_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../drawer_widget/drawer_widget.dart';
 
 class CategoriesWidget extends StatefulWidget {
   const CategoriesWidget({super.key});
@@ -50,7 +49,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
     final listOfIncomeCategories = model.listOfIncomeCategories;
     final iconsMap = model.iconsMap;
     _tabController?.addListener(() {
-      if (myTabs[_tabController!.index].text == "Расходы") {
+      if (myTabs[_tabController!.index].text == 'Расходы') {
         model.categoryClassIndex = CategoryClass.expense.index;
       } else {
         model.categoryClassIndex = CategoryClass.income.index;
@@ -59,7 +58,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed("/main_page/categories/add");
+          Navigator.of(context).pushNamed('/main_page/categories/add');
         },
         backgroundColor: Colors.green,
         child: Icon(Icons.add, size: 29.w),
@@ -83,7 +82,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget>
             color: Theme.of(context).primaryColor,
             child: TabBar(
               onTap: (index) {
-                if (myTabs[index].text == "Расходы") {
+                if (myTabs[index].text == 'Расходы') {
                   model.categoryClassIndex = CategoryClass.expense.index;
                 } else {
                   model.categoryClassIndex = CategoryClass.income.index;

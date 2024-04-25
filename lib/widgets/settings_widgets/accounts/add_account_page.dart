@@ -2,12 +2,11 @@ import 'package:finance_manager/domain/data_provider/default_data/default_curren
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/widgets/settings_widgets/accounts/accounts_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
-import 'package:finance_manager/widgets/settings_widgets/categories/add_category_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddAccountPage extends StatelessWidget {
   AddAccountPage({super.key});
@@ -24,7 +23,8 @@ class AddAccountPage extends StatelessWidget {
         Provider.of<AddCategoryModel>(context, listen: true);
     final currencyModel = Provider.of<CurrencyModel>(context, listen: true);
     final currency = DefaultCurrencyData.listOfCurrencies.firstWhere(
-        (element) => element.currencySign == currencyModel.currentCurrency);
+      (element) => element.currencySign == currencyModel.currentCurrency,
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Добавление счёта'),
@@ -39,7 +39,7 @@ class AddAccountPage extends StatelessWidget {
           ),
           SizedBox(
             width: 200.w,
-            child: TextField(),
+            child: const TextField(),
           ),
           Text(
             'Название счёта:',
@@ -47,7 +47,7 @@ class AddAccountPage extends StatelessWidget {
           ),
           SizedBox(
             width: 200.w,
-            child: TextField(),
+            child: const TextField(),
           ),
           Text(
             'Выбор валюты:',
@@ -57,7 +57,7 @@ class AddAccountPage extends StatelessWidget {
             children: [
               SizedBox(
                 width: 200.w,
-                child: TextField(),
+                child: const TextField(),
               ),
               Text(currency.currencyCode.toString()),
             ],
@@ -108,7 +108,7 @@ class AddAccountPage extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () => Navigator.of(context)
-                    .pushNamed("/main_page/categories/add/all_categories"),
+                    .pushNamed('/main_page/categories/add/all_categories'),
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
                 ),
@@ -116,7 +116,7 @@ class AddAccountPage extends StatelessWidget {
                   AppLocalizations.of(context)!.allIcons,
                   style: TextStyle(fontSize: 14.sp),
                 ),
-              )
+              ),
             ],
           ),
           SizedBox(height: 11.h),
@@ -134,7 +134,8 @@ class AddAccountPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () => accountsModel.pickColor(context),
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green)),
+                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                ),
                 child: Text(
                   AppLocalizations.of(context)!.chooseColorButton,
                   style: TextStyle(fontSize: 15.sp),
@@ -146,12 +147,17 @@ class AddAccountPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {},
             style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.symmetric(
-                horizontal: 20.0.w,
-                vertical: 12.0.h,
-              )),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0))),
+              padding: MaterialStateProperty.all(
+                EdgeInsets.symmetric(
+                  horizontal: 20.0.w,
+                  vertical: 12.0.h,
+                ),
+              ),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+              ),
               backgroundColor: MaterialStateProperty.all(Colors.green),
             ),
             child: Text(
@@ -167,12 +173,12 @@ class AddAccountPage extends StatelessWidget {
 
 class AddCategoryCircleIconWidgetForAccounts extends StatelessWidget {
   const AddCategoryCircleIconWidgetForAccounts({
-    Key? key,
     required this.index,
     required this.listOfCategories,
     required this.iconsMap,
     required this.model,
-  }) : super(key: key);
+    super.key,
+  });
   final List<Category> listOfCategories;
   final Map<String, IconData> iconsMap;
   final int index;

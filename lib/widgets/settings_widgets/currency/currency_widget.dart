@@ -1,9 +1,8 @@
+import 'package:finance_manager/widgets/drawer_widget/drawer_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/currency/currency_widget_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../drawer_widget/drawer_widget.dart';
+import 'package:provider/provider.dart';
 
 class CurrencyWidget extends StatelessWidget {
   const CurrencyWidget({super.key});
