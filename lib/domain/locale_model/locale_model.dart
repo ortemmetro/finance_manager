@@ -1,7 +1,7 @@
 import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
-import 'package:finance_manager/l10n/l10n.dart';
-import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/src/core/l10n/l10n.dart';
+import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/domain/entity/my_user.dart';
-import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/add_category_model.dart';
 import 'package:finance_manager/widgets/settings_widgets/categories/expenses_categories_page.dart';

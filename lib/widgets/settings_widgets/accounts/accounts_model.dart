@@ -3,7 +3,7 @@ import 'package:finance_manager/domain/data_provider/default_data/default_catego
 import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
-import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -96,7 +96,7 @@ class AccountsModel extends ChangeNotifier {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Выберите ваш цвет"),
+        title: const Text('Выберите ваш цвет'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -104,7 +104,7 @@ class AccountsModel extends ChangeNotifier {
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text(
-                "ВЫБРАТЬ",
+                'ВЫБРАТЬ',
                 style: TextStyle(fontSize: 20),
               ),
             ),

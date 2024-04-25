@@ -1,10 +1,10 @@
 import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/domain/data_provider/default_data/default_currency_data.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
-import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrencyModel extends ChangeNotifier {
   final listOfCurrencies = DefaultCurrencyData.listOfCurrencies;
@@ -53,17 +53,23 @@ class CurrencyModel extends ChangeNotifier {
           title: Text(AppLocalizations.of(context)!.currencyChangedText),
           actionsPadding: EdgeInsets.all(15.0.r),
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(18.0))),
+            borderRadius: BorderRadius.all(Radius.circular(18.0)),
+          ),
           actions: [
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(),
               style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.symmetric(
-                  horizontal: 10.0.h,
-                  vertical: 10.0.w,
-                )),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
+                padding: MaterialStateProperty.all(
+                  EdgeInsets.symmetric(
+                    horizontal: 10.0.h,
+                    vertical: 10.0.w,
+                  ),
+                ),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
                 backgroundColor: MaterialStateProperty.all(Colors.green),
               ),
               child: Text(

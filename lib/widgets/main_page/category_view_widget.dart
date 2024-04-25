@@ -1,7 +1,7 @@
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/expense.dart';
 import 'package:finance_manager/domain/entity/income.dart';
-import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_widget.dart';

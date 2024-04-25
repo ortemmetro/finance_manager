@@ -1,5 +1,5 @@
 import 'package:finance_manager/domain/locale_model/locale_model.dart';
-import 'package:finance_manager/l10n/l10n.dart';
+import 'package:finance_manager/src/core/l10n/l10n.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
 import 'package:finance_manager/widgets/auth/auth_widget.dart';

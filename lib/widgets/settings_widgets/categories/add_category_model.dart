@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dart';
 import 'package:finance_manager/domain/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/domain/entity/category.dart';
-import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -18,11 +18,11 @@ class AddCategoryModel extends ChangeNotifier {
   int categoryClassIndex = CategoryClass.expense.index;
 
   var selectedIndex = -1;
-  String selectedCategoryIcon = "";
+  String selectedCategoryIcon = '';
 
   Color color = Colors.red;
 
-  String? userId = "";
+  String? userId = '';
 
   Future<void> setCategories() async {
     listOfExpenseCategories.clear();
@@ -33,11 +33,13 @@ class AddCategoryModel extends ChangeNotifier {
     await downloadCategoriesFromHive();
 
     listOfExpenseCategories.addAll(
-        DefaultCategoriesData.listOfExpenseCategories +
-            DefaultCategoriesData.listOfTempExpenseCategories);
+      DefaultCategoriesData.listOfExpenseCategories +
+          DefaultCategoriesData.listOfTempExpenseCategories,
+    );
     listOfIncomeCategories.addAll(
-        DefaultCategoriesData.listOfIncomesCategories +
-            DefaultCategoriesData.listOfTempIncomeCategories);
+      DefaultCategoriesData.listOfIncomesCategories +
+          DefaultCategoriesData.listOfTempIncomeCategories,
+    );
     notifyListeners();
   }
 
@@ -67,7 +69,7 @@ class AddCategoryModel extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Выберите ваш цвет"),
+        title: const Text('Выберите ваш цвет'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -75,7 +77,7 @@ class AddCategoryModel extends ChangeNotifier {
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text(
-                "ВЫБРАТЬ",
+                'ВЫБРАТЬ',
                 style: TextStyle(fontSize: 20),
               ),
             ),
@@ -89,18 +91,18 @@ class AddCategoryModel extends ChangeNotifier {
     final userId = await SessionIdManager.instance.readUserId();
     final userReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where('id', isEqualTo: userId)
             .get())
         .docs
         .first
         .reference;
-    final stringColorList = color.value.toRadixString(16).split("");
-    stringColorList.insert(0, "0");
-    stringColorList.insert(1, "x");
+    final stringColorList = color.value.toRadixString(16).split('');
+    stringColorList.insert(0, '0');
+    stringColorList.insert(1, 'x');
     final stringColor = stringColorList.join();
 
     if (categoryClassIndex == CategoryClass.income.index) {
-      final categoryReference = userReference.collection("Categories").doc();
+      final categoryReference = userReference.collection('Categories').doc();
       final category = Category(
         id: categoryReference.id,
         name: categoryName,
@@ -123,7 +125,7 @@ class AddCategoryModel extends ChangeNotifier {
       return;
     }
 
-    final categoryReference = userReference.collection("Categories").doc();
+    final categoryReference = userReference.collection('Categories').doc();
     final category = Category(
       id: categoryReference.id,
       name: categoryName,
@@ -151,18 +153,20 @@ class AddCategoryModel extends ChangeNotifier {
     final userId = await SessionIdManager.instance.readUserId();
     final userReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where('id', isEqualTo: userId)
             .get())
         .docs
         .first
         .reference;
-    final categoryReference = userReference.collection("Categories");
+    final categoryReference = userReference.collection('Categories');
     if (categoryReference.doc().path.isNotEmpty) {
       tempList = await categoryReference
           .snapshots()
-          .map((snapshot) => snapshot.docs
-              .map((doc) => Category.fromJson(doc.data()))
-              .toList())
+          .map(
+            (snapshot) => snapshot.docs
+                .map((doc) => Category.fromJson(doc.data()))
+                .toList(),
+          )
           .first;
       for (var i = 0; i < tempList.length; i++) {
         if (tempList[i].categoryClassIndex == CategoryClass.expense.index) {
@@ -203,7 +207,7 @@ class AddCategoryModel extends ChangeNotifier {
   ) async {
     final docUsersReference = (await FirebaseFirestore.instance
             .collection('Users')
-            .where("id", isEqualTo: userId)
+            .where('id', isEqualTo: userId)
             .get())
         .docs
         .first

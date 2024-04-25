@@ -3,7 +3,7 @@ import 'package:finance_manager/domain/data_provider/box_manager/box_manager.dar
 import 'package:finance_manager/domain/data_provider/default_data/default_categories_data.dart';
 import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/domain/entity/expense.dart';
-import 'package:finance_manager/session/session_id_manager.dart';
+import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,5 +1,5 @@
 import 'package:finance_manager/domain/entity/income.dart';
-import 'package:finance_manager/my_icons_class/my_icons_class.dart';
+import 'package:finance_manager/src/core/my_icons_class/my_icons_class.dart';
 import 'package:finance_manager/widgets/charts/bar_chart_widget.dart';
 import 'package:finance_manager/widgets/charts/pie_chart_widget.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
