@@ -4,32 +4,41 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.2 <3.0.0"
+  sdk: ">=3.0.5 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+
+  # State Management
   provider: ^6.1.2
-  cloud_firestore: ^4.16.1
-  firebase_core: ^2.29.0
-  json_serializable: ^6.7.1
-  json_annotation: ^4.8.1
-  flutter_slidable: ^3.1.0
-  pie_chart: ^5.4.0
-  firebase_auth: ^4.19.1
-  flutter_secure_storage: ^9.0.0
-  flutter_colorpicker: ^1.0.3
-  flutter_screenutil: ^5.9.0
-  intl: ^0.19.0
-  fl_chart: ^0.67.0
-  flutter_localizations:
-    sdk: flutter
   bloc: ^8.1.4
   flutter_bloc: ^8.1.5
+
+  # Firebase
+  cloud_firestore: ^4.16.1
+  firebase_core: ^2.29.0
+  firebase_auth: ^4.19.1
+
+  # Utilities
+  json_serializable: ^6.7.1
+  json_annotation: ^4.8.1
+  flutter_screenutil: ^5.9.0
+  intl: ^0.18.1
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.6
+  flutter_secure_storage: ^9.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   forex_conversion: ^0.0.3
+  get_it: ^7.7.0
+
+  # UI
+  flutter_slidable: ^3.1.0
+  pie_chart: ^5.4.0
+  flutter_colorpicker: ^1.0.3
+  fl_chart: ^0.67.0
 
 dev_dependencies:
   flutter_test:

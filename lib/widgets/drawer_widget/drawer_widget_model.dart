@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finance_manager/domain/entity/my_user.dart';
+import 'package:finance_manager/domain/entity/app_user.dart';
 import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +23,7 @@ class DrawerWidgetModel extends ChangeNotifier {
         .reference;
     final userInfoObject = await docUsersReference.get();
     final userInfoMap = userInfoObject.data();
-    final userInfo = MyUser.fromJson(userInfoMap!);
+    final userInfo = AppUser.fromJson(userInfoMap!);
     userName = userInfo.firstName;
     userSurname = userInfo.lastName;
     notifyListeners();

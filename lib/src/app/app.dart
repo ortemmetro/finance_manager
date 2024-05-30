@@ -1,11 +1,11 @@
 import 'package:finance_manager/domain/locale_model/locale_model.dart';
 import 'package:finance_manager/l10n/l10n.dart';
+import 'package:finance_manager/src/features/authentication/presentation/pages/auth_widget_model.dart';
+import 'package:finance_manager/src/features/authentication/presentation/pages/authentication_page.dart';
+import 'package:finance_manager/src/features/authentication/presentation/pages/sign_up_widget.dart';
+import 'package:finance_manager/src/features/authentication/presentation/pages/sign_up_widget_model.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget.dart';
 import 'package:finance_manager/widgets/add_widget/add_widget_model.dart';
-import 'package:finance_manager/widgets/auth/auth_widget.dart';
-import 'package:finance_manager/widgets/auth/auth_widget_model.dart';
-import 'package:finance_manager/widgets/auth/sign_up_widget.dart';
-import 'package:finance_manager/widgets/auth/sign_up_widget_model.dart';
 import 'package:finance_manager/widgets/drawer_widget/drawer_widget_model.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:finance_manager/widgets/income_page_widget/incomes_page_model.dart';
@@ -31,11 +31,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
-  const App({
-    required this.userId,
-    super.key,
-  });
-  final String? userId;
+  const App({super.key});
 
   @override
   State<App> createState() => _AppState();
@@ -77,7 +73,7 @@ class _AppState extends State<App> {
           ),
           routes: {
             '/start': (context) => const StartupPage(),
-            '/': (context) => const AuthWidget(),
+            '/': (context) => const AuthenticationPage(),
             '/sign_up': (context) => const SignUpWidget(),
             '/main_page': (context) => const MainPage(),
             '/main_page/category_view': (context) => const CategoryViewWidget(),

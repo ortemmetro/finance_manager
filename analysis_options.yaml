@@ -43,9 +43,9 @@ analyzer:
     use_key_in_widget_constructors: error
     valid_regexps: error
     library_private_types_in_public_api: ignore
-    require_trailing_commas: warning
 linter:
   rules:
+    prefer_const_constructors: true
     prefer_single_quotes: true
     use_super_parameters: true
     always_use_package_imports: true
@@ -56,10 +56,8 @@ linter:
     directives_ordering: true
     implementation_imports: true
     no_leading_underscores_for_local_identifiers: true
-    require_trailing_commas: true
     sized_box_for_whitespace: true
     sort_child_properties_last: true
-    sort_pub_dependencies: true
     collection_methods_unrelated_type: true
     combinators_ordering: true
     implicit_call_tearoffs: true

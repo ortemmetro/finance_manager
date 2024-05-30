@@ -61,7 +61,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       name: json['name'] as String,
       color: json['color'] as String,
       icon: json['icon'] as String,
-      categoryClassIndex: json['category_class_index'] as int,
+      categoryClassIndex: (json['category_class_index'] as num).toInt(),
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
