@@ -4,6 +4,7 @@ import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
 import 'package:finance_manager/firebase_options.dart';
 import 'package:finance_manager/src/app/app.dart';
+import 'package:finance_manager/src/core/di/di.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -13,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Di.initDependencies();
   await Hive.initFlutter();
   Hive.registerAdapter(CategoryAdapter());
   Hive.registerAdapter(ExpenseAdapter());

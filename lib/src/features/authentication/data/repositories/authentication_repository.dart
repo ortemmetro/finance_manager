@@ -7,9 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthenticationRepository implements IAuthenticationRepository {
   final AuthenticationDataSource _authenticationDataSource;
 
-  AuthenticationRepository({
-    required AuthenticationDataSource authenticationDataSource,
-  }) : _authenticationDataSource = authenticationDataSource;
+  AuthenticationRepository(
+    this._authenticationDataSource,
+  );
 
   @override
   Future<UserCredential> signUp({

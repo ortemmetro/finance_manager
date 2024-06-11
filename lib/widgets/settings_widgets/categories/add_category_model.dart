@@ -5,7 +5,6 @@ import 'package:finance_manager/domain/entity/category.dart';
 import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:finance_manager/widgets/expenses_page_widget/expenses_page_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 enum CategoryClass { expense, income }
 
@@ -53,18 +52,6 @@ class AddCategoryModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget _buildColorPicker() {
-    return ColorPicker(
-      pickerColor: color,
-      enableAlpha: false,
-      labelTypes: const [],
-      onColorChanged: (color) {
-        this.color = color;
-        notifyListeners();
-      },
-    );
-  }
-
   void pickColor(BuildContext context) {
     showDialog(
       context: context,
@@ -73,7 +60,7 @@ class AddCategoryModel extends ChangeNotifier {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildColorPicker(),
+            // _buildColorPicker(),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text(

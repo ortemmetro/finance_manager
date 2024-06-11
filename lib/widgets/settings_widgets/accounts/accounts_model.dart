@@ -5,7 +5,6 @@ import 'package:finance_manager/domain/entity/income.dart';
 import 'package:finance_manager/domain/entity/my_user_for_hive.dart';
 import 'package:finance_manager/src/core/session/session_id_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AccountsModel extends ChangeNotifier {
   List<String> accounts = [];
@@ -80,18 +79,6 @@ class AccountsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget _buildColorPicker() {
-    return ColorPicker(
-      pickerColor: selectedColor,
-      enableAlpha: false,
-      labelTypes: const [],
-      onColorChanged: (color) {
-        selectedColor = color;
-        notifyListeners();
-      },
-    );
-  }
-
   Future<void> pickColor(BuildContext context) async {
     await showDialog(
       context: context,
@@ -100,7 +87,7 @@ class AccountsModel extends ChangeNotifier {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildColorPicker(),
+            // _buildColorPicker(),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text(

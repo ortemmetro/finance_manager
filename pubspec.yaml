@@ -20,11 +20,14 @@ dependencies:
   firebase_core: ^2.29.0
   firebase_auth: ^4.19.1
 
+  # Dependency Injection
+  get_it: ^7.7.0
+
   # Utilities
   json_serializable: ^6.7.1
   json_annotation: ^4.8.1
   flutter_screenutil: ^5.9.0
-  intl: ^0.18.1
+  intl: ^0.19.0
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^1.0.6
@@ -32,12 +35,11 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   forex_conversion: ^0.0.3
-  get_it: ^7.7.0
+  google_fonts: ^4.0.4
 
   # UI
   flutter_slidable: ^3.1.0
   pie_chart: ^5.4.0
-  flutter_colorpicker: ^1.0.3
   fl_chart: ^0.67.0
 
 dev_dependencies:

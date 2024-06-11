@@ -1,15 +1,13 @@
-import 'package:finance_manager/src/features/authentication/presentation/pages/sign_up_widget_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class SignUpWidget extends StatefulWidget {
-  const SignUpWidget({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignUpWidget> createState() => _SignUpWidgetState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpWidgetState extends State<SignUpWidget> {
+class _SignUpPageState extends State<SignUpPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -53,10 +51,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      Provider.of<SignUpWidgetModel>(context, listen: false).isButtonEnabled =
-          true;
-    });
   }
 
   @override
@@ -73,7 +67,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<SignUpWidgetModel>(context);
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
@@ -119,7 +112,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  onEditingComplete: () => model.resetErrorText(),
+                  // onEditingComplete: () => model.resetErrorText(),
                 ),
                 const SizedBox(height: 30),
                 const Row(
@@ -130,7 +123,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  onEditingComplete: () => model.resetErrorText(),
+                  // onEditingComplete: () => model.resetErrorText(),
                 ),
                 const SizedBox(height: 30),
                 Column(
@@ -150,26 +143,12 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
-                  onPressed: model.isButtonEnabled
-                      ? () async {
-                          await model.signUp(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                            confirmPassword: _confirmPasswordController.text,
-                            firstName: _firstNameController.text,
-                            lastName: _lastNameController.text,
-                            age: int.parse(_ageController.text),
-                            currency: _selectedCurrencyValue,
-                            context: context,
-                          );
-                          Navigator.of(context).pushNamed('/start');
-                        }
-                      : null,
+                  onPressed: () {},
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
+                    backgroundColor: WidgetStateProperty.all(
                       const Color.fromARGB(255, 93, 176, 117),
                     ),
-                    padding: MaterialStateProperty.all(
+                    padding: WidgetStateProperty.all(
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                     ),
                   ),
@@ -179,9 +158,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                Text(
-                  model.notValidPasswordString,
-                  style: const TextStyle(
+                const Text(
+                  'smodel.notValidPasswordString',
+                  style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
